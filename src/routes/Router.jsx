@@ -14,6 +14,7 @@ import {
   PostWrite,
   EditProfile,
 } from '../pages/index';
+import Login from '../pages/login/login';
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
   {
     path: '/settings',
     element: <UserSettings />,
+  },
+  {
+    path: '/auth/kakao-oauth',
+    element: <Login />,
   },
   {
     path: '/',
