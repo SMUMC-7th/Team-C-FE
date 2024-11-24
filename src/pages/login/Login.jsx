@@ -14,7 +14,8 @@ function Login() {
       if (code) {
         try {
           const response = await axios.get(
-            `${import.meta.env.VITE_KAKAO_LOGIN_URI}?code=${code}`
+            `${import.meta.env.VITE_KAKAO_LOGIN_URI}?code=${code}`,
+            { withCredentials: true }
           );
 
           if (response.status === 200) {
