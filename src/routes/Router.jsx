@@ -13,8 +13,8 @@ import {
   NotFound,
   PostWrite,
   EditProfile,
+  Login,
 } from '../pages/index';
-import Login from '../pages/login/login';
 
 const router = createBrowserRouter([
   {
