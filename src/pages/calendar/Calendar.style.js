@@ -8,7 +8,7 @@ const Layout = styled.div`
   flex-direction: column;
   align-items: center;
   height: calc(100vh - 190px);
-  overflow-y: scroll;
+  overflow-y: hidden;
 `;
 
 const Title = styled.div`

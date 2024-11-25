@@ -57,6 +57,7 @@ const Title = styled.div`
   font-size: 26px;
   color: var(--color-blue-700);
   font-weight: bold;
+  width: 85%;
 `;
 
 const Explain = styled.div`
@@ -97,6 +98,13 @@ const Data = styled.div`
   word-break: break-all;
   white-space: pre-line;
 `;
+
+const Alert = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 30px;
+`;
 export {
   Container,
   Header,
@@ -109,4 +117,5 @@ export {
   BookmarkFillIcon,
   BookmarkIcon,
   PolicyInfoCard,
+  Alert,
 };

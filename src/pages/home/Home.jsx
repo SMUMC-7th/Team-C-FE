@@ -1,4 +1,4 @@
-import * as S from './home.style';
+import * as S from './Home.style';
 import PolicyListLogin from '../../components/policyList/policyList';
 import PolicyList from '../../components/policyList/notLogin/policyList';
 import { useState } from 'react';

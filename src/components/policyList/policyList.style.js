@@ -28,4 +28,11 @@ const PolicyList = styled.div`
   width: 345px;
 `;
 
-export { Container, Title, PolicyList };
+const Alert = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 30px;
+`;
+
+export { Container, Title, PolicyList, Alert };

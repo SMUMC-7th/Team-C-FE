@@ -13,6 +13,7 @@ import {
   NotFound,
   PostWrite,
   EditProfile,
+  Login,
 } from '../pages/index';
 import KakaoOAuthHandler from '../pages/KakaoAuth/KakaoOAuthHandler';
 
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
   {
     path: '/settings',
     element: <UserSettings />,
+  },
+  {
+    path: '/auth/kakao-oauth',
+    element: <Login />,
   },
   {
     path: '/',
