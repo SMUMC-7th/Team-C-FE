@@ -24,7 +24,7 @@ const Title = styled.div`
   color: var(--color-gray-800);
   font-weight: 700;
   display: flex;
-  min-width: 110px;
+  min-width: 120px;
   align-items: center;
   justify-content: center;
 `;
