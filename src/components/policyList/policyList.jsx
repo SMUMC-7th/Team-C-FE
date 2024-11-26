@@ -3,8 +3,7 @@ import PolicyCard from '../policyCard/policyCard';
 import { useInView } from 'react-intersection-observer';
 import { useEffect } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { getRecommendPolicy } from '../../apis/policy';
-import ClipLoader from 'react-spinners/ClipLoader';
+import { getRandomPolicy } from '../../apis/policy';
 
 const policyFieldCodesLetter = {
   일자리: '023010',
@@ -16,7 +15,7 @@ const policyFieldCodesLetter = {
 function useGetInfinitePolicy(interest) {
   return useInfiniteQuery({
     queryKey: ['categoryPolicies', interest],
-    queryFn: ({ pageParam = 1 }) => getRecommendPolicy(pageParam),
+    queryFn: ({ pageParam = 1 }) => getRandomPolicy(pageParam, interest),
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages) => {
       const lastPolicy = lastPage?.data?.emp?.[lastPage.data.emp.length - 1];
@@ -57,56 +56,23 @@ const PolicyListLogin = (props) => {
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
 
-  if (isPending || isLoading) {
-    return (
-      <S.Alert>
-        <ClipLoader />
-      </S.Alert>
-    );
+  if (isPending) {
+    return <p>Loading...</p>;
   }
 
+  if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error loading policies</p>;
 
   const policiesData = data?.pages;
-
-  function extractSubstring(text) {
-    if (!text) return true;
-    const keyword = '신청기간:';
-    const keywordIndex = text.indexOf(keyword);
-
-    if (keywordIndex !== -1) {
-      return true;
-    } else {
-      const newText = text.slice(0, 21);
-      try {
-        const [start, end] = newText.split('~', 2).map((date) => date.trim());
-        const endDate = new Date(end);
-        const today = new Date();
-
-        if (endDate < today) {
-          return false;
-        }
-        return start;
-      } catch {
-        return true;
-      }
-    }
-  }
-
+  console.log(policiesData);
   return (
     <S.Container>
       <S.PolicyList>
-        {policiesData?.map((page) => {
-          return page?.data?.emp.map((policyData) => {
-            const isValid = extractSubstring(policyData.rqutPrdCn);
-            if (isValid === false) {
-              return null;
-            }
-            return (
-              <PolicyCard key={policyData.bizId} {...policyData} {...user} />
-            );
-          });
-        })}
+        {policiesData?.map((page) =>
+          page?.data?.emp.map((policyData) => (
+            <PolicyCard key={policyData.bizId} {...policyData} {...user} />
+          ))
+        )}
       </S.PolicyList>
       <div
         ref={ref}

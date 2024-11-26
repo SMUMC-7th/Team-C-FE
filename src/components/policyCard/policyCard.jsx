@@ -3,7 +3,8 @@ import img1 from '../../images/policyImg1.svg';
 import img2 from '../../images/policyImg2.svg';
 import img3 from '../../images/policyImg3.svg';
 import img4 from '../../images/policyImg4.svg';
-import { format } from 'date-fns';
+import { extractSubstring } from '../../utils/formatDate';
+const ImagesArr = [img1, img2, img3, img4];
 
 const ImagesArr = [img1, img2, img3, img4];
 
