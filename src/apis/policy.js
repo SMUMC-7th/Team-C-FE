@@ -9,7 +9,10 @@ const getSinglePolicy = async (srchPolicyId) => {
 
 const getRecommendPolicy = async (page) => {
   const { data } = await axios.get(
-    `https://api.youthstepup.site/policy/recommend?display=10&pageIndex=${page}`
+    `https://api.youthstepup.site/policy/recommend?display=10&pageIndex=${page}`,
+    {
+      withCredentials: true,
+    }
   );
   return data;
 };
