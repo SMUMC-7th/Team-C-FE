@@ -3,7 +3,7 @@ import PolicyCard from '../policyCard/policyCard';
 import { useInView } from 'react-intersection-observer';
 import { useEffect } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { getRandomPolicyLogin } from '../../apis/policy';
+import { getRandomPolicy } from '../../apis/policy';
 
 const policyFieldCodesLetter = {
   일자리: '023010',
@@ -15,7 +15,7 @@ const policyFieldCodesLetter = {
 function useGetInfinitePolicy(interest) {
   return useInfiniteQuery({
     queryKey: ['categoryPolicies', interest],
-    queryFn: ({ pageParam = 1 }) => getRandomPolicyLogin(pageParam, interest),
+    queryFn: ({ pageParam = 1 }) => getRandomPolicy(pageParam, interest),
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages) => {
       const lastPolicy = lastPage?.data?.emp?.[lastPage.data.emp.length - 1];
@@ -64,15 +64,15 @@ const PolicyListLogin = (props) => {
   if (error) return <p>Error loading policies</p>;
 
   const policiesData = data?.pages;
-
+  console.log(policiesData);
   return (
     <S.Container>
       <S.PolicyList>
-        {policiesData?.map((page) => {
-          return page?.data?.emp.map((policyData) => {
-            <PolicyCard key={policyData.bizId} {...policyData} {...user} />;
-          });
-        })}
+        {policiesData?.map((page) =>
+          page?.data?.emp.map((policyData) => (
+            <PolicyCard key={policyData.bizId} {...policyData} {...user} />
+          ))
+        )}
       </S.PolicyList>
       <div
         ref={ref}
