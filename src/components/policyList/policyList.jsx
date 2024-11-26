@@ -92,10 +92,9 @@ const PolicyListLogin = (props) => {
             justifyContent: 'center',
             alignItems: 'center',
             width: '100%',
-            marginBottom: '150px',
           }}
         >
-          {isFetching && <p>Loading more...</p>}
+          {isFetching && <ClipLoader />}
         </div>
       )}
     </S.Container>
