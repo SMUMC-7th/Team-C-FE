@@ -98,13 +98,7 @@ const PolicyListLogin = (props) => {
       <S.PolicyList>
         {policiesData?.map((page) => {
           return page?.data?.emp.map((policyData) => {
-            const isValid = extractSubstring(policyData.rqutPrdCn);
-            if (isValid === false) {
-              return null;
-            }
-            return (
-              <PolicyCard key={policyData.bizId} {...policyData} {...user} />
-            );
+            <PolicyCard key={policyData.bizId} {...policyData} {...user} />;
           });
         })}
       </S.PolicyList>
