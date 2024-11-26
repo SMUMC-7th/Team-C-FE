@@ -1,6 +1,7 @@
 import * as S from './Landing.style';
 import { RiKakaoTalkFill } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
+import logo_wg from '../../images/logo_wg.svg';
 
 function Landing() {
   const loginUrl = `${import.meta.env.VITE_KAKAO_URL}?response_type=code&client_id=${import.meta.env.VITE_KAKAO_REST_API_KEY}&redirect_uri=${import.meta.env.VITE_KAKAO_REDIRECT_URI}`;
@@ -8,7 +9,7 @@ function Landing() {
   return (
     <S.Container>
       <S.LogoContainer>
-        <S.Logo>청년돋움</S.Logo>
+        <S.Logo src={logo_wg} />
         <S.Slogan>청년들의 사회 적응 길라잡이</S.Slogan>
       </S.LogoContainer>
       <S.LoginContainer>

@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { IoChevronBack } from 'react-icons/io5';
 import { LuUserCircle2 } from 'react-icons/lu';
+import logo_bg from '../../images/logo_bg.svg';
 
 function Header() {
   const navigate = useNavigate();
@@ -50,22 +51,14 @@ function Header() {
     <S.Header>
       <S.Nav>
         {showBackBtn() && <IoChevronBack onClick={() => navigate(-1)} />}
-
-        {showLogoAndProfile() ? (
-          <S.Logo to="/home">청년돋움</S.Logo>
-        ) : showWriteTitle() ? (
-          <S.Title>글쓰기</S.Title>
-        ) : null}
-
-        {!location.pathname.startsWith('/my') && (
-          <S.Profile onClick={() => navigate('/my')}>
-            {userImg ? (
-              <S.UserImg src={userImg} alt="사용자 프로필" />
-            ) : (
-              <LuUserCircle2 />
-            )}
-          </S.Profile>
-        )}
+        {showLogoAndProfile() && <S.Logo src={logo_bg} />}
+        <S.Profile onClick={() => navigate('/my')}>
+          {userImg ? (
+            <S.UserImg src={userImg} alt="사용자 프로필" />
+          ) : (
+            <LuUserCircle2 />
+          )}
+        </S.Profile>
       </S.Nav>
     </S.Header>
   );

@@ -1,5 +1,6 @@
-import * as S from './home.style';
-import PolicyList from '../../components/policyList/policyList';
+import * as S from './Home.style';
+import PolicyListLogin from '../../components/policyList/policyList';
+import PolicyList from '../../components/policyList/notLogin/policyList';
 import { useState } from 'react';
 import Banner from '../../components/banner/banner';
 import userInfo from '../../mocks/userData.json';
@@ -14,12 +15,12 @@ const Home = () => {
         {isLogin ? (
           <>
             <S.Title>✨ {user.nickName}님을 위한 추천정책</S.Title>
-            <PolicyList isLogin={isLogin} {...user}></PolicyList>
+            <PolicyListLogin {...user}></PolicyListLogin>
           </>
         ) : (
           <>
             <S.Title>🚨 랜덤 정책 추천</S.Title>
-            <PolicyList isLogin={isLogin}></PolicyList>
+            <PolicyList></PolicyList>
           </>
         )}
       </S.PolicyContainer>

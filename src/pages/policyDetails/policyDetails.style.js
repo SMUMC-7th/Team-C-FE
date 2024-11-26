@@ -57,51 +57,53 @@ const Title = styled.div`
   font-size: 26px;
   color: var(--color-blue-700);
   font-weight: bold;
+  width: 85%;
 `;
 
 const Explain = styled.div`
   display: flex;
   font-size: 15px;
   font-weight: 600;
+  padding: 20px 0;
+  width: 100%;
+  border-bottom: 1px solid var(--color-gray-300);
 `;
 const Contents = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-const Line = styled.div`
-  border-top: 1px solid var(--color-gray-300);
-  width: 90%;
-  display: flex;
-  align-self: center;
-`;
-const Line2 = styled.div`
-  border-right: 1px solid var(--color-gray-300);
-  height: 600px;
-  display: flex;
-  z-index: 1;
-  position: absolute;
-  top: 98px;
-  left: 105px;
-`;
 const Content = styled.div`
   display: flex;
-  margin: 10px 20px;
+  margin: 10px 0;
+  width: 100%;
   justify-content: space-between;
 `;
 const Category = styled.div`
   display: flex;
   font-size: 15px;
   font-weight: 600;
-  width: 81px;
+  width: 25%;
+  margin-left: 20px;
+  line-height: 150%;
 `;
 const Data = styled.div`
   display: flex;
-  width: 217px;
-  height: 40px;
+  width: 60%;
   font-size: 15px;
   font-weight: 600;
-  margin-left: 18px;
+  margin-right: 20px;
+  line-height: 150%;
+  flex-wrap: wrap;
+  word-break: break-all;
+  white-space: pre-line;
+`;
+
+const Alert = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 30px;
 `;
 export {
   Container,
@@ -109,12 +111,11 @@ export {
   Title,
   Explain,
   Contents,
-  Line,
   Category,
   Content,
   Data,
   BookmarkFillIcon,
   BookmarkIcon,
-  Line2,
   PolicyInfoCard,
+  Alert,
 };
