@@ -75,7 +75,7 @@ function PolicyDetails() {
   }
 
   const policyData = data?.data.emp;
-  console.log(policyData);
+
   if (!policyData) {
     return (
       <div
