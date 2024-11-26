@@ -18,15 +18,20 @@ function useGetInfinitePolicy(interest) {
     queryKey: ['categoryPolicies', interest],
     queryFn: ({ pageParam = 1 }) => getRecommendPolicy(pageParam),
     initialPageParam: 1,
-    getNextPageParam: (lastPage, allPages) => {
-      const lastPolicy = lastPage?.data?.emp?.[lastPage.data.emp.length - 1];
-      return lastPolicy ? allPages.length + 1 : undefined;
+    getNextPageParam: (lastPage) => {
+      const currentIndex = lastPage?.data?.pageIndex || 1;
+      const totalPolicies = lastPage?.data?.totalCnt || 0;
+      const policiesPerPage = 10;
+
+      const maxPageIndex = Math.ceil(totalPolicies / policiesPerPage);
+      return currentIndex < maxPageIndex ? currentIndex + 1 : undefined;
     },
     cacheTime: 10000,
     staleTime: 10000,
     enabled: !!interest && interest.length > 0,
   });
 }
+
 const PolicyListLogin = (props) => {
   const { ...user } = props;
   let interestCode = '';
@@ -78,18 +83,21 @@ const PolicyListLogin = (props) => {
           ))
         )}
       </S.PolicyList>
-      <div
-        ref={ref}
-        style={{
-          height: '50px',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: '100%',
-        }}
-      >
-        {isFetching && <p>Loading more...</p>}
-      </div>
+      {hasNextPage && (
+        <div
+          ref={ref}
+          style={{
+            height: '50px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+            marginBottom: '150px',
+          }}
+        >
+          {isFetching && <p>Loading more...</p>}
+        </div>
+      )}
     </S.Container>
   );
 };
