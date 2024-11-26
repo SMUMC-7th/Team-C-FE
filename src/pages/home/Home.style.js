@@ -4,13 +4,11 @@ const Container = styled.div`
   position: fixed;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: calc(100vh - 190px);
   align-items: center;
   gap: 20px;
-  transform: translateX(20px);
-  width: 345px;
+  width: 346px;
   overflow: hidden;
-  margin-left: calc(-1 * var(--size-side-gap));
 `;
 
 const PolicyContainer = styled.div`
@@ -36,5 +34,15 @@ const Title = styled.div`
   z-index: 3;
   margin-bottom: 10px;
 `;
-
-export { Container, PolicyContainer, Title };
+const Button = styled.button`
+  padding: 10px;
+  justify-self: center;
+  display: flex;
+  position: absolute;
+  top: 165px;
+  right: 10px;
+  z-index: 100;
+  border-radius: 5px;
+  font-size: 10px;
+`;
+export { Container, PolicyContainer, Title, Button };
