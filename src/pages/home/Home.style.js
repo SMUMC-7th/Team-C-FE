@@ -1,21 +1,23 @@
 import styled from 'styled-components';
 
 const Container = styled.div`
+  position: fixed;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 190px);
+  height: 100vh;
   align-items: center;
-  position: relative;
   gap: 20px;
   transform: translateX(20px);
-  max-width: 100%;
+  width: 345px;
+  overflow: hidden;
   margin-left: calc(-1 * var(--size-side-gap));
 `;
 
 const PolicyContainer = styled.div`
   flex: 1;
   overflow-y: scroll;
-  width: 345px;
+  width: 100%;
+  max-height: 75%;
 `;
 
 const Title = styled.div`

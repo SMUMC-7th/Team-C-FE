@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom';
 import { format } from 'date-fns';
 import { getSinglePolicy } from '../../apis/policy';
 import { useQuery } from '@tanstack/react-query';
+import ClipLoader from 'react-spinners/ClipLoader';
+
 const prdRpttSecdMap = {
   '002001': '상시',
   '002002': '연간반복',
@@ -11,22 +13,47 @@ const prdRpttSecdMap = {
   '002005': '미정',
 };
 
+function extractSubstring(text) {
+  if (!text) return '-';
+  const keyword1 = '신청기간:';
+  const keyword2 = '~';
+
+  const keywordIndex1 = text.indexOf(keyword1);
+  const keywordIndex2 = text.indexOf(keyword2);
+
+  if (keywordIndex1 !== -1) {
+    const newText = text.slice(keywordIndex1 + 5);
+    return newText;
+  } else if (keywordIndex2 === -1) {
+    const newText = text;
+    return newText;
+  } else {
+    const newText = text.slice(0, 21);
+    return newText;
+  }
+}
+
 function PolicyDetails() {
   const params = useParams();
-  // const [isClicked, setIsClicked] = useState(policy?.isChecked);
+  const [isClicked, setIsClicked] = useState(false);
   const { data, error, isLoading } = useQuery({
     queryKey: [params],
     queryFn: () => getSinglePolicy(params.policyId),
   });
+  const newDate = extractSubstring(data?.data?.emp?.rqutPrdCn).trim();
 
   if (error) {
     console.log(error);
   }
   if (isLoading) {
-    return <div>로딩중입니다</div>;
+    return (
+      <S.Alert>
+        <ClipLoader />
+      </S.Alert>
+    );
   }
-  const policyData = data?.data.emp;
 
+  const policyData = data?.data.emp;
   if (!policyData) {
     return (
       <div
@@ -73,7 +100,7 @@ function PolicyDetails() {
         <S.Contents>
           <S.Content>
             <S.Category>사업신청기간</S.Category>
-            <S.Data>{policyData?.rqutPrdCn}</S.Data>
+            <S.Data>{newDate}</S.Data>
           </S.Content>
           <S.Content>
             <S.Category>지원 내용</S.Category>
@@ -179,11 +206,11 @@ function PolicyDetails() {
             <S.Data>{getpolyRlmCd(policyData?.polyRlmCd)}</S.Data>
           </S.Content>
         </S.Contents>
-        {/* {isClicked ? (
+        {isClicked ? (
           <S.BookmarkFillIcon onClick={handleBookmarkClick} />
         ) : (
           <S.BookmarkIcon onClick={handleBookmarkClick} />
-        )} */}
+        )}
       </S.PolicyInfoCard>
     </S.Container>
   );
