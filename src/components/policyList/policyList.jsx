@@ -65,42 +65,12 @@ const PolicyListLogin = (props) => {
 
   const policiesData = data?.pages;
 
-  function extractSubstring(text) {
-    if (!text) return true;
-    const keyword = '신청기간:';
-    const keywordIndex = text.indexOf(keyword);
-
-    if (keywordIndex !== -1) {
-      return true;
-    } else {
-      const newText = text.slice(0, 21);
-      try {
-        const [start, end] = newText.split('~', 2).map((date) => date.trim());
-        const endDate = new Date(end);
-        const today = new Date();
-
-        if (endDate < today) {
-          return false;
-        }
-        return start;
-      } catch {
-        return true;
-      }
-    }
-  }
-
   return (
     <S.Container>
       <S.PolicyList>
         {policiesData?.map((page) => {
           return page?.data?.emp.map((policyData) => {
-            const isValid = extractSubstring(policyData.rqutPrdCn);
-            if (isValid === false) {
-              return null;
-            }
-            return (
-              <PolicyCard key={policyData.bizId} {...policyData} {...user} />
-            );
+            <PolicyCard key={policyData.bizId} {...policyData} {...user} />;
           });
         })}
       </S.PolicyList>

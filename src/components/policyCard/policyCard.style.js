@@ -69,12 +69,16 @@ const Title = styled.div`
 `;
 
 const Content = styled.div`
-  display: flex;
+  display: -webkit-box;
   font-size: 15px;
-  word-break: keep-all;
+  word-break: break-word;
   font-weight: bold;
   color: #000000;
-  /* width: 150px; */
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 200px;
 `;
 
 const Img = styled.div`
