@@ -39,7 +39,7 @@ const PolicyList = ({ user }) => {
           <PolicyCard key={policyData.bizId} {...policyData} {...user} />
         ))}
       </S.PolicyList>
-      <div ref={ref} style={{ marginTop: '50px', height: '100px' }}></div>
+      <div ref={ref} style={{ height: '5px' }}></div>
     </S.Container>
   );
 };
