@@ -10,7 +10,7 @@ import Calendar from './calendar/Calendar';
 import NotFound from './NotFound';
 import PostWrite from './postWrite/postWrite';
 import EditProfile from './editProfile/EditProfile';
-import Login from '../pages/login/Login';
+import KakaoOAuthHandler from './kakaoOAuth/KakaoOAuthHandler';
 
 export {
   Landing,
@@ -25,5 +25,5 @@ export {
   NotFound,
   PostWrite,
   EditProfile,
-  Login,
+  KakaoOAuthHandler,
 };
