@@ -5,9 +5,12 @@ import userInfo from '../../mocks/userData.json';
 const user = userInfo[0];
 
 function PolicyRec() {
-  const [isLogin, setIsLogin] = useState(false);
-  !isLogin && alert('로그인이 필요한 서비스입니다');
-  window.location.href = '/home';
+  const [isLogin, setIsLogin] = useState(true);
+
+  if (isLogin === false) {
+    alert('로그인이 필요한 서비스입니다');
+    window.location.href = '/home';
+  }
 
   return (
     <S.Container>
