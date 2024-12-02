@@ -108,13 +108,15 @@ const DayPolicyList = styled.div`
   justify-content: flex-end;
   width: 100%;
   align-items: center;
+  overflow-y: hidden;
 `;
 
 const DayPolicyText = styled.div`
-  font-size: 7px;
+  font-size: 8px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  width: 24px;
   color: ${(props) =>
     props.isSelected
       ? props.$started
@@ -126,13 +128,15 @@ const DayPolicyText = styled.div`
 `;
 
 const ArrowBackIcon = styled(IoIosArrowBack)`
-  width: 25px;
+  width: 7px;
+  stroke-width: 25px;
   color: ${(props) =>
     props.isSelected ? 'var(--color-red-900)' : 'var(--color-red-800)'};
 `;
 
 const ArrowForwardIcon = styled(IoIosArrowForward)`
-  width: 25px;
+  width: 7px;
+  stroke-width: 25px;
   color: ${(props) =>
     props.isSelected ? 'var(--color-blue-900)' : 'var(--color-blue-800)'};
 `;

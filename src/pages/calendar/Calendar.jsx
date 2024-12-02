@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import {
   format,
   addMonths,
@@ -9,34 +10,39 @@ import {
   endOfWeek,
   addDays,
 } from 'date-fns';
+
 import * as S from './Calendar.style';
+
 import CalendarHeader from '../../components/calendarHeader/calendarHeader';
 import Day from '../../components/day/day';
-import policyDatas from '../../mocks/policyData.json';
-import userInfo from '../../mocks/userData.json';
 
-const user = userInfo[0];
+import { getMonthBookmark } from '../../apis/bookmark';
+
 const weekDays = ['일', '월', '화', '수', '목', '금', '토'];
 
-function getBookmarkPolicyId() {
-  return user.bookmarked;
-}
-function getPolicyInfo(policies) {
-  return policies.flatMap((id) =>
-    policyDatas.filter((policy) => policy.bizId === id)
-  );
-}
 const Calendar = () => {
-  const [isLogin, setIsLogin] = useState(true);
+  const isLogin = true; //수정 예정
   const today = new Date();
   const [currentDate, setCurrentDate] = useState(today);
   const [selectDate, setSelectDate] = useState(format(today, 'yyyy-MM-dd'));
+  if (isLogin === false) {
+    alert('로그인이 필요한 서비스 입니다');
+    window.location.href = '/';
+  }
+  const {
+    data: MonthBookmark,
+    error: MonthBookmarkError,
+    isLoading: MonthBookmarkLoading,
+  } = useQuery({
+    queryKey: ['calendar', currentDate.getMonth()],
+    queryFn: () =>
+      getMonthBookmark(currentDate.getFullYear(), currentDate.getMonth() + 1),
+  });
 
-  const handleSelectDate = (data) => {
-    setSelectDate(data);
-  };
+  const policies = Array.isArray(MonthBookmark?.data?.bookmarks)
+    ? MonthBookmark?.data?.bookmarks
+    : [];
 
-  const policies = isLogin ? getPolicyInfo(getBookmarkPolicyId()) : [];
   const getMonthDates = () => {
     const monthStart = startOfMonth(currentDate);
     const monthEnd = endOfMonth(monthStart);
@@ -46,6 +52,10 @@ const Calendar = () => {
   };
 
   const { monthStart, monthEnd, startDate, endDate } = getMonthDates();
+
+  const handleSelectDate = (DateData) => {
+    setSelectDate(DateData);
+  };
 
   const generateCalendarDays = () => {
     const days = [];
@@ -73,25 +83,32 @@ const Calendar = () => {
                   {format(day, 'd')}
                 </S.DaySpan>
                 <S.DayPolicyList>
-                  {policies.map((policy) =>
+                  {policies.map((policy, index) =>
                     policy.startDate === editDay ? (
-                      <S.DayPolicy key={`${policy.bizId}_start`}>
-                        <S.ArrowForwardIcon selected={isSelectedDay} />
+                      <S.DayPolicy
+                        key={`${policy.bizId}_${policy.startDate}_${index}`}
+                      >
+                        <S.ArrowForwardIcon
+                          size={10}
+                          selected={isSelectedDay}
+                        />
                         <S.DayPolicyText
                           $started={true}
                           selected={isSelectedDay}
                         >
-                          {policy.policyTitle}
+                          {policy.name}
                         </S.DayPolicyText>
                       </S.DayPolicy>
                     ) : policy.endDate === editDay ? (
-                      <S.DayPolicy key={`${policy.bizId}_end`}>
+                      <S.DayPolicy
+                        key={`${policy.bizId}_${policy.endDate}_${index}`}
+                      >
                         <S.ArrowBackIcon selected={isSelectedDay} />
                         <S.DayPolicyText
                           $started={false}
                           selected={isSelectedDay}
                         >
-                          {policy.policyTitle}
+                          {policy.name}
                         </S.DayPolicyText>
                       </S.DayPolicy>
                     ) : null
@@ -125,7 +142,7 @@ const Calendar = () => {
 
   return (
     <S.Layout>
-      {isLogin ? (
+      {isLogin && (
         <>
           <CalendarHeader
             currentDate={currentDate}
@@ -140,18 +157,8 @@ const Calendar = () => {
             </S.WeekLayout>
             <S.DayLayout>{generateCalendarDays()}</S.DayLayout>
           </S.CalendarBox>
-          {selectDate && <Day day={selectDate} {...policies} {...user} />}
+          {selectDate && <Day day={selectDate} {...policies} />}
         </>
-      ) : (
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            marginTop: '50px',
-          }}
-        >
-          로그인이 필요한 서비스입니다
-        </div>
       )}
     </S.Layout>
   );
