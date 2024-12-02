@@ -85,6 +85,9 @@ const Img = styled.div`
   display: flex;
   width: 123px;
   height: 123px;
+  img {
+    object-fit: cover;
+  }
 `;
 export {
   Container,
