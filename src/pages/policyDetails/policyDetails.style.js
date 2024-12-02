@@ -22,12 +22,46 @@ const PolicyInfoCard = styled.div`
   width: 100%;
 `;
 
+const Table = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+`;
+
+const Row = styled.tr``;
+
+const CategoryHeader = styled.th`
+  font-size: 16px;
+  font-weight: bold;
+  text-align: left;
+  padding: 10px 20px;
+  background-color: var(--color-gray-300);
+`;
+
+const Category = styled.td`
+  font-size: 15px;
+  font-weight: 600;
+  margin: 20px 5px 10px 20px;
+  width: 90px;
+  display: flex;
+  flex-wrap: wrap;
+  word-break: keep-all;
+`;
+
+const Data = styled.td`
+  font-size: 15px;
+  padding: 10px 20px;
+  padding-top: 20px;
+  font-weight: 200;
+  word-break: break-word;
+  white-space: pre-wrap;
+  border-left: solid 1px var(--color-gray-300);
+`;
+
 const BookmarkIcon = styled(BsBookmarkDash)`
   position: absolute;
   top: 20px;
   right: 20px;
   height: 20px;
-  width: 40px;
   cursor: pointer;
   z-index: 1;
   color: var(--color-blue-700);
@@ -39,21 +73,23 @@ const BookmarkFillIcon = styled(BsBookmarkFill)`
   top: 20px;
   right: 20px;
   height: 20px;
-  width: 40px;
   cursor: pointer;
   z-index: 1;
   color: var(--color-blue-700);
   width: 25px;
   height: 25px;
 `;
+
 const Header = styled.div`
-  margin: 20px;
+  margin-top: 20px;
+  margin-right: 20px;
+  margin-left: 20px;
+
   display: flex;
   flex-direction: column;
   gap: 10px;
 `;
 const Title = styled.div`
-  display: flex;
   font-size: 26px;
   color: var(--color-blue-700);
   font-weight: bold;
@@ -61,42 +97,11 @@ const Title = styled.div`
 `;
 
 const Explain = styled.div`
-  display: flex;
   font-size: 15px;
   font-weight: 600;
   padding: 20px 0;
   width: 100%;
   border-bottom: 1px solid var(--color-gray-300);
-`;
-const Contents = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const Content = styled.div`
-  display: flex;
-  margin: 10px 0;
-  width: 100%;
-  justify-content: space-between;
-`;
-const Category = styled.div`
-  display: flex;
-  font-size: 15px;
-  font-weight: 600;
-  width: 25%;
-  margin-left: 20px;
-  line-height: 150%;
-`;
-const Data = styled.div`
-  display: flex;
-  width: 60%;
-  font-size: 15px;
-  font-weight: 600;
-  margin-right: 20px;
-  line-height: 150%;
-  flex-wrap: wrap;
-  word-break: break-all;
-  white-space: pre-line;
 `;
 
 const Alert = styled.div`
@@ -105,14 +110,16 @@ const Alert = styled.div`
   width: 100%;
   margin-top: 30px;
 `;
+
 export {
   Container,
   Header,
   Title,
   Explain,
-  Contents,
+  Table,
+  Row,
+  CategoryHeader,
   Category,
-  Content,
   Data,
   BookmarkFillIcon,
   BookmarkIcon,
