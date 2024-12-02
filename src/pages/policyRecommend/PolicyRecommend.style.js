@@ -6,9 +6,7 @@ const Container = styled.div`
   height: calc(100vh - 190px);
   justify-content: center;
   position: relative;
-  transform: translateX(20px);
   width: 100%;
-  margin-left: calc(-1 * var(--size-side-gap));
 `;
 
 const PolicyContainer = styled.div`

@@ -19,20 +19,13 @@ function Login() {
           );
 
           if (response.status === 200) {
-            console.log('쿠키 설정 확인: ', document.cookie);
             navigate('/settings');
           } else {
             console.log(response.status);
           }
         } catch (error) {
-          if (error.response) {
-            console.log('응답 상태: ', error.response.status);
-            console.log('응답 데이터: ', error.response.data);
-          } else if (error.request) {
-            console.log('요청 객체: ', error.request);
-          } else {
-            console.log(error.message);
-          }
+          console.log(error.message);
+          navigate('/');
         }
       }
     };
