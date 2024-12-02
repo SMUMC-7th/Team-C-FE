@@ -22,7 +22,7 @@ const Home = () => {
           </>
         ) : (
           <>
-            <S.Title>🚨 랜덤 정책 추천</S.Title>
+            <S.Title>🎯 랜덤 정책 추천</S.Title>
             <S.Button onClick={() => setIsLogin(!isLogin)}>
               로그인 버튼
             </S.Button>
