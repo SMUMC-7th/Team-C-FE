@@ -3,31 +3,42 @@ import img1 from '../../images/policyImg1.svg';
 import img2 from '../../images/policyImg2.svg';
 import img3 from '../../images/policyImg3.svg';
 import img4 from '../../images/policyImg4.svg';
-import { extractSubstring } from '../../utils/formatDate';
-const ImagesArr = [img1, img2, img3, img4];
+import img5 from '../../images/policyImg5.svg';
+import img6 from '../../images/policyImg6.svg';
+import img7 from '../../images/policyImg7.svg';
+import img8 from '../../images/policyImg8.svg';
+import img9 from '../../images/policyImg9.svg';
+import { formatDate, extractSubstring } from '../../utils/formatDate';
+import { requestBookmark } from '../../apis/bookmark';
 
-const formatDateRange = (dateRange) => {
-  try {
-    const [start, end] = dateRange.split('~', 2).map((date) => date.trim());
-    return (
-      <>
-        {format(new Date(start), 'yyyy년 M월 d일')}
-        <br />~ {format(new Date(end), 'yyyy년 M월 d일')}
-      </>
-    );
-  } catch (error) {
-    return dateRange;
-  }
-};
+const ImagesArr = [img1, img2, img3, img4, img5, img6, img7, img8, img9];
 
 const PolicyCard = (props) => {
+  const isLogin = true;
   const { bizId, polyBizSjnm, rqutPrdCn } = props;
-  const handleBookmarkClick = () => {
-    alert('로그인이 필요한 서비스입니다');
+
+  const handleBookmarkClick = async () => {
+    const { start, end } = formatDate(rqutPrdCn);
+    if (!isLogin) {
+      alert('로그인이 필요한 서비스입니다');
+      return;
+    }
+
+    try {
+      const response = requestBookmark({
+        polyBizSjnm,
+        srchPolicyId: bizId,
+        startDate: start,
+        deadline: end,
+      });
+
+      console.log('북마크 성공:', response);
+    } catch (error) {
+      console.error('북마크 요청 실패:', error);
+    }
   };
 
-  const randomIndex = bizId.slice(1, 13) % 4;
-
+  const randomIndex = parseInt(bizId.slice(1, 14), 10) % 9;
   const RandomImage = ImagesArr[randomIndex];
   const editDate = extractSubstring(rqutPrdCn);
 

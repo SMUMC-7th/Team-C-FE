@@ -24,12 +24,26 @@ export function extractSubstring(text) {
 
   if (keywordIndex1 !== -1) {
     const newText = text.slice(keywordIndex1 + 5);
-    return newText;
+    return newText.trim();
   } else if (keywordIndex2 === -1) {
     const newText = text;
-    return newText;
+    return newText.trim();
   } else {
     const newText = text.slice(0, 21);
     return formatDateRange(newText);
   }
 }
+
+export const formatDate = (dateRange) => {
+  const keyword1 = '~';
+  const keywordIndex1 = dateRange.indexOf(keyword1);
+  if (keywordIndex1 !== -1) {
+    const newText = dateRange.slice(0, 21);
+    const [start, end] = newText.split('~', 2).map((date) => date.trim());
+    return { start, end };
+  } else {
+    const start = null;
+    const end = null;
+    return { start, end };
+  }
+};

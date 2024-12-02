@@ -1,34 +1,45 @@
 import * as S from './day.style';
 import { format } from 'date-fns';
 import Content from '../content/content';
+import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
+import { getDayBookmark } from '../../apis/bookmark';
 
 const Day = (props) => {
   const { day, checked, ...policies } = props;
-  console.log(checked);
-  const policiesArray = Object.values(policies);
+  const dateObj = new Date(day);
+  const selectedYear = dateObj.getFullYear();
+  const selectedMonth = dateObj.getMonth() + 1;
+  const selectedDay = dateObj.getDate();
 
-  function findSameDate() {
-    return policiesArray.filter(
-      (policy) => policy.startDate === day || policy.endDate === day
-    );
-  }
-
-  const sameDates = findSameDate();
-
+  const {
+    data: DayBookmark,
+    error: DayBookmarkError,
+    isLoading: DayBookmarkLoading,
+  } = useQuery({
+    queryKey: ['bookmark', selectedYear, selectedMonth, selectedDay],
+    queryFn: () => getDayBookmark(selectedYear, selectedMonth, selectedDay),
+  });
   return (
     <S.Container>
       <S.Date>{format(day, 'd')}일</S.Date>
       <S.Contents>
-        {sameDates.map((sameDatePolicy) => {
-          const isChecked = checked.includes(sameDatePolicy.bizId);
-          return (
-            <Content
-              key={sameDatePolicy.bizId}
-              {...sameDatePolicy}
-              checked={isChecked}
-            />
-          );
-        })}
+        <S.Contents>
+          {DayBookmark?.data?.bookmarks &&
+          DayBookmark?.data?.bookmarks.length > 0 ? (
+            DayBookmark?.data?.bookmarks.map((policy) => {
+              return (
+                <Content
+                  key={policy?.srchPolicyId}
+                  {...policy}
+                  checked={false}
+                />
+              );
+            })
+          ) : (
+            <></>
+          )}
+        </S.Contents>
       </S.Contents>
     </S.Container>
   );
