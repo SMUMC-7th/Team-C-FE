@@ -1,18 +1,14 @@
 import * as S from './policyList.style';
 import PolicyCard from '../policyCard/policyCard';
+
 import { useInView } from 'react-intersection-observer';
 import { useEffect } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { getRecommendPolicy } from '../../apis/policy';
-import ClipLoader from 'react-spinners/ClipLoader';
 
-const policyFieldCodesLetter = {
-  일자리: '023010',
-  주거: '023020',
-  교육: '023030',
-  '복지 / 문화': '023040',
-  '참여 / 권리': '023050',
-};
+import ClipLoader from 'react-spinners/ClipLoader';
+import { policyFieldCodesLetter } from '../../utils/policyCodeFormat';
+import { getRecommendPolicy } from '../../apis/policy';
+
 function useGetInfinitePolicy(interest) {
   return useInfiniteQuery({
     queryKey: ['categoryPolicies', interest],
@@ -22,7 +18,6 @@ function useGetInfinitePolicy(interest) {
       const currentIndex = lastPage?.data?.pageIndex || 1;
       const totalPolicies = lastPage?.data?.totalCnt || 0;
       const policiesPerPage = 10;
-
       const maxPageIndex = Math.ceil(totalPolicies / policiesPerPage);
       return currentIndex < maxPageIndex ? currentIndex + 1 : undefined;
     },
@@ -51,7 +46,6 @@ const PolicyListLogin = (props) => {
     isFetching,
     isPending,
   } = useGetInfinitePolicy(interestCode);
-
   const { ref, inView } = useInView({
     threshold: 0,
   });
