@@ -7,11 +7,6 @@ import { useEffect } from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
 
 const PolicyList = ({ user }) => {
-  const { data, error, isLoading } = useQuery({
-    queryKey: ['page', 1, user?.isLogin],
-    queryFn: () => getRandomPolicy(1),
-  });
-
   const { ref, inView } = useInView({
     threshold: 0,
   });
@@ -31,7 +26,10 @@ const PolicyList = ({ user }) => {
   if (error) return <S.Alert>Error loading policies</S.Alert>;
 
   const policiesData = data?.data.emp;
-
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['page', 1, user?.isLogin],
+    queryFn: () => getRandomPolicy(policyData.bizId),
+  });
   return (
     <S.Container>
       <S.PolicyList>
