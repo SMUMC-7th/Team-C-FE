@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { useParams } from 'react-router-dom';
@@ -11,16 +11,32 @@ import { requestBookmark } from '../../apis/bookmark';
 import { extractSubstring, formatDate } from '../../utils/formatDate';
 import { getRpttDescription, getpolyRlmCd } from '../../utils/policyCodeFormat';
 import { parseLinks, getSafeValue } from '../../utils/policyDetailParse';
+import { isBookmarked, deleteBookmark } from '../../apis/bookmark';
 
 function PolicyDetails() {
   const isLogin = true; //수정 예정
   const params = useParams();
-  const [isClicked, setIsClicked] = useState(false);
+
+  const {
+    data: bookmark,
+    error: bookmarkError,
+    isLoading: bookmarkLoading,
+  } = useQuery({
+    queryKey: ['bookmark', params],
+    queryFn: () => isBookmarked(params.policyId),
+  });
+
+  const [isClicked, setIsClicked] = useState(bookmark?.data);
+
+  useEffect(() => {
+    setIsClicked(bookmark?.data);
+  }, [bookmark?.data]);
 
   const { data, error, isLoading } = useQuery({
     queryKey: [params],
     queryFn: () => getSinglePolicy(params.policyId),
   });
+
   const newDate = extractSubstring(data?.data?.emp?.rqutPrdCn);
 
   if (error) {
@@ -59,14 +75,22 @@ function PolicyDetails() {
       return;
     }
     const polyBizSjnm = data?.data?.emp?.polyBizSjnm;
-    const bizId = data?.data?.emp?.bizId;
+    const bizId = params.policyId;
     try {
-      requestBookmark({
-        polyBizSjnm,
-        srchPolicyId: bizId,
-        startDate: start,
-        deadline: end,
-      });
+      if (isClicked === true) {
+        const response = deleteBookmark(bizId);
+        console.log(response);
+        setIsClicked(false);
+      } else {
+        const response = requestBookmark({
+          polyBizSjnm,
+          srchPolicyId: bizId,
+          startDate: start,
+          deadline: end,
+        });
+        setIsClicked(true);
+        console.log('북마크 성공:', response);
+      }
     } catch (error) {
       console.error('북마크 요청 실패:', error);
     }
