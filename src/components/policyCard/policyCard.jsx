@@ -9,13 +9,28 @@ import img7 from '../../images/policyImg7.svg';
 import img8 from '../../images/policyImg8.svg';
 import img9 from '../../images/policyImg9.svg';
 import { formatDate, extractSubstring } from '../../utils/formatDate';
-import { requestBookmark } from '../../apis/bookmark';
+import { deleteBookmark, requestBookmark } from '../../apis/bookmark';
+import { useQuery } from '@tanstack/react-query';
+import { isBookmarked } from '../../apis/bookmark';
+import { useEffect, useState } from 'react';
 
 const ImagesArr = [img1, img2, img3, img4, img5, img6, img7, img8, img9];
 
 const PolicyCard = (props) => {
   const isLogin = true;
   const { bizId, polyBizSjnm, rqutPrdCn } = props;
+
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['bookmark', bizId],
+    queryFn: () => isBookmarked(bizId),
+  });
+
+  console.log(polyBizSjnm, data?.data);
+  const [isClicked, setIsClicked] = useState(data?.data);
+
+  useEffect(() => {
+    setIsClicked(data?.data);
+  }, [data?.data]);
 
   const handleBookmarkClick = async () => {
     const { start, end } = formatDate(rqutPrdCn);
@@ -25,14 +40,20 @@ const PolicyCard = (props) => {
     }
 
     try {
-      const response = requestBookmark({
-        polyBizSjnm,
-        srchPolicyId: bizId,
-        startDate: start,
-        deadline: end,
-      });
-
-      console.log('북마크 성공:', response);
+      if (isClicked === true) {
+        const response = deleteBookmark(bizId);
+        console.log(response);
+        setIsClicked(false);
+      } else {
+        const response = requestBookmark({
+          polyBizSjnm,
+          srchPolicyId: bizId,
+          startDate: start,
+          deadline: end,
+        });
+        setIsClicked(true);
+        console.log('북마크 성공:', response);
+      }
     } catch (error) {
       console.error('북마크 요청 실패:', error);
     }
@@ -53,7 +74,11 @@ const PolicyCard = (props) => {
           {RandomImage && <img src={RandomImage} alt="랜덤 이미지" />}
         </S.Img>
       </S.Card>
-      <S.BookmarkIcon onClick={handleBookmarkClick} />
+      {isClicked === true ? (
+        <S.BookmarkFillIcon onClick={handleBookmarkClick}></S.BookmarkFillIcon>
+      ) : (
+        <S.BookmarkIcon onClick={handleBookmarkClick} isclicked={data?.data} />
+      )}
     </S.Container>
   );
 };
