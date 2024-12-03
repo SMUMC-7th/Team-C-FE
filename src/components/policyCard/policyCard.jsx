@@ -25,7 +25,6 @@ const PolicyCard = (props) => {
     queryFn: () => isBookmarked(bizId),
   });
 
-  console.log(polyBizSjnm, data?.data);
   const [isClicked, setIsClicked] = useState(data?.data);
 
   useEffect(() => {
@@ -42,7 +41,6 @@ const PolicyCard = (props) => {
     try {
       if (isClicked === true) {
         const response = deleteBookmark(bizId);
-        console.log(response);
         setIsClicked(false);
       } else {
         const response = requestBookmark({

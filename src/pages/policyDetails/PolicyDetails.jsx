@@ -187,7 +187,9 @@ function PolicyDetails() {
               <S.Category>참고 사이트1</S.Category>
               <S.Data>
                 {getSafeValue(policyData?.rfcSiteUrla1) !== '-' ? (
-                  <a href={policyData?.rfcSiteUrla1}>바로가기 ↗️</a>
+                  <a href={policyData?.rfcSiteUrla1} target="_blank">
+                    바로가기 ↗️
+                  </a>
                 ) : (
                   '-'
                 )}
@@ -197,7 +199,9 @@ function PolicyDetails() {
               <S.Category>참고 사이트2</S.Category>
               <S.Data>
                 {getSafeValue(policyData?.rfcSiteUrla2) !== '-' ? (
-                  <a href={policyData?.rfcSiteUrla2}>바로가기 ↗️</a>
+                  <a href={policyData?.rfcSiteUrla2} target="_blank">
+                    바로가기 ↗️
+                  </a>
                 ) : (
                   '-'
                 )}
