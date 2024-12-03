@@ -32,4 +32,26 @@ const getPostDetail = async ({ articleId }) => {
   return data;
 };
 
-export { createPost, getPostList, getPostDetail };
+// 게시글 삭제
+const deletePost = async ({ articleId }) => {
+  const { data } = await axios.delete(
+    `${import.meta.env.VITE_API_BASE_URL}/articles/${articleId}`,
+    { withCredentials: true }
+  );
+  return data;
+};
+
+// 게시글 수정
+const updatePost = async ({ articleId }) => {
+  const { data } = await axios.put(
+    `${import.meta.env.VITE_API_BASE_URL}/articles/${articleId}`,
+    {
+      title,
+      content,
+    },
+    { withCredentials: true }
+  );
+  return data;
+};
+
+export { createPost, getPostList, getPostDetail, deletePost, updatePost };
