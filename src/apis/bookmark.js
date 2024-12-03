@@ -46,4 +46,30 @@ const completeBookmark = async (bookmarkId, isCompleted) => {
   return data;
 };
 
-export { requestBookmark, getMonthBookmark, getDayBookmark, completeBookmark };
+const isBookmarked = async (bookmarkId) => {
+  const { data } = await axios.get(
+    `${import.meta.env.VITE_API_BASE_URL}/policy/bookmark/exist-check/${bookmarkId}`,
+    {
+      withCredentials: true,
+    }
+  );
+
+  return data;
+};
+const deleteBookmark = async (bookmarkId) => {
+  const { data } = await axios.delete(
+    `${import.meta.env.VITE_API_BASE_URL}/profiles/bookmarks/${bookmarkId}`,
+    {
+      withCredentials: true,
+    }
+  );
+  return data;
+};
+export {
+  requestBookmark,
+  getMonthBookmark,
+  getDayBookmark,
+  completeBookmark,
+  isBookmarked,
+  deleteBookmark,
+};
