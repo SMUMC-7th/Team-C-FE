@@ -148,6 +148,8 @@ const Calendar = () => {
             currentDate={currentDate}
             prevMonth={prevMonth}
             nextMonth={nextMonth}
+            setCurrentDate={setCurrentDate}
+            setSelectDate={setSelectDate}
           />
           <S.CalendarBox>
             <S.WeekLayout>
