@@ -17,19 +17,23 @@ const PolicyList = ({ user }) => {
     }
   }, [inView, user?.isLogin]);
 
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['page', 1, user?.isLogin],
+    queryFn: () => getRandomPolicy(1),
+  });
+
+  const policiesData = data?.data.emp;
+  console.log(data);
+
   if (isLoading)
     return (
       <S.Alert>
         <ClipLoader />
       </S.Alert>
     );
+
   if (error) return <S.Alert>Error loading policies</S.Alert>;
 
-  const policiesData = data?.data.emp;
-  const { data, error, isLoading } = useQuery({
-    queryKey: ['page', 1, user?.isLogin],
-    queryFn: () => getRandomPolicy(policyData.bizId),
-  });
   return (
     <S.Container>
       <S.PolicyList>
