@@ -4,10 +4,15 @@ import PolicyList from '../../components/policyList/notLogin/policyList';
 import { useState } from 'react';
 import Banner from '../../components/banner/banner';
 import userInfo from '../../mocks/userData.json';
+import { updateVh } from '../../utils/calculateVH';
+
 const user = userInfo[0];
 
 const Home = () => {
   const [isLogin, setIsLogin] = useState(true);
+  updateVh();
+  window.addEventListener('resize', updateVh);
+
   return (
     <S.Container>
       <Banner></Banner>
