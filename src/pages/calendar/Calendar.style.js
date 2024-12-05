@@ -7,8 +7,8 @@ const Layout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: calc(100vh - 190px);
-  overflow-y: hidden;
+  height: calc(var(--vh, 1vh) * 100 - 190px);
+  overflow-y: scroll;
 `;
 
 const Title = styled.div`
@@ -91,7 +91,7 @@ const DaySpan = styled.span`
   position: relative;
   font-weight: 700;
   margin-top: 2px;
-  color: ${(props) => (props.selected ? 'white' : 'black')};
+  color: black;
 `;
 
 const DayPolicy = styled.div`

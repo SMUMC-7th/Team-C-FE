@@ -17,11 +17,14 @@ import CalendarHeader from '../../components/calendarHeader/calendarHeader';
 import Day from '../../components/day/day';
 
 import { getMonthBookmark } from '../../apis/bookmark';
+import { updateVh } from '../../utils/calculateVH';
 
 const weekDays = ['일', '월', '화', '수', '목', '금', '토'];
 
 const Calendar = () => {
   const isLogin = true; //수정 예정
+  updateVh();
+  window.addEventListener('resize', updateVh);
   const today = new Date();
   const [currentDate, setCurrentDate] = useState(today);
   const [selectDate, setSelectDate] = useState(format(today, 'yyyy-MM-dd'));
