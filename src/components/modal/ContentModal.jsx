@@ -4,7 +4,7 @@ const ContentModal = ({
   title,
   message,
   children,
-  btnTest1,
+  btnText1,
   onBtn1Click,
   btnText2,
   onBtn2Click,
@@ -16,7 +16,7 @@ const ContentModal = ({
         <S.Message>{message}</S.Message>
         {children}
         <S.BtnContainer>
-          <S.BlueBtn onClick={onBtn1Click}>{btnTest1}</S.BlueBtn>
+          <S.BlueBtn onClick={onBtn1Click}>{btnText1}</S.BlueBtn>
           <S.DefaultBtn onClick={onBtn2Click}>{btnText2}</S.DefaultBtn>
         </S.BtnContainer>
       </S.ModalContent>
