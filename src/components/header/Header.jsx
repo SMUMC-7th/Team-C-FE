@@ -8,21 +8,13 @@ import logo_bg from '../../images/logo_bg.svg';
 function Header() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [userImg, setUserImg] = useState(null);
+  const [userImg, setUserImg] = useState(localStorage.getItem('profileImgUrl'));
 
-  // 추후 수정 필요. 현재는 로컬스토리지 값을 가져오도록 함
   useEffect(() => {
-    const profileDataString = localStorage.getItem('profileData');
+    const profileImgUrl = localStorage.getItem('profileImgUrl');
 
-    if (profileDataString) {
-      try {
-        const { user_img } = JSON.parse(profileDataString);
-        if (user_img) {
-          setUserImg(user_img);
-        }
-      } catch (error) {
-        console.error('프로필 데이터가 존재하지 않습니다.', error);
-      }
+    if (profileImgUrl !== userImg) {
+      setUserImg(profileImgUrl);
     }
   }, []);
 

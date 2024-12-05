@@ -1,8 +1,8 @@
 const EDUCATION = ['고등학교 졸업 이하', '대학교 재학', '대학교 졸업'];
 
-const FIELD = ['IT', '공학', '자연', '경상', '인문', '예체능'];
+const MAJORS = ['IT', '공학', '자연', '경상', '인문', '예체능'];
 
-const REGION = [
+const REGIONS = [
   '서울',
   '부산',
   '대구',
@@ -22,7 +22,7 @@ const REGION = [
   '제주',
 ];
 
-const INTERESTS = ['일자리', '주거', '교육', '복지 / 문화', '참여 / 권리'];
+const KEYWORD = ['일자리', '주거', '교육', '복지/문화', '참여/권리'];
 
 const FORM_MENU = [
   {
@@ -35,21 +35,21 @@ const FORM_MENU = [
   {
     id: 2,
     title: '분야',
-    options: FIELD,
+    options: MAJORS,
     additional: '(최대 2개 선택 가능)',
     maxSelections: 2,
   },
   {
     id: 3,
     title: '지역',
-    options: REGION,
+    options: REGIONS,
     additional: '(최대 2개 선택 가능)',
     maxSelections: 2,
   },
   {
     id: 4,
     title: '관심있는 키워드',
-    options: INTERESTS,
+    options: KEYWORD,
     additional: '(최대 4개 선택 가능)',
     maxSelections: 4,
   },

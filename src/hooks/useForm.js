@@ -35,6 +35,18 @@ function useForm({ initialValue, validate, formMenu }) {
     setToggles(newToggles);
   };
 
+  const getSelectedOptions = () => {
+    return formMenu.map((menu, menuIdx) => {
+      const selectedOptions = toggles[menuIdx]
+        .map((selected, optionIdx) =>
+          selected ? menu.options[optionIdx] : null
+        )
+        .filter((option) => option !== null);
+
+      return menu.id === 1 ? selectedOptions[0] || '' : selectedOptions;
+    });
+  };
+
   useEffect(() => {
     const newErrors = validate(values);
     setErrors(newErrors);
@@ -54,6 +66,7 @@ function useForm({ initialValue, validate, formMenu }) {
     isFormValid,
     setToggleSelections,
     toggles,
+    getSelectedOptions,
   };
 }
 
