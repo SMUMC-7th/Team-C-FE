@@ -15,7 +15,7 @@ const ModalContainer = styled.aside`
 
 const ModalContent = styled.div`
   background-color: white;
-  width: 260px;
+  width: 300px;
   padding: 30px 40px;
   border-radius: 8px;
   display: flex;
