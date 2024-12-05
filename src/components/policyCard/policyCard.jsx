@@ -25,7 +25,6 @@ const PolicyCard = (props) => {
     queryFn: () => isBookmarked(bizId),
   });
 
-  console.log(polyBizSjnm, data?.data);
   const [isClicked, setIsClicked] = useState(data?.data);
 
   useEffect(() => {
