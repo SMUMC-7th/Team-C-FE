@@ -12,8 +12,12 @@ import { extractSubstring, formatDate } from '../../utils/formatDate';
 import { getRpttDescription, getpolyRlmCd } from '../../utils/policyCodeFormat';
 import { parseLinks, getSafeValue } from '../../utils/policyDetailParse';
 import { isBookmarked, deleteBookmark } from '../../apis/bookmark';
+import { updateVh } from '../../utils/calculateVH';
 
-function PolicyDetails() {
+const PolicyDetails = () => {
+  updateVh();
+  window.addEventListener('resize', updateVh);
+
   const isLogin = true; //수정 예정
   const params = useParams();
 
@@ -187,7 +191,9 @@ function PolicyDetails() {
               <S.Category>참고 사이트1</S.Category>
               <S.Data>
                 {getSafeValue(policyData?.rfcSiteUrla1) !== '-' ? (
-                  <a href={policyData?.rfcSiteUrla1}>바로가기 ↗️</a>
+                  <a href={policyData?.rfcSiteUrla1} target="_blank">
+                    바로가기 ↗️
+                  </a>
                 ) : (
                   '-'
                 )}
@@ -197,7 +203,9 @@ function PolicyDetails() {
               <S.Category>참고 사이트2</S.Category>
               <S.Data>
                 {getSafeValue(policyData?.rfcSiteUrla2) !== '-' ? (
-                  <a href={policyData?.rfcSiteUrla2}>바로가기 ↗️</a>
+                  <a href={policyData?.rfcSiteUrla2} target="_blank">
+                    바로가기 ↗️
+                  </a>
                 ) : (
                   '-'
                 )}
@@ -219,6 +227,6 @@ function PolicyDetails() {
       </S.PolicyInfoCard>
     </S.Container>
   );
-}
+};
 
 export default PolicyDetails;

@@ -5,7 +5,7 @@ const Container = styled.div`
   display: flex;
   position: relative;
   flex-direction: column;
-  height: calc(100vh - 190px);
+  height: calc(var(--vh, 1vh) * 100 - 190px);
   overflow-y: scroll;
 `;
 
