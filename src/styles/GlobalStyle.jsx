@@ -55,7 +55,7 @@ const GlobalStyle = createGlobalStyle`
     #root {
       height: 100vh;
       padding: calc(var(--size-header) + 0.5rem) var(--size-side-gap) calc(var(--size-navbar) + 0.5rem);
-      position: relative;
+      position: absolute;
       overflow: hidden;
     }
 
