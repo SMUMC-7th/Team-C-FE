@@ -28,4 +28,9 @@ const postInitProfile = async ({
   return data;
 };
 
-export { getKakaoOAuth, postInitProfile };
+const getProfile = async () => {
+  const { data } = await axiosInstance.get('/profiles');
+  return data;
+};
+
+export { getKakaoOAuth, postInitProfile, getProfile };
