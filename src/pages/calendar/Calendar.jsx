@@ -26,6 +26,7 @@ const weekDays = ['일', '월', '화', '수', '목', '금', '토'];
 
 const Calendar = () => {
   const { isLogin } = useContext(LoginContext);
+  const nowToday = new Date();
   const [isModalOpen, setIsModalOpen] = useState(false);
   updateVh();
   window.addEventListener('resize', updateVh);
@@ -152,6 +153,11 @@ const Calendar = () => {
     setSelectDate(format(startOfMonth(newDate), 'yyyy-MM-dd'));
   };
 
+  const handleMoveToToday = () => {
+    setCurrentDate(nowToday);
+    setSelectDate(format(nowToday, 'yyyy-MM-dd'));
+  };
+
   return (
     <>
       <S.Layout>
@@ -161,6 +167,7 @@ const Calendar = () => {
           nextMonth={nextMonth}
           setCurrentDate={setCurrentDate}
           setSelectDate={setSelectDate}
+          handleMoveToToday={handleMoveToToday}
         />
         <S.CalendarBox>
           <S.WeekLayout>
@@ -172,6 +179,13 @@ const Calendar = () => {
         </S.CalendarBox>
         {selectDate && <Day day={selectDate} {...policies} />}
       </S.Layout>
+      {format(nowToday, 'yyyy-MM-dd') != selectDate && (
+        <S.TodayButton onClick={handleMoveToToday}>
+          {'< '}
+          <S.TodayButtonSpan>TODAY</S.TodayButtonSpan>
+        </S.TodayButton>
+      )}
+
       {isModalOpen && (
         <Portal>
           <ContentModal
