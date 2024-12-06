@@ -1,5 +1,5 @@
 import * as S from './SettingForm.style';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useForm from '../../hooks/useForm';
 import { FORM_MENU } from '../../constants/form_menu';
@@ -7,6 +7,7 @@ import { ToggleBtnGroup } from '../toggleBtnGroup/ToggleBtnGroup';
 import { validateUser } from '../../utils/validate';
 import { ProfileImgUploader } from '../profileImgUploader/ProfileImgUploader';
 import { InputField } from '../inputField/InputField';
+import { LoginContext } from '../../context/LoginContext';
 
 function SettingForm({
   title,
@@ -19,6 +20,7 @@ function SettingForm({
   const [profileImg, setProfileImg] = useState(initialData.profileImg);
   const [nickName, setNickName] = useState(initialData.nickName);
   const [age, setAge] = useState(initialData.age);
+  const { setProfileImgUrl } = useContext(LoginContext);
 
   const {
     values,
@@ -61,7 +63,7 @@ function SettingForm({
         keyword,
       });
     }
-    window.localStorage.setItem('profileImgUrl', profileImg);
+    setProfileImgUrl(profileImg);
   };
 
   return (

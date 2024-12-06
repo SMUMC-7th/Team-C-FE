@@ -1,15 +1,17 @@
 import * as S from './ProfileImgUploader.style';
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext } from 'react';
 import { MdModeEditOutline } from 'react-icons/md';
 import Portal from './../Portal';
 import ContentModal from '../modal/ContentModal';
 import DefaultProfile from '../../images/defaultProfile.svg';
+import { LoginContext } from '../../context/LoginContext';
 
 function ProfileImgUploader({ profileImg, setProfileImg }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { kakaoProfileImg } = useContext(LoginContext);
 
   const handleUseKakaoProfile = () => {
-    setProfileImg(window.localStorage.getItem('kakaoProfileImgUrl') || '');
+    setProfileImg(kakaoProfileImg || '');
     setIsModalOpen(false);
   };
 
