@@ -47,6 +47,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0 auto;
     background-color: #ffffff;
     font-family: 'Pretendard-Regular';
+    overflow: hidden;
 
     #portal {
       position: absolute;
