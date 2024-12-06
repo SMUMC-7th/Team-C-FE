@@ -91,7 +91,7 @@ const DaySpan = styled.span`
   position: relative;
   font-weight: 700;
   margin-top: 2px;
-  color: black;
+  color: ${(props) => (props.selected ? 'white' : 'black')};
 `;
 
 const DayPolicy = styled.div`

@@ -26,7 +26,6 @@ const PolicyList = ({ user }) => {
   });
 
   const policiesData = data?.data.emp;
-  console.log(data);
 
   if (isLoading)
     return (
