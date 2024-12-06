@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { getKakaoOAuth, postInitProfile } from '../apis/auth';
+import { getKakaoOAuth, getProfile, postInitProfile } from '../apis/auth';
 import { useNavigate } from 'react-router-dom';
 import { LoginContext } from '../context/LoginContext';
 
@@ -18,16 +18,22 @@ function usePostInitProfile() {
   const onSuccess = () => {
     alert('회원가입이 완료되었습니다.');
     setIsLogin(true);
-    window.localStorage.removeItem('nickName');
     navigate('/home');
   };
 
   return useMutation({
     mutationFn: (data) => postInitProfile(data),
-    mutationKey: ['InitProfile'],
+    mutationKey: ['initProfile'],
     onSuccess: onSuccess,
     onError: (error) => console.log('프로필 초기 설정 오류', error),
   });
 }
 
-export { useGetKakaoOAuth, usePostInitProfile };
+function useGetProfile() {
+  return useQuery({
+    queryFn: () => getProfile(),
+    queryKey: ['getProfile'],
+  });
+}
+
+export { useGetKakaoOAuth, usePostInitProfile, useGetProfile };
