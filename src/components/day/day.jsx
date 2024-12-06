@@ -2,8 +2,9 @@ import * as S from './day.style';
 import { format } from 'date-fns';
 import Content from '../content/content';
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { getDayBookmark } from '../../apis/bookmark';
+import { LoginContext } from '../../context/LoginContext';
 
 const Day = (props) => {
   const { day, checked, ...policies } = props;
@@ -11,7 +12,7 @@ const Day = (props) => {
   const selectedYear = dateObj.getFullYear();
   const selectedMonth = dateObj.getMonth() + 1;
   const selectedDay = dateObj.getDate();
-
+  const { isLogin } = useContext(LoginContext);
   const {
     data: DayBookmark,
     error: DayBookmarkError,
@@ -19,6 +20,7 @@ const Day = (props) => {
   } = useQuery({
     queryKey: ['bookmark', selectedYear, selectedMonth, selectedDay],
     queryFn: () => getDayBookmark(selectedYear, selectedMonth, selectedDay),
+    enabled: !!isLogin,
   });
   return (
     <S.Container>

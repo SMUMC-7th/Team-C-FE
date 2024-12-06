@@ -7,6 +7,7 @@ const Container = styled.div`
   flex-direction: column;
   height: calc(var(--vh, 1vh) * 100 - 190px);
   overflow-y: scroll;
+  max-width: 345px;
 `;
 
 const PolicyInfoCard = styled.div`
@@ -107,7 +108,7 @@ const Explain = styled.div`
 const Alert = styled.div`
   display: flex;
   justify-content: center;
-  width: 100%;
+  width: 345px;
   margin-top: 30px;
 `;
 
