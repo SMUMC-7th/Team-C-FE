@@ -1,43 +1,41 @@
 import * as S from './ProfileImgUploader.style';
 import { useState, useRef } from 'react';
-import { CiImageOn } from 'react-icons/ci';
+import { MdModeEditOutline } from 'react-icons/md';
+import Portal from './../Portal';
+import ContentModal from '../modal/ContentModal';
+import DefaultProfile from '../../images/defaultProfile.svg';
 
-function ProfileImgUploader({ onProfileChange }) {
-  const [profileImg, setProfileImg] = useState(null);
-  const profileImgFileInput = useRef(null);
+function ProfileImgUploader({ profileImg, setProfileImg }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // 프로필 변경 함수
-  const handleProfileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setProfileImg(reader.result);
-          onProfileChange(reader.result);
-        }
-      };
-      reader.readAsDataURL(file);
-    }
+  const handleUseKakaoProfile = () => {
+    setProfileImg(window.localStorage.getItem('kakaoProfileImgUrl') || '');
+    setIsModalOpen(false);
   };
+
+  const handleUseDefaultProfile = () => {
+    setProfileImg(DefaultProfile);
+    setIsModalOpen(false);
+  };
+
   return (
-    <S.ProfileImg onClick={() => profileImgFileInput.current.click()}>
-      {!profileImg ? (
-        <CiImageOn />
-      ) : (
-        <img
-          src={profileImg}
-          alt="프로필 이미지"
-          onClick={() => profileImgFileInput.current.click()}
-        />
+    <S.ProfileContainer>
+      <S.ProfileImg src={profileImg} alt="프로필 이미지" />
+      <S.EditButton onClick={() => setIsModalOpen(true)}>
+        <MdModeEditOutline />
+      </S.EditButton>
+      {isModalOpen && (
+        <Portal>
+          <ContentModal
+            title="프로필 사진 변경"
+            btnText1="카카오 프로필 사용"
+            btnText2="기본 프로필 사용"
+            onBtn1Click={handleUseKakaoProfile}
+            onBtn2Click={handleUseDefaultProfile}
+          />
+        </Portal>
       )}
-      <S.FileInput
-        type="file"
-        accept="image/*"
-        ref={profileImgFileInput}
-        onChange={handleProfileChange}
-      />
-    </S.ProfileImg>
+    </S.ProfileContainer>
   );
 }
 

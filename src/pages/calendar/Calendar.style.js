@@ -7,8 +7,8 @@ const Layout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: calc(100vh - 190px);
-  overflow-y: hidden;
+  height: calc(var(--vh, 1vh) * 100 - 190px);
+  overflow-y: scroll;
 `;
 
 const Title = styled.div`
@@ -84,6 +84,7 @@ const Day = styled.div`
   border: none;
   border-radius: 5px;
   font-size: 11px;
+  position: relative;
 `;
 
 const DaySpan = styled.span`
@@ -102,13 +103,15 @@ const DayPolicy = styled.div`
 `;
 
 const DayPolicyList = styled.div`
-  height: 100%;
+  max-height: 34px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   width: 100%;
   align-items: center;
-  overflow-y: hidden;
+  overflow: hidden;
+  position: absolute;
+  bottom: 0;
 `;
 
 const DayPolicyText = styled.div`

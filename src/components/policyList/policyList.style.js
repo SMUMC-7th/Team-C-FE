@@ -32,7 +32,15 @@ const Alert = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  margin-top: 30px;
+  flex-direction: column;
+  gap: 10px;
 `;
 
-export { Container, Title, PolicyList, Alert };
+const Ref = styled.div`
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+`;
+export { Container, Title, PolicyList, Alert, Ref };

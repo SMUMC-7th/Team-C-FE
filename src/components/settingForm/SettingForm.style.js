@@ -2,24 +2,20 @@ import styled from 'styled-components';
 
 const Container = styled.div`
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: hidden;
 `;
 
 const Form = styled.form`
   width: 100%;
-  height: ${(props) =>
-    props.full
-      ? '100%'
-      : 'calc(100vh - var(--size-navbar) - var(--size-header))'};
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 22px;
   padding: 0 6px;
-  overflow-y: auto;
 `;
 
 const FormTitle = styled.p`

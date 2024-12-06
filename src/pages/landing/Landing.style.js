@@ -3,13 +3,8 @@ import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   height: 100vh;
-  width: 100%;
-  padding: calc(var(--size-header) + 0.5rem) var(--size-side-gap)
-    calc(var(--size-navbar) + 0.5rem) var(--size-side-gap);
+  width: min(100vw, var(--size-max-width));
   background-color: var(--color-blue-700);
-  position: absolute;
-  top: 0;
-  left: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
