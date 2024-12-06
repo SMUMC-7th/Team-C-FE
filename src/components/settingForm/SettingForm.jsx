@@ -20,7 +20,11 @@ function SettingForm({
   const [profileImg, setProfileImg] = useState(initialData.profileImg);
   const [nickName, setNickName] = useState(initialData.nickName);
   const [age, setAge] = useState(initialData.age);
-  const { setProfileImgUrl } = useContext(LoginContext);
+  const {
+    setNickName: setNickname,
+    setProfileImgUrl,
+    setKakaoProfileImg,
+  } = useContext(LoginContext);
 
   const {
     values,
@@ -63,7 +67,9 @@ function SettingForm({
         keyword,
       });
     }
+    setNickname(nickName);
     setProfileImgUrl(profileImg);
+    setKakaoProfileImg(profileImg);
   };
 
   return (
