@@ -2,16 +2,17 @@ import * as S from './policyList.style';
 import PolicyCard from '../policyCard/policyCard';
 
 import { useInView } from 'react-intersection-observer';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import ClipLoader from 'react-spinners/ClipLoader';
-import { policyFieldCodesLetter } from '../../utils/policyCodeFormat';
 import { getRecommendPolicy } from '../../apis/policy';
+import PolicyListSkeleton from './policyListSkeleton/policyListSkeleton';
+import { LoginContext } from '../../context/LoginContext';
 
-function useGetInfinitePolicy(interest) {
+function useGetInfinitePolicy() {
+  const { isLogin } = useContext(LoginContext);
   return useInfiniteQuery({
-    queryKey: ['categoryPolicies', interest],
+    queryKey: ['categoryPolicies'],
     queryFn: ({ pageParam = 1 }) => getRecommendPolicy(pageParam),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {
@@ -23,20 +24,11 @@ function useGetInfinitePolicy(interest) {
     },
     cacheTime: 10000,
     staleTime: 10000,
-    enabled: !!interest && interest.length > 0,
+    enabled: !!isLogin,
   });
 }
 
-const PolicyListLogin = (props) => {
-  const { ...user } = props;
-  let interestCode = '';
-
-  const interest = user.interest;
-  interestCode = interest
-    .map((interestItem) => policyFieldCodesLetter[interestItem])
-    .filter((code) => code)
-    .join(',');
-
+const PolicyListLogin = () => {
   const {
     data,
     error,
@@ -45,7 +37,7 @@ const PolicyListLogin = (props) => {
     hasNextPage,
     isFetching,
     isPending,
-  } = useGetInfinitePolicy(interestCode);
+  } = useGetInfinitePolicy();
   const { ref, inView } = useInView({
     threshold: 0,
   });
@@ -57,11 +49,7 @@ const PolicyListLogin = (props) => {
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
 
   if (isPending || isLoading) {
-    return (
-      <S.Alert>
-        <ClipLoader />
-      </S.Alert>
-    );
+    return <PolicyListSkeleton></PolicyListSkeleton>;
   }
 
   if (error) return <p>Error loading policies</p>;
@@ -73,24 +61,12 @@ const PolicyListLogin = (props) => {
       <S.PolicyList>
         {policiesData?.map((page) =>
           page?.data?.emp.map((policyData) => (
-            <PolicyCard key={policyData.bizId} {...policyData} {...user} />
+            <PolicyCard key={policyData.bizId} {...policyData} />
           ))
         )}
       </S.PolicyList>
-      {hasNextPage && (
-        <div
-          ref={ref}
-          style={{
-            height: '50px',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: '100%',
-          }}
-        >
-          {isFetching && <ClipLoader />}
-        </div>
-      )}
+      {hasNextPage && !isFetching && <S.Ref ref={ref}></S.Ref>}
+      {isFetching && <PolicyListSkeleton />}
     </S.Container>
   );
 };

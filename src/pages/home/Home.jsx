@@ -8,8 +8,7 @@ import { LoginContext } from '../../context/LoginContext';
 import { useEffect } from 'react';
 
 const Home = () => {
-  const { isLogin } = useContext(LoginContext);
-  const { nickname } = useContext(LoginContext);
+  const { isLogin, nickName } = useContext(LoginContext);
   updateVh();
   window.addEventListener('resize', updateVh);
 
@@ -19,7 +18,7 @@ const Home = () => {
       <S.PolicyContainer>
         {isLogin ? (
           <>
-            <S.Title>✨ {nickname}님을 위한 추천정책</S.Title>
+            <S.Title>✨ {nickName}님을 위한 추천정책</S.Title>
             <PolicyListLogin></PolicyListLogin>
           </>
         ) : (

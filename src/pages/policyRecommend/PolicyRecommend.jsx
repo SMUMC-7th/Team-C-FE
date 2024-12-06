@@ -1,23 +1,52 @@
 import * as S from './PolicyRecommend.style';
 import PolicyList from '../../components/policyList/policyList';
-import { useState } from 'react';
-import userInfo from '../../mocks/userData.json';
-const user = userInfo[0];
+import { updateVh } from '../../utils/calculateVH';
+import { useContext, useState, useEffect } from 'react';
+import { LoginContext } from '../../context/LoginContext';
+import Portal from '../../components/Portal';
+import ContentModal from '../../components/modal/ContentModal';
 
 function PolicyRec() {
-  const [isLogin, setIsLogin] = useState(true);
+  const { isLogin } = useContext(LoginContext);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  if (isLogin === false) {
-    alert('로그인이 필요한 서비스입니다');
-    window.location.href = '/home';
-  }
+  useEffect(() => {
+    updateVh();
+    const handleResize = () => updateVh();
+    window.addEventListener('resize', handleResize);
+
+    if (!isLogin) {
+      setIsModalOpen(true);
+    }
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [isLogin]);
 
   return (
-    <S.Container>
-      <S.PolicyContainer>
-        <PolicyList isLogin={isLogin} {...user}></PolicyList>
-      </S.PolicyContainer>
-    </S.Container>
+    <>
+      <S.Container>
+        <S.PolicyContainer>
+          <PolicyList></PolicyList>
+        </S.PolicyContainer>
+      </S.Container>
+      {isModalOpen && (
+        <Portal>
+          <ContentModal
+            title="로그인하시겠습니까?"
+            message="로그인이 필요한 서비스입니다."
+            btnText1="로그인"
+            btnText2="닫기"
+            onBtn1Click={() => (window.location.href = '/')}
+            onBtn2Click={() => {
+              window.location.href = '/home';
+              setIsModalOpen(false);
+            }}
+          />
+        </Portal>
+      )}
+    </>
   );
 }
 

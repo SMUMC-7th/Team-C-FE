@@ -7,8 +7,9 @@ const Layout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: calc(100vh - 190px);
-  overflow-y: hidden;
+  height: calc(var(--vh, 1vh) * 100 - 190px);
+  overflow-y: scroll;
+  position: relative;
 `;
 
 const Title = styled.div`
@@ -84,6 +85,7 @@ const Day = styled.div`
   border: none;
   border-radius: 5px;
   font-size: 11px;
+  position: relative;
 `;
 
 const DaySpan = styled.span`
@@ -102,13 +104,15 @@ const DayPolicy = styled.div`
 `;
 
 const DayPolicyList = styled.div`
-  height: 100%;
+  max-height: 34px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   width: 100%;
   align-items: center;
-  overflow-y: hidden;
+  overflow: hidden;
+  position: absolute;
+  bottom: 0;
 `;
 
 const DayPolicyText = styled.div`
@@ -140,6 +144,30 @@ const ArrowForwardIcon = styled(IoIosArrowForward)`
   color: ${(props) =>
     props.isSelected ? 'var(--color-blue-900)' : 'var(--color-blue-800)'};
 `;
+
+const TodayButton = styled.button`
+  position: absolute;
+  bottom: 110px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  align-items: center;
+  border: 0.3px solid #e0e2e7;
+  background-color: #ffffff;
+  border-radius: 20px;
+  font-size: 15px;
+  padding: 0 5px;
+  width: 109px;
+  height: 40px;
+  font-size: 20px;
+  color: #53565d;
+  box-shadow: 2px 4px 2px rgba(0, 0, 0, 0.15);
+`;
+const TodayButtonSpan = styled.span`
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  color: #53565d;
+`;
+
 export {
   Layout,
   Title,
@@ -156,4 +184,6 @@ export {
   DayPolicyText,
   ArrowForwardIcon,
   ArrowBackIcon,
+  TodayButton,
+  TodayButtonSpan,
 };

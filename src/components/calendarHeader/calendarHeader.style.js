@@ -17,6 +17,7 @@ const Header = styled.div`
   min-height: 40px;
   border-radius: 30px;
   background-color: var(--color-gray-50);
+  position: relative;
 `;
 
 const Title = styled.div`
@@ -36,4 +37,12 @@ const Button = styled.div`
   align-items: center;
 `;
 
-export { Layout, Header, Title, Button };
+const TodayButton = styled.button`
+  position: absolute;
+  right: -40px;
+  top: 13px;
+  font-size: 15px;
+  padding: 0 5px;
+  border-radius: 10px;
+`;
+export { Layout, Header, Title, Button, TodayButton };

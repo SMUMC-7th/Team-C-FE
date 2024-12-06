@@ -3,10 +3,12 @@ import { RiKakaoTalkFill } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
 import logo_wg from '../../images/logo_wg.svg';
 import Portal from './../../components/Portal';
+import { updateVh } from '../../utils/calculateVH';
 
 function Landing() {
   const loginUrl = `${import.meta.env.VITE_KAKAO_URL}?response_type=code&client_id=${import.meta.env.VITE_KAKAO_REST_API_KEY}&redirect_uri=${import.meta.env.VITE_KAKAO_REDIRECT_URI}`;
-
+  updateVh();
+  window.addEventListener('resize', updateVh);
   return (
     <Portal>
       <S.Container>
