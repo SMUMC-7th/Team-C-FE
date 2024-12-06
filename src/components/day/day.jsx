@@ -13,6 +13,7 @@ const Day = (props) => {
   const selectedMonth = dateObj.getMonth() + 1;
   const selectedDay = dateObj.getDate();
   const { isLogin } = useContext(LoginContext);
+
   const {
     data: DayBookmark,
     error: DayBookmarkError,
@@ -22,6 +23,7 @@ const Day = (props) => {
     queryFn: () => getDayBookmark(selectedYear, selectedMonth, selectedDay),
     enabled: !!isLogin,
   });
+  console.log(policies);
   return (
     <S.Container>
       <S.Date>{format(day, 'd')}일</S.Date>
