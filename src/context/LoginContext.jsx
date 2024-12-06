@@ -1,19 +1,20 @@
-import { createContext, ReactNode, useState, useEffect } from 'react';
+import { createContext, ReactNode, useState } from 'react';
+import { Cookies } from 'react-cookie';
 
 export const LoginContext = createContext({
   isLogin: false,
   setIsLogin: () => {},
 });
 
-export function LoginContextProvider({ children }) {
-  const [isLogin, setIsLogin] = useState(false);
+const cookies = new Cookies();
 
-  useEffect(() => {
-    const accessToken = document.cookie
-      .split('; ')
-      .find((row) => row.startsWith('accessToken='));
-    setIsLogin(accessToken ? true : false);
-  }, []);
+export function LoginContextProvider({ children }) {
+  const accessToken = cookies.get('accessToken') || null;
+
+  console.log(accessToken);
+
+  const [isLogin, setIsLogin] = useState(accessToken === null ? false : true);
+  console.log(isLogin);
 
   return (
     <LoginContext.Provider value={{ setIsLogin, isLogin }}>
