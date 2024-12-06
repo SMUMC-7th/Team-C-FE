@@ -1,23 +1,39 @@
-import { createContext, ReactNode, useState } from 'react';
-import { Cookies } from 'react-cookie';
+import { createContext, ReactNode, useState, useEffect } from 'react';
 
 export const LoginContext = createContext({
   isLogin: false,
   setIsLogin: () => {},
+  nickName: '',
+  setNickName: () => {},
+  profileImgUrl: '',
+  setProfileImgUrl: () => {},
+  kakaoProfileImg: '',
+  setKakaoProfileImg: () => {},
 });
 
-const cookies = new Cookies();
-
 export function LoginContextProvider({ children }) {
-  const accessToken = cookies.get('accessToken') || null;
+  const [isLogin, setIsLogin] = useState(false);
+  const [nickName, setNickName] = useState('');
+  const [profileImgUrl, setProfileImgUrl] = useState('');
+  const [kakaoProfileImg, setKakaoProfileImg] = useState('');
 
-  console.log(accessToken);
-
-  const [isLogin, setIsLogin] = useState(accessToken === null ? false : true);
-  console.log(isLogin);
+  useEffect(() => {
+    console.log('isLogin: ', isLogin);
+  }, [isLogin]);
 
   return (
-    <LoginContext.Provider value={{ setIsLogin, isLogin }}>
+    <LoginContext.Provider
+      value={{
+        setIsLogin,
+        isLogin,
+        nickName,
+        setNickName,
+        profileImgUrl,
+        setProfileImgUrl,
+        kakaoProfileImg,
+        setKakaoProfileImg,
+      }}
+    >
       {children}
     </LoginContext.Provider>
   );

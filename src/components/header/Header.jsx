@@ -1,22 +1,26 @@
 import * as S from './Header.style';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { IoChevronBack } from 'react-icons/io5';
 import { LuUserCircle2 } from 'react-icons/lu';
 import logo_bg from '../../images/logo_bg.svg';
+import { LoginContext } from '../../context/LoginContext';
+import { useGetProfile } from '../../hooks/useGetProfile';
 
 function Header() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [userImg, setUserImg] = useState(localStorage.getItem('profileImgUrl'));
+  const { isLogin, setIsLogin, profileImgUrl } = useContext(LoginContext);
+
+  const { data, isLoading, isSuccess, isError } = useGetProfile();
 
   useEffect(() => {
-    const profileImgUrl = localStorage.getItem('profileImgUrl');
-
-    if (profileImgUrl !== userImg) {
-      setUserImg(profileImgUrl);
+    if (isSuccess) {
+      setIsLogin(true);
+    } else if (isError) {
+      setIsLogin(false);
     }
-  }, []);
+  }, [isSuccess, isError, setIsLogin]);
 
   const showBackBtn = () => {
     const backBtnPath = [
@@ -45,8 +49,8 @@ function Header() {
         {showBackBtn() && <IoChevronBack onClick={() => navigate(-1)} />}
         {showLogoAndProfile() && <S.Logo src={logo_bg} />}
         <S.Profile onClick={() => navigate('/my')}>
-          {userImg ? (
-            <S.UserImg src={userImg} alt="사용자 프로필" />
+          {isSuccess && isLogin && profileImgUrl ? (
+            <S.UserImg src={profileImgUrl} alt="사용자 프로필" />
           ) : (
             <LuUserCircle2 />
           )}

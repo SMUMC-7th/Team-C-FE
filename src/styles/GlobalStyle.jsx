@@ -50,7 +50,9 @@ const GlobalStyle = createGlobalStyle`
     overflow: hidden;
 
     #portal {
+      height: 100vh;
       position: absolute;
+      overflow: hidden;
     }
 
     #root {

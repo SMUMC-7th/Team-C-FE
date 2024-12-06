@@ -1,12 +1,15 @@
 import Portal from '../../components/Portal';
 import { SettingForm } from '../../components/settingForm/SettingForm';
+import { LoginContext } from '../../context/LoginContext';
 import { usePostInitProfile } from '../../hooks/useGetProfile';
 import { Container } from './UserSetting.style';
+import { useContext } from 'react';
 
 function UserSettings() {
+  const { profileImgUrl, nickName } = useContext(LoginContext);
   const initialData = {
-    profileImg: window.localStorage.getItem('profileImgUrl') || '',
-    nickName: window.localStorage.getItem('nickName') || '',
+    profileImg: profileImgUrl || '',
+    nickName: nickName || '',
     age: 1,
   };
 
