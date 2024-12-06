@@ -13,7 +13,7 @@ const Home = () => {
   updateVh();
   window.addEventListener('resize', updateVh);
   if (isLogin) {
-    const nickName = localStorage.getItem('NickName');
+    const nickName = localStorage.getItem('nickName');
   }
 
   return (
