@@ -19,10 +19,7 @@ export function LoginContextProvider({ children }) {
 
   useEffect(() => {
     console.log('isLogin: ', isLogin);
-    console.log('nickName: ', nickName);
-    console.log('profileImgUrl: ', profileImgUrl);
-    console.log('kakaoProfileImg: ', kakaoProfileImg);
-  }, [isLogin, nickName, profileImgUrl, kakaoProfileImg]);
+  }, [isLogin]);
 
   return (
     <LoginContext.Provider
