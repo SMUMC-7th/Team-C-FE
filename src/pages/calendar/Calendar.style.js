@@ -79,20 +79,26 @@ const Day = styled.div`
   height: 51px;
   display: flex;
   flex-direction: column;
-  background-color: ${(props) =>
-    props.selected ? 'var(--color-gray-500)' : 'white'};
+  background-color: white;
+  border: 1px solid #61646b;
+  /* background-color: ${(props) =>
+    props.selected ? 'var(--color-gray-500)' : 'white'}; */
   align-items: center;
-  border: none;
+  border: ${(props) => (props.selected ? '1px solid #61646b' : 'none')};
+  align-items: center;
   border-radius: 5px;
   font-size: 11px;
   position: relative;
+  box-shadow: ${(props) =>
+    props.selected ? '  0px 2px 5px 0px rgba(0, 0, 0, 0.25)' : 'none'};
 `;
 
 const DaySpan = styled.span`
   position: relative;
   font-weight: 700;
   margin-top: 2px;
-  color: ${(props) => (props.selected ? 'white' : 'black')};
+  color: black;
+  /* color: ${(props) => (props.selected ? 'white' : 'black')}; */
 `;
 
 const DayPolicy = styled.div`
@@ -145,29 +151,6 @@ const ArrowForwardIcon = styled(IoIosArrowForward)`
     props.isSelected ? 'var(--color-blue-900)' : 'var(--color-blue-800)'};
 `;
 
-const TodayButton = styled.button`
-  position: absolute;
-  bottom: 110px;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  align-items: center;
-  border: 0.3px solid #e0e2e7;
-  background-color: #ffffff;
-  border-radius: 20px;
-  font-size: 15px;
-  padding: 0 5px;
-  width: 109px;
-  height: 40px;
-  font-size: 20px;
-  color: #53565d;
-  box-shadow: 2px 4px 2px rgba(0, 0, 0, 0.15);
-`;
-const TodayButtonSpan = styled.span`
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  color: #53565d;
-`;
-
 export {
   Layout,
   Title,
@@ -184,6 +167,4 @@ export {
   DayPolicyText,
   ArrowForwardIcon,
   ArrowBackIcon,
-  TodayButton,
-  TodayButtonSpan,
 };
