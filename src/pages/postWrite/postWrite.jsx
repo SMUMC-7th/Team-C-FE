@@ -2,13 +2,11 @@ import * as S from './postWrite.style';
 import { BsPencil } from 'react-icons/bs';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import { usePost } from '../../context/PostContext';
 import { createPost } from '../../apis/post';
 
 const postWrite = () => {
   const navigate = useNavigate();
 
-  // const { addPost } = usePost();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 

@@ -8,12 +8,13 @@ const PostList = ({ posts }) => {
     navigate(`/community/${postId}`);
   };
 
-  // console.log(posts);
-
   return (
     <S.BoardContainer>
       {posts.map((post) => (
-        <S.PostItem key={post.id} onClick={() => handlePostClick(post.id)}>
+        <S.PostItem
+          key={post.articleId}
+          onClick={() => handlePostClick(post.articleId)}
+        >
           <h3>{post.title}</h3>
           <p>{post.content}</p>
           <span>
