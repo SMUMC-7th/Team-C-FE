@@ -1,10 +1,10 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import * as S from './PostDetails.style';
 import { useState, useEffect } from 'react';
 import CommentList from '../../components/comment/CommentList';
 import CommentInput from '../../components/comment/CommentInput';
 import EditMenu from '../../components/editMenu/EditMenu';
-import { getPostDetail } from '../../apis/post';
+import { getPostDetail, deletePost } from '../../apis/post';
 
 function PostDetails() {
   const { postId } = useParams();
@@ -12,6 +12,7 @@ function PostDetails() {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
   const [commentCount, setCommmetCount] = useState(0); // 초기값 0
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPostDetail = async () => {
@@ -27,12 +28,25 @@ function PostDetails() {
     fetchPostDetail();
   }, [postId]);
 
+  console.log(postId);
+
   const handleAddComment = (e) => {
     e.preventDefault();
     if (newComment.trim() !== '') {
       setComments((comments) => [...comments, newComment]);
       setCommmetCount((count) => count + 1);
       setNewComment('');
+    }
+  };
+
+  const handleDeletePost = async () => {
+    try {
+      await deletePost({ articleId: postId });
+      alert('게시글이 삭제되었습니다.');
+      navigate('/community');
+    } catch (error) {
+      console.error('게시글 삭제 실패:', error);
+      alert('게시글 삭제 중 오류가 발생했습니다.');
     }
   };
 
@@ -59,7 +73,10 @@ function PostDetails() {
             <h6>{displayDateTime}</h6>
           </div>
         </S.AuthorInfo>
-        <EditMenu />
+        <EditMenu
+          onEdit={() => console.log('수정')}
+          onDelete={handleDeletePost}
+        />
       </S.AuthorBox>
       <S.PostContent>
         <h3>{postData.title}</h3>
