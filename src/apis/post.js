@@ -42,7 +42,7 @@ const deletePost = async ({ articleId }) => {
 };
 
 // 게시글 수정
-const updatePost = async ({ articleId }) => {
+const updatePost = async ({ articleId, title, content }) => {
   const { data } = await axios.put(
     `${import.meta.env.VITE_API_BASE_URL}/articles/${articleId}`,
     {

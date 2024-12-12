@@ -28,7 +28,7 @@ function PostDetails() {
     fetchPostDetail();
   }, [postId]);
 
-  console.log(postId);
+  // console.log(postId);
 
   const handleAddComment = (e) => {
     e.preventDefault();
@@ -48,6 +48,10 @@ function PostDetails() {
       console.error('게시글 삭제 실패:', error);
       alert('게시글 삭제 중 오류가 발생했습니다.');
     }
+  };
+
+  const handleEditPost = (postId) => {
+    navigate(`/postedit/${postId}`);
   };
 
   // postData가 null이 아닐 때만 접근
@@ -74,7 +78,7 @@ function PostDetails() {
           </div>
         </S.AuthorInfo>
         <EditMenu
-          onEdit={() => console.log('수정')}
+          onEdit={() => handleEditPost(postId)}
           onDelete={handleDeletePost}
         />
       </S.AuthorBox>
