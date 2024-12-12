@@ -1,15 +1,15 @@
-// PostEdit.js
 import * as S from '../postWrite/postWrite.style';
 import { BsPencil } from 'react-icons/bs';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { updatePost } from '../../apis/post';
+import { updatePost, getPostDetail } from '../../apis/post';
 
 const PostEdit = () => {
   const { postId } = useParams();
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   // 게시글 수정 함수
   const handleSubmit = async (e) => {
@@ -29,6 +29,28 @@ const PostEdit = () => {
       alert('수정 중 오류가 발생했습니다.');
     }
   };
+
+  // 게시글 상세 조회
+  useEffect(() => {
+    const fetchPostDetail = async () => {
+      try {
+        const data = await getPostDetail({ articleId: postId });
+        setTitle(data.data?.title || '');
+        setContent(data.data?.content || '');
+        setIsLoading(false);
+        // console.log(data);
+      } catch (error) {
+        console.error('게시글 불러오기 실패:', error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchPostDetail();
+  }, [postId]);
+
+  if (isLoading) {
+    return <S.WriteContainer>게시글을 불러오는 중입니다...</S.WriteContainer>;
+  }
 
   return (
     <S.WriteContainer>
