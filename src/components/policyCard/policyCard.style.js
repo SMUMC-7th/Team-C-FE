@@ -26,8 +26,8 @@ const Card = styled(Link)`
 `;
 const BookmarkIcon = styled(BsBookmarkDash)`
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 11px;
+  left: 13px;
   cursor: pointer;
   z-index: 1;
   color: var(--color-blue-700);
@@ -36,8 +36,8 @@ const BookmarkIcon = styled(BsBookmarkDash)`
 `;
 const BookmarkFillIcon = styled(BsBookmarkFill)`
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 11px;
+  left: 13px;
   cursor: pointer;
   z-index: 1;
   color: var(--color-blue-700);
@@ -79,6 +79,7 @@ const Content = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   width: 200px;
+  margin-top: 5px;
 `;
 
 const Img = styled.div`
