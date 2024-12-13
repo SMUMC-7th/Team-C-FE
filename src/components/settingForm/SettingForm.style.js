@@ -1,25 +1,14 @@
 import styled from 'styled-components';
 
-const Container = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow: hidden;
-`;
-
 const Form = styled.form`
   width: 100%;
-  height: ${(props) =>
-    props.full
-      ? '100%'
-      : 'calc(100vh - var(--size-navbar) - var(--size-header))'};
+  max-height: calc(100% - var(--size-header));
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 22px;
   padding: 0 6px;
-  overflow-y: auto;
+  overflow-y: scroll;
 `;
 
 const FormTitle = styled.p`
@@ -51,4 +40,4 @@ const SubmitBtn = styled.button`
   }
 `;
 
-export { Container, Form, FormTitle, Section, SubmitBtn };
+export { Form, FormTitle, Section, SubmitBtn };

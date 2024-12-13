@@ -57,7 +57,7 @@ const Texts = styled.div`
 
 const Title = styled.div`
   display: -webkit-box;
-  font-size: 26px;
+  font-size: 23px;
   color: var(--color-blue-700);
   font-weight: bold;
   word-break: break-word;

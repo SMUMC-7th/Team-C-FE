@@ -11,6 +11,7 @@ import NotFound from './NotFound';
 import PostWrite from './postWrite/postWrite';
 import EditProfile from './editProfile/EditProfile';
 import KakaoOAuthHandler from './kakaoOAuth/KakaoOAuthHandler';
+import PostEdit from './postEdit/postEdit';
 
 export {
   Landing,
@@ -26,4 +27,5 @@ export {
   PostWrite,
   EditProfile,
   KakaoOAuthHandler,
+  PostEdit,
 };

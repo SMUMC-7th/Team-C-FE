@@ -1,38 +1,53 @@
+import { useEffect, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
 import axios from 'axios';
+import { useGetKakaoOAuth } from '../../hooks/useGetProfile';
+import { useQuery } from '@tanstack/react-query';
+import { LoginContext } from '../../context/LoginContext';
 
-function Login() {
+function KakaoOAuthHandler() {
   const navigate = useNavigate();
   const location = useLocation();
 
   const url = new URLSearchParams(location.search);
   const code = url.get('code');
 
-  useEffect(() => {
-    const handleLogin = async () => {
-      if (code) {
-        try {
-          const response = await axios.get(
-            `${import.meta.env.VITE_KAKAO_LOGIN_URI}?code=${code}`,
-            { withCredentials: true }
-          );
+  const { setNickName, setProfileImgUrl, setKakaoProfileImg } =
+    useContext(LoginContext);
+  const {
+    data: response,
+    isLoading,
+    isError,
+    isSuccess,
+  } = useGetKakaoOAuth(code);
 
-          if (response.status === 200) {
-            navigate('/settings');
-          } else {
-            console.log(response.status);
-          }
-        } catch (error) {
-          console.log(error.message);
-          navigate('/');
-        }
+  useEffect(() => {
+    if (isSuccess) {
+      const { profileImgUrl, nickName, isOriginMember } = response.data;
+
+      setNickName(nickName);
+      setProfileImgUrl(profileImgUrl);
+      setKakaoProfileImg(profileImgUrl);
+
+      if (isOriginMember) {
+        navigate('/home');
+      } else {
+        navigate('/settings');
       }
-    };
-    handleLogin();
-  }, [code, navigate]);
+    }
+  }, [isSuccess, response, navigate]);
+
+  useEffect(() => {
+    if (isError) {
+      console.error('카카오 토큰 발급 실패');
+    }
+  }, [isError]);
+
+  if (isLoading) {
+    return <div></div>;
+  }
 
   return <></>;
 }
 
-export default Login;
+export default KakaoOAuthHandler;
