@@ -23,7 +23,7 @@ const Day = (props) => {
     queryFn: () => getDayBookmark(selectedYear, selectedMonth, selectedDay),
     enabled: !!isLogin,
   });
-  console.log(policies);
+
   return (
     <S.Container>
       <S.Date>{format(day, 'd')}일</S.Date>

@@ -54,7 +54,8 @@ const PostItem = styled.div`
 `;
 
 const CommentIcon = styled(FaCommentDots)`
-  font-size: 15px;
+  width: 15px;
+  height: 15px;
   margin-right: 3px;
 `;
 

@@ -5,7 +5,7 @@ const Alert = styled.div`
   justify-content: center;
   width: 100%;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
   margin-top: 10px;
 `;
 

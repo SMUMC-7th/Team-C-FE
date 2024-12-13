@@ -8,6 +8,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { getRecommendPolicy } from '../../apis/policy';
 import PolicyListSkeleton from './policyListSkeleton/policyListSkeleton';
 import { LoginContext } from '../../context/LoginContext';
+import { canApplyNow } from '../../utils/formatDate';
 
 function useGetInfinitePolicy() {
   const { isLogin } = useContext(LoginContext);
@@ -49,7 +50,7 @@ const PolicyListLogin = () => {
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
 
   if (isPending || isLoading) {
-    return <PolicyListSkeleton></PolicyListSkeleton>;
+    return <PolicyListSkeleton />;
   }
 
   if (error) return <p>Error loading policies</p>;
@@ -60,9 +61,11 @@ const PolicyListLogin = () => {
     <S.Container>
       <S.PolicyList>
         {policiesData?.map((page) =>
-          page?.data?.emp.map((policyData) => (
-            <PolicyCard key={policyData.bizId} {...policyData} />
-          ))
+          page?.data?.emp.map((policyData) =>
+            canApplyNow(policyData.rqutPrdCn) ? (
+              <PolicyCard key={policyData.bizId} {...policyData} />
+            ) : null
+          )
         )}
       </S.PolicyList>
       {hasNextPage && !isFetching && <S.Ref ref={ref}></S.Ref>}

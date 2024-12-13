@@ -8,7 +8,7 @@ import * as S from './policyDetails.style';
 import { getSinglePolicy } from '../../apis/policy';
 import { requestBookmark } from '../../apis/bookmark';
 
-import { extractSubstring, formatDate } from '../../utils/formatDate';
+import { extractDatesAPIVer, extractDates } from '../../utils/formatDate';
 import { getRpttDescription, getpolyRlmCd } from '../../utils/policyCodeFormat';
 import { parseLinks, getSafeValue } from '../../utils/policyDetailParse';
 import { isBookmarked, deleteBookmark } from '../../apis/bookmark';
@@ -45,8 +45,6 @@ const PolicyDetails = () => {
     queryFn: () => getSinglePolicy(params.policyId),
   });
 
-  const newDate = extractSubstring(data?.data?.emp?.rqutPrdCn);
-
   if (error) {
     console.log(error);
   }
@@ -59,7 +57,7 @@ const PolicyDetails = () => {
   }
 
   const policyData = data?.data.emp;
-
+  const newDate = extractDates(data?.data?.emp?.rqutPrdCn);
   if (!policyData) {
     return (
       <div
@@ -77,7 +75,7 @@ const PolicyDetails = () => {
   }
 
   const handleBookmarkClick = async () => {
-    const { start, end } = formatDate(data?.data?.emp?.rqutPrdCn);
+    const { start, end } = extractDatesAPIVer(data?.data?.emp?.rqutPrdCn);
     if (!isLogin) {
       setIsModalOpen(true);
       return;

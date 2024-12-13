@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
 import Portal from '../../Portal';
 import ContentModal from '../../../components/modal/ContentModal';
+import PolicyListSkeleton from '../policyListSkeleton/policyListSkeleton';
 
 const PolicyList = ({ user }) => {
   const { ref, inView } = useInView({
@@ -27,12 +28,7 @@ const PolicyList = ({ user }) => {
 
   const policiesData = data?.data.emp;
 
-  if (isLoading)
-    return (
-      <S.Alert>
-        <ClipLoader />
-      </S.Alert>
-    );
+  if (isLoading) return <PolicyListSkeleton />;
 
   if (error) return <S.Alert>Error loading policies</S.Alert>;
 

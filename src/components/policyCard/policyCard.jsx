@@ -8,7 +8,7 @@ import img6 from '../../images/policyImg6.svg';
 import img7 from '../../images/policyImg7.svg';
 import img8 from '../../images/policyImg8.svg';
 import img9 from '../../images/policyImg9.svg';
-import { formatDate, extractSubstring } from '../../utils/formatDate';
+import { extractDatesAPIVer, extractDates } from '../../utils/formatDate';
 import { deleteBookmark, requestBookmark } from '../../apis/bookmark';
 import { useQuery } from '@tanstack/react-query';
 import { isBookmarked } from '../../apis/bookmark';
@@ -28,7 +28,6 @@ const PolicyCard = (props) => {
     queryFn: () => isBookmarked(bizId),
     enabled: !!isLogin,
   });
-
   const [isClicked, setIsClicked] = useState(data?.data);
 
   useEffect(() => {
@@ -36,7 +35,7 @@ const PolicyCard = (props) => {
   }, [data?.data]);
 
   const handleBookmarkClick = async () => {
-    const { start, end } = formatDate(rqutPrdCn);
+    const { start, end } = extractDatesAPIVer(rqutPrdCn);
     if (!isLogin) {
       setIsModalOpen(true);
       return;
@@ -63,7 +62,7 @@ const PolicyCard = (props) => {
 
   const randomIndex = parseInt(bizId.slice(1, 14), 10) % 9;
   const RandomImage = ImagesArr[randomIndex];
-  const editDate = extractSubstring(rqutPrdCn);
+  const editDate = extractDates(rqutPrdCn);
 
   return (
     <>

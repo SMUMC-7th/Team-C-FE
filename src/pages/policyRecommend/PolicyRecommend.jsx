@@ -15,7 +15,7 @@ function PolicyRec() {
     const handleResize = () => updateVh();
     window.addEventListener('resize', handleResize);
 
-    if (!isLogin) {
+    if (isLogin === false) {
       setIsModalOpen(true);
     }
 
