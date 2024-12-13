@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const WriteContainer = styled.div`
+  width: var(--size-inner-max-width);
   display: flex;
   flex-direction: column;
   gap: 10px;
