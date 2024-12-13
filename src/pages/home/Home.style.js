@@ -7,8 +7,10 @@ const Container = styled.div`
   height: calc(var(--vh, 1vh) * 100 - 190px);
   align-items: center;
   gap: 20px;
-  width: 346px;
+  width: var(--size-inner-max-width);
   overflow: hidden;
+  margin: 0;
+  padding: 0;
 `;
 
 const PolicyContainer = styled.div`

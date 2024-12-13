@@ -30,6 +30,7 @@ const GlobalStyle = createGlobalStyle`
 
     /* size */
     --size-max-width: 393px;
+    --size-inner-max-width: 345px;
     --size-header: 80px;
     --size-navbar: 89px;
     --size-side-gap: 24px;
