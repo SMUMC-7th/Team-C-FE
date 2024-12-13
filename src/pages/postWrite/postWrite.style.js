@@ -24,13 +24,14 @@ const WriteContainer = styled.div`
     border-radius: 10px;
     background-color: var(--color-gray-50);
     padding: 10px;
+    resize: none;
   }
 `;
 
 const UploadButton = styled.div`
   position: fixed;
   left: 50%;
-  bottom: 14%;
+  bottom: 19%;
   transform: translate(-50%, 50%);
 
   button {
