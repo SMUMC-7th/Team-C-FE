@@ -32,7 +32,7 @@ const Calendar = () => {
   window.addEventListener('resize', updateVh);
 
   useEffect(() => {
-    if (!isLogin) {
+    if (isLogin === false) {
       setIsModalOpen(true);
     }
   }, [isLogin]);

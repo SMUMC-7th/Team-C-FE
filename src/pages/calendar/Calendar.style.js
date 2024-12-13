@@ -81,8 +81,6 @@ const Day = styled.div`
   flex-direction: column;
   background-color: white;
   border: 1px solid #61646b;
-  /* background-color: ${(props) =>
-    props.selected ? 'var(--color-gray-500)' : 'white'}; */
   align-items: center;
   border: ${(props) => (props.selected ? '1px solid #61646b' : 'none')};
   align-items: center;
@@ -98,7 +96,6 @@ const DaySpan = styled.span`
   font-weight: 700;
   margin-top: 2px;
   color: black;
-  /* color: ${(props) => (props.selected ? 'white' : 'black')}; */
 `;
 
 const DayPolicy = styled.div`
