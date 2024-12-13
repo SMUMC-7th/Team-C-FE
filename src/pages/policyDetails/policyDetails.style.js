@@ -105,13 +105,6 @@ const Explain = styled.div`
   border-bottom: 1px solid var(--color-gray-300);
 `;
 
-const Alert = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 345px;
-  margin-top: 30px;
-`;
-
 export {
   Container,
   Header,
@@ -125,5 +118,4 @@ export {
   BookmarkFillIcon,
   BookmarkIcon,
   PolicyInfoCard,
-  Alert,
 };

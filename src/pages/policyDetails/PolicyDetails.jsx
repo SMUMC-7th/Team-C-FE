@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import ClipLoader from 'react-spinners/ClipLoader';
 import { useParams } from 'react-router-dom';
 
 import * as S from './policyDetails.style';
@@ -16,6 +15,8 @@ import { updateVh } from '../../utils/calculateVH';
 import Portal from '../../components/Portal';
 import { LoginContext } from '../../context/LoginContext';
 import ContentModal from '../../components/modal/ContentModal';
+import Loading from '../loading/Loading';
+
 const PolicyDetails = () => {
   updateVh();
   window.addEventListener('resize', updateVh);
@@ -49,11 +50,7 @@ const PolicyDetails = () => {
     console.log(error);
   }
   if (isLoading) {
-    return (
-      <S.Alert>
-        <ClipLoader />
-      </S.Alert>
-    );
+    return <Loading></Loading>;
   }
 
   const policyData = data?.data.emp;
