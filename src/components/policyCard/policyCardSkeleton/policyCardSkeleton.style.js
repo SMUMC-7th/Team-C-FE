@@ -1,4 +1,23 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const skeleton = keyframes`
+  0% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  75% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
+  }
+
+`;
 
 const Container = styled.div`
   display: flex;
@@ -13,6 +32,7 @@ const Container = styled.div`
   align-items: center;
   width: 345px;
   justify-content: center;
+  animation: ${skeleton} 4s ease infinite;
 `;
 
 export { Container };
