@@ -16,6 +16,7 @@ import Portal from '../../components/Portal';
 import { LoginContext } from '../../context/LoginContext';
 import ContentModal from '../../components/modal/ContentModal';
 import Loading from '../loading/Loading';
+import Error from '../error/Error';
 
 const PolicyDetails = () => {
   updateVh();
@@ -236,6 +237,11 @@ const PolicyDetails = () => {
             onBtn1Click={() => (window.location.href = '/')}
             onBtn2Click={() => setIsModalOpen(false)}
           ></ContentModal>
+        </Portal>
+      )}
+      {error && (
+        <Portal>
+          <Error></Error>
         </Portal>
       )}
     </>

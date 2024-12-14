@@ -1,8 +1,8 @@
-import * as S from './Error.style';
-import errorImg from '../../images/errorImg.svg';
+import * as S from './NotFound.style';
 import { IoChevronBack } from 'react-icons/io5';
+import errorImg from '../../images/errorImg.svg';
 
-const Error = () => {
+const NotFound = () => {
   return (
     <S.Container>
       <S.Header>
@@ -19,4 +19,4 @@ const Error = () => {
   );
 };
 
-export default Error;
+export default NotFound;

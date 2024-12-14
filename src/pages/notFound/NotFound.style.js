@@ -7,14 +7,9 @@ const Container = styled.div`
   height: 100vh;
   padding: 0;
   margin: 0;
-  z-index: 6;
-  top: 0;
-  left: 0;
   justify-content: center;
   background-color: rgb(255, 255, 255);
   opacity: 100%;
-  position: fixed;
-  z-index: 10;
   justify-content: center;
   align-items: center;
   img {
