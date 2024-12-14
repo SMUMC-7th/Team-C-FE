@@ -3,10 +3,8 @@ import styled from 'styled-components';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: var(--size-max-width);
+  width: var(--size-inner-max-width);
   height: 100vh;
-  padding: 0;
-  margin: 0;
   justify-content: center;
   background-color: rgb(255, 255, 255);
   opacity: 100%;
