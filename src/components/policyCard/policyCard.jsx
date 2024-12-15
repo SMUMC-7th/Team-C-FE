@@ -71,6 +71,7 @@ const PolicyCard = (props) => {
     const timer = setTimeout(() => {
       setIsUpload(false);
     }, 2500);
+    return () => clearTimeout(timer);
   }, [isClicked]);
 
   const randomIndex = parseInt(bizId.slice(1, 14), 10) % 9;
