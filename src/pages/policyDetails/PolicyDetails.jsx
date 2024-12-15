@@ -55,7 +55,7 @@ const PolicyDetails = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsUpload(false);
-    }, 2000);
+    }, 1000);
     return () => clearTimeout(timer);
   }, [isUpload]);
 
