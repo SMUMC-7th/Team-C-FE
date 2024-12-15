@@ -16,12 +16,15 @@ import { useContext, useEffect, useState } from 'react';
 import { LoginContext } from '../../context/LoginContext';
 import Portal from '../Portal';
 import ContentModal from '../modal/ContentModal';
+import { useNavigate } from 'react-router-dom';
 
 const ImagesArr = [img1, img2, img3, img4, img5, img6, img7, img8, img9];
 
 const PolicyCard = (props) => {
+  const navigate = useNavigate();
   const { isLogin } = useContext(LoginContext);
-  const { bizId, polyBizSjnm, rqutPrdCn } = props;
+  const { bizId, polyBizSjnm, rqutPrdCn, setIsUpload, setUploadResponse } =
+    props;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data, error, isLoading } = useQuery({
     queryKey: ['bookmark', bizId],
@@ -45,6 +48,8 @@ const PolicyCard = (props) => {
       if (isClicked === true) {
         const response = deleteBookmark(bizId);
         setIsClicked(false);
+        setIsUpload(true);
+        setUploadResponse('북마크가 삭제되었습니다');
       } else {
         const response = requestBookmark({
           polyBizSjnm,
@@ -53,12 +58,20 @@ const PolicyCard = (props) => {
           deadline: end,
         });
         setIsClicked(true);
-        console.log('북마크 성공:', response);
+        setIsUpload(true);
+        setUploadResponse('성공적으로 북마크 되었습니다');
       }
     } catch (error) {
-      console.error('북마크 요청 실패:', error);
+      setIsUpload(true);
+      setUploadResponse('북마크에 실패하였습니다');
     }
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsUpload(false);
+    }, 2500);
+  }, [isClicked]);
 
   const randomIndex = parseInt(bizId.slice(1, 14), 10) % 9;
   const RandomImage = ImagesArr[randomIndex];
@@ -94,7 +107,7 @@ const PolicyCard = (props) => {
             message="로그인이 필요한 서비스입니다."
             btnText1="로그인"
             btnText2="닫기"
-            onBtn1Click={() => (window.location.href = '/')}
+            onBtn1Click={() => navigate('/')}
             onBtn2Click={() => setIsModalOpen(false)}
           />
         </Portal>

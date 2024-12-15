@@ -8,6 +8,7 @@ import ClipLoader from 'react-spinners/ClipLoader';
 import Portal from '../../Portal';
 import ContentModal from '../../../components/modal/ContentModal';
 import PolicyListSkeleton from '../policyListSkeleton/policyListSkeleton';
+import { Alert } from '../policyList.style';
 
 const PolicyList = ({ user }) => {
   const { ref, inView } = useInView({
@@ -42,6 +43,7 @@ const PolicyList = ({ user }) => {
         </S.PolicyList>
         <div ref={ref} style={{ height: '5px' }}></div>
       </S.Container>
+
       {isModalOpen && (
         <Portal>
           <ContentModal
