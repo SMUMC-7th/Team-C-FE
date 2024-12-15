@@ -119,29 +119,11 @@ const PolicyDetails = () => {
                 <S.Data>{getSafeValue(policyData?.sporCn)}</S.Data>
               </S.Row>
               <S.Row>
-                <S.Category>지원 규모</S.Category>
-                <S.Data>{getSafeValue(policyData?.sporScvl)}</S.Data>
-              </S.Row>
-              <S.Row>
                 <S.Category>제출 서류 내용</S.Category>
                 <S.Data>{getSafeValue(policyData?.pstnPaprCn)}</S.Data>
               </S.Row>
               <S.Row>
-                <S.Category>사업 운영 기간</S.Category>
-                <S.Data>{getSafeValue(policyData?.bizPrdCn)}</S.Data>
-              </S.Row>
-              <S.Row>
-                <S.Category>사업 신청 기간 주기</S.Category>
-                <S.Data>
-                  {getSafeValue(getRpttDescription(policyData?.prdRpttSecd))}
-                </S.Data>
-              </S.Row>
-              <S.Row>
-                <S.Category>참여 제한 대상 내용</S.Category>
-                <S.Data>{getSafeValue(policyData?.prcpLmttTrgtCn)}</S.Data>
-              </S.Row>
-              <S.Row>
-                <S.Category>연령 정보</S.Category>
+                <S.Category>연령 조건</S.Category>
                 <S.Data>{getSafeValue(policyData?.ageInfo)}</S.Data>
               </S.Row>
               <S.Row>
@@ -157,18 +139,10 @@ const PolicyDetails = () => {
                 <S.Data>{getSafeValue(policyData?.empmSttsCn)}</S.Data>
               </S.Row>
               <S.Row>
-                <S.Category>특화분야</S.Category>
-                <S.Data>{getSafeValue(policyData?.splzRlmRqisCn)}</S.Data>
-              </S.Row>
-              <S.Row>
                 <S.Category>
                   거주지 /<br /> 소득 조건
                 </S.Category>
                 <S.Data>{getSafeValue(policyData?.prcpCn)}</S.Data>
-              </S.Row>
-              <S.Row>
-                <S.Category>운영기관명</S.Category>
-                <S.Data>{getSafeValue(policyData?.cnsgNmor)}</S.Data>
               </S.Row>
               <S.Row>
                 <S.Category>신청방법</S.Category>
@@ -177,12 +151,34 @@ const PolicyDetails = () => {
                 </S.Data>
               </S.Row>
               <S.Row>
+                <S.Category>사업 신청 기간 주기</S.Category>
+                <S.Data>
+                  {getSafeValue(getRpttDescription(policyData?.prdRpttSecd))}
+                </S.Data>
+              </S.Row>
+              <S.Row>
+                <S.Category>참여 제한 대상 내용</S.Category>
+                <S.Data>{getSafeValue(policyData?.prcpLmttTrgtCn)}</S.Data>
+              </S.Row>
+              <S.Row>
+                <S.Category>운영기관명</S.Category>
+                <S.Data>{getSafeValue(policyData?.cnsgNmor)}</S.Data>
+              </S.Row>
+              <S.Row>
                 <S.Category>운영 기관 담당자 연락처</S.Category>
                 <S.Data>{getSafeValue(policyData?.tintCherCtpcCn)}</S.Data>
               </S.Row>
               <S.Row>
                 <S.Category>주관 부처 담당자 연락처</S.Category>
                 <S.Data>{getSafeValue(policyData?.cherCtpcCn)}</S.Data>
+              </S.Row>
+              <S.Row>
+                <S.Category>지원 규모</S.Category>
+                <S.Data>{getSafeValue(policyData?.sporScvl)}</S.Data>
+              </S.Row>
+              <S.Row>
+                <S.Category>사업 운영 기간</S.Category>
+                <S.Data>{getSafeValue(policyData?.bizPrdCn)}</S.Data>
               </S.Row>
               <S.Row>
                 <S.Category>기타사항</S.Category>
@@ -217,6 +213,10 @@ const PolicyDetails = () => {
                 <S.Data>
                   {getSafeValue(getpolyRlmCd(policyData?.polyRlmCd))}
                 </S.Data>
+              </S.Row>
+              <S.Row>
+                <S.Category>특화분야</S.Category>
+                <S.Data>{getSafeValue(policyData?.splzRlmRqisCn)}</S.Data>
               </S.Row>
             </tbody>
           </S.Table>
