@@ -70,7 +70,8 @@ const PolicyCard = (props) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsUpload(false);
-    }, 2500);
+    }, 1000);
+    return () => clearTimeout(timer);
   }, [isClicked]);
 
   const randomIndex = parseInt(bizId.slice(1, 14), 10) % 9;

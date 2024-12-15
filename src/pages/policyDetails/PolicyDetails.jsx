@@ -17,10 +17,13 @@ import { LoginContext } from '../../context/LoginContext';
 import ContentModal from '../../components/modal/ContentModal';
 import Loading from '../loading/Loading';
 import Error from '../error/Error';
+import Alert from '../../components/alert/alert';
 
 const PolicyDetails = () => {
-  updateVh();
-  window.addEventListener('resize', updateVh);
+  useEffect(() => {
+    updateVh();
+    window.addEventListener('resize', updateVh);
+  }, []);
 
   const { isLogin } = useContext(LoginContext);
   const params = useParams();
@@ -37,40 +40,24 @@ const PolicyDetails = () => {
 
   const [isClicked, setIsClicked] = useState(bookmark?.data);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  useEffect(() => {
-    setIsClicked(bookmark?.data);
-  }, [bookmark?.data]);
+  const [isUpload, setIsUpload] = useState(false);
+  const [uploadResponse, setUploadResponse] = useState('');
 
   const { data, error, isLoading } = useQuery({
     queryKey: [params],
     queryFn: () => getSinglePolicy(params.policyId),
   });
 
-  if (error) {
-    console.log(error);
-  }
-  if (isLoading) {
-    return <Loading></Loading>;
-  }
+  useEffect(() => {
+    setIsClicked(bookmark?.data);
+  }, [bookmark?.data]);
 
-  const policyData = data?.data.emp;
-  const newDate = extractDates(data?.data?.emp?.rqutPrdCn);
-  if (!policyData) {
-    return (
-      <div
-        style={{
-          display: 'flex',
-          width: '100%',
-          marginTop: '50px',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        해당 정책을 찾을 수 없습니다.
-      </div>
-    );
-  }
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsUpload(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [isUpload]);
 
   const handleBookmarkClick = async () => {
     const { start, end } = extractDatesAPIVer(data?.data?.emp?.rqutPrdCn);
@@ -85,6 +72,8 @@ const PolicyDetails = () => {
         const response = deleteBookmark(bizId);
         console.log(response);
         setIsClicked(false);
+        setIsUpload(true);
+        setUploadResponse('북마크가 삭제되었습니다');
       } else {
         const response = requestBookmark({
           polyBizSjnm,
@@ -93,12 +82,25 @@ const PolicyDetails = () => {
           deadline: end,
         });
         setIsClicked(true);
+        setIsUpload(true);
+        setUploadResponse('성공적으로 북마크되었습니다');
         console.log('북마크 성공:', response);
       }
     } catch (error) {
       console.error('북마크 요청 실패:', error);
     }
   };
+
+  if (isLoading || bookmarkLoading) {
+    return <Loading />;
+  }
+
+  if (error || bookmarkError) {
+    console.log(error);
+  }
+
+  const policyData = data?.data?.emp;
+  const newDate = extractDates(data?.data?.emp?.rqutPrdCn);
 
   return (
     <>
@@ -236,12 +238,13 @@ const PolicyDetails = () => {
             btnText2="닫기"
             onBtn1Click={() => (window.location.href = '/')}
             onBtn2Click={() => setIsModalOpen(false)}
-          ></ContentModal>
+          />
         </Portal>
       )}
+      {isUpload && <Alert content={uploadResponse} />}
       {error && (
         <Portal>
-          <Error></Error>
+          <Error />
         </Portal>
       )}
     </>
