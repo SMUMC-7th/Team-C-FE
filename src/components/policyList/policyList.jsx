@@ -2,13 +2,14 @@ import * as S from './policyList.style';
 import PolicyCard from '../policyCard/policyCard';
 
 import { useInView } from 'react-intersection-observer';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { getRecommendPolicy } from '../../apis/policy';
 import PolicyListSkeleton from './policyListSkeleton/policyListSkeleton';
 import { LoginContext } from '../../context/LoginContext';
 import { canApplyNow } from '../../utils/formatDate';
+import Alert from '../alert/alert';
 
 function useGetInfinitePolicy() {
   const { isLogin } = useContext(LoginContext);
@@ -42,7 +43,8 @@ const PolicyListLogin = () => {
   const { ref, inView } = useInView({
     threshold: 0,
   });
-
+  const [isUpload, setIsUpload] = useState(false);
+  const [uploadResponse, setUploadResponse] = useState('');
   useEffect(() => {
     if (inView && !isFetching && hasNextPage) {
       fetchNextPage();
@@ -63,13 +65,19 @@ const PolicyListLogin = () => {
         {policiesData?.map((page) =>
           page?.data?.emp.map((policyData) =>
             canApplyNow(policyData.rqutPrdCn) ? (
-              <PolicyCard key={policyData.bizId} {...policyData} />
+              <PolicyCard
+                key={policyData.bizId}
+                setIsUpload={setIsUpload}
+                setUploadResponse={setUploadResponse}
+                {...policyData}
+              />
             ) : null
           )
         )}
       </S.PolicyList>
       {hasNextPage && !isFetching && <S.Ref ref={ref}></S.Ref>}
       {isFetching && <PolicyListSkeleton />}
+      {isUpload && <Alert content={uploadResponse}></Alert>}
     </S.Container>
   );
 };
