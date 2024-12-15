@@ -7,8 +7,9 @@ const Layout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: calc(100vh - 190px);
+  height: calc(var(--vh, 1vh) * 100 - 190px);
   overflow-y: scroll;
+  position: relative;
 `;
 
 const Title = styled.div`
@@ -78,19 +79,23 @@ const Day = styled.div`
   height: 51px;
   display: flex;
   flex-direction: column;
-  background-color: ${(props) =>
-    props.selected ? 'var(--color-gray-500)' : 'white'};
+  background-color: white;
+  border: 1px solid #61646b;
   align-items: center;
-  border: none;
+  border: ${(props) => (props.selected ? '1px solid #61646b' : 'none')};
+  align-items: center;
   border-radius: 5px;
   font-size: 11px;
+  position: relative;
+  box-shadow: ${(props) =>
+    props.selected ? '  0px 2px 5px 0px rgba(0, 0, 0, 0.25)' : 'none'};
 `;
 
 const DaySpan = styled.span`
   position: relative;
   font-weight: 700;
   margin-top: 2px;
-  color: ${(props) => (props.selected ? 'white' : 'black')};
+  color: black;
 `;
 
 const DayPolicy = styled.div`
@@ -102,19 +107,23 @@ const DayPolicy = styled.div`
 `;
 
 const DayPolicyList = styled.div`
-  height: 100%;
+  max-height: 34px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   width: 100%;
   align-items: center;
+  overflow: hidden;
+  position: absolute;
+  bottom: 0;
 `;
 
 const DayPolicyText = styled.div`
-  font-size: 7px;
+  font-size: 8px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  width: 24px;
   color: ${(props) =>
     props.isSelected
       ? props.$started
@@ -126,16 +135,19 @@ const DayPolicyText = styled.div`
 `;
 
 const ArrowBackIcon = styled(IoIosArrowBack)`
-  width: 25px;
+  width: 7px;
+  stroke-width: 25px;
   color: ${(props) =>
     props.isSelected ? 'var(--color-red-900)' : 'var(--color-red-800)'};
 `;
 
 const ArrowForwardIcon = styled(IoIosArrowForward)`
-  width: 25px;
+  width: 7px;
+  stroke-width: 25px;
   color: ${(props) =>
     props.isSelected ? 'var(--color-blue-900)' : 'var(--color-blue-800)'};
 `;
+
 export {
   Layout,
   Title,

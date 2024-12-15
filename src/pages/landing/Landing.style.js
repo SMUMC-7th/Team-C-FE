@@ -2,14 +2,9 @@ import { styled } from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const Container = styled.div`
-  height: 100vh;
-  width: 100vw;
-  padding: calc(var(--size-header) + 0.5rem) var(--size-side-gap)
-    calc(var(--size-navbar) + 0.5rem) var(--size-side-gap);
+  height: calc(var(--vh, 1vh) * 100);
+  width: min(100vw, var(--size-max-width));
   background-color: var(--color-blue-700);
-  position: absolute;
-  top: 0;
-  left: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,9 +22,10 @@ const LogoContainer = styled.div`
   transform: translateY(-50%);
 `;
 
-const Logo = styled.div`
+const Logo = styled.img`
   font-size: 40px;
   font-weight: 700;
+  width: 160px;
 `;
 
 const Slogan = styled.p`

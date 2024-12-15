@@ -2,7 +2,8 @@ import styled from 'styled-components';
 import Slider from 'react-slick';
 
 const StyledSlider = styled(Slider)`
-  width: 345px;
+  width: var(--size-inner-max-width);
+  overflow-y: hidden;
   .slick-list {
     overflow: hidden;
     border-radius: 20px;

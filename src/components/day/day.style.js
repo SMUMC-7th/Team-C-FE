@@ -24,8 +24,11 @@ const Date = styled.div`
 const Contents = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 13px;
+  margin-left: 13px;
+  margin-right: 13px;
+  margin-bottom: 10px;
   gap: 10px;
+  align-items: center;
 `;
 
 export { Container, Date, Contents };

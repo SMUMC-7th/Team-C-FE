@@ -1,53 +1,85 @@
 import * as S from './policyList.style';
 import PolicyCard from '../policyCard/policyCard';
-import policyDatas from '../../mocks/policyData.json';
 
-const PolicyList = (props) => {
-  const { isLogin, ...user } = props;
-  const interest = user.interest;
-  const safeInterest = interest || [];
+import { useInView } from 'react-intersection-observer';
+import { useContext, useEffect, useState } from 'react';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
-  const policyFieldCodes = {
-    일자리: '023010',
-    주거: '023020',
-    교육: '023030',
-    '복지 / 문화': '023040',
-    '참여 / 권리': '023050',
-  };
+import { getRecommendPolicy } from '../../apis/policy';
+import PolicyListSkeleton from './policyListSkeleton/policyListSkeleton';
+import { LoginContext } from '../../context/LoginContext';
+import { canApplyNow } from '../../utils/formatDate';
+import Alert from '../alert/alert';
 
-  const convertInterestsToCodes = (interests) => {
-    return interests
-      .map((interest) => policyFieldCodes[interest])
-      .filter((code) => code);
-  };
+function useGetInfinitePolicy() {
+  const { isLogin } = useContext(LoginContext);
+  return useInfiniteQuery({
+    queryKey: ['categoryPolicies'],
+    queryFn: ({ pageParam = 1 }) => getRecommendPolicy(pageParam),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) => {
+      const currentIndex = lastPage?.data?.pageIndex || 1;
+      const totalPolicies = lastPage?.data?.totalCnt || 0;
+      const policiesPerPage = 10;
+      const maxPageIndex = Math.ceil(totalPolicies / policiesPerPage);
+      return currentIndex < maxPageIndex ? currentIndex + 1 : undefined;
+    },
+    cacheTime: 10000,
+    staleTime: 10000,
+    enabled: !!isLogin,
+  });
+}
 
-  const interestCodes = convertInterestsToCodes(safeInterest);
+const PolicyListLogin = () => {
+  const {
+    data,
+    error,
+    isLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isPending,
+  } = useGetInfinitePolicy();
+  const { ref, inView } = useInView({
+    threshold: 0,
+  });
+  const [isUpload, setIsUpload] = useState(false);
+  const [uploadResponse, setUploadResponse] = useState('');
+  useEffect(() => {
+    if (inView && !isFetching && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, isFetching, hasNextPage, fetchNextPage]);
 
-  const InterestPolicy = () => {
-    return policyDatas.filter((policy) =>
-      interestCodes.includes(policy.polyRlmCd)
-    );
-  };
+  if (isPending || isLoading) {
+    return <PolicyListSkeleton />;
+  }
 
-  const filteredPolicies = InterestPolicy();
+  if (error) return <p>Error loading policies</p>;
+
+  const policiesData = data?.pages;
 
   return (
     <S.Container>
-      {isLogin ? (
-        <S.PolicyList>
-          {filteredPolicies.map((policyData) => (
-            <PolicyCard key={policyData.bizId} {...policyData} {...user} />
-          ))}
-        </S.PolicyList>
-      ) : (
-        <S.PolicyList>
-          {policyDatas.map((policyData) => (
-            <PolicyCard key={policyData.bizId} {...policyData} />
-          ))}
-        </S.PolicyList>
-      )}
+      <S.PolicyList>
+        {policiesData?.map((page) =>
+          page?.data?.emp.map((policyData) =>
+            canApplyNow(policyData.rqutPrdCn) ? (
+              <PolicyCard
+                key={policyData.bizId}
+                setIsUpload={setIsUpload}
+                setUploadResponse={setUploadResponse}
+                {...policyData}
+              />
+            ) : null
+          )
+        )}
+      </S.PolicyList>
+      {hasNextPage && !isFetching && <S.Ref ref={ref}></S.Ref>}
+      {isFetching && <PolicyListSkeleton />}
+      {isUpload && <Alert content={uploadResponse}></Alert>}
     </S.Container>
   );
 };
 
-export default PolicyList;
+export default PolicyListLogin;

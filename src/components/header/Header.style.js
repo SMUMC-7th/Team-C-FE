@@ -5,6 +5,7 @@ const Header = styled.header`
   max-width: var(--size-max-width);
   width: 100%;
   height: var(--size-header);
+  background-color: white;
   overflow: hidden;
   position: fixed;
   top: 0;
@@ -50,11 +51,8 @@ const UserImg = styled.img`
   border-radius: 15px;
 `;
 
-const Logo = styled(Link)`
-  font-size: 28px;
-  color: var(--color-blue-700);
-  font-weight: 700;
-  text-decoration: none;
+const Logo = styled.img`
+  width: 100px;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);

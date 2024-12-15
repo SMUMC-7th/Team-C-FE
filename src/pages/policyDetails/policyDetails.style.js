@@ -7,6 +7,7 @@ const Container = styled.div`
   flex-direction: column;
   height: calc(var(--vh, 1vh) * 100 - 190px);
   overflow-y: scroll;
+  max-width: 345px;
 `;
 
 const PolicyInfoCard = styled.div`
@@ -104,13 +105,6 @@ const Explain = styled.div`
   border-bottom: 1px solid var(--color-gray-300);
 `;
 
-const Alert = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  margin-top: 30px;
-`;
-
 export {
   Container,
   Header,
@@ -124,5 +118,4 @@ export {
   BookmarkFillIcon,
   BookmarkIcon,
   PolicyInfoCard,
-  Alert,
 };
