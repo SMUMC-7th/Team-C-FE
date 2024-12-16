@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import {
   format,
@@ -18,20 +18,31 @@ import Day from '../../components/day/day';
 
 import { getMonthBookmark } from '../../apis/bookmark';
 import { updateVh } from '../../utils/calculateVH';
+import { LoginContext } from '../../context/LoginContext';
+import Portal from '../../components/Portal';
+import ContentModal from '../../components/modal/ContentModal';
+import { Navigate } from 'react-router-dom';
 
 const weekDays = ['일', '월', '화', '수', '목', '금', '토'];
 
 const Calendar = () => {
-  const isLogin = true; //수정 예정
+  const { isLogin } = useContext(LoginContext);
+  const nowToday = new Date();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = Navigate();
   updateVh();
   window.addEventListener('resize', updateVh);
+
+  useEffect(() => {
+    if (isLogin === false) {
+      setIsModalOpen(true);
+    }
+  }, [isLogin]);
+
   const today = new Date();
   const [currentDate, setCurrentDate] = useState(today);
   const [selectDate, setSelectDate] = useState(format(today, 'yyyy-MM-dd'));
-  if (isLogin === false) {
-    alert('로그인이 필요한 서비스 입니다');
-    window.location.href = '/';
-  }
+
   const {
     data: MonthBookmark,
     error: MonthBookmarkError,
@@ -40,6 +51,7 @@ const Calendar = () => {
     queryKey: ['calendar', currentDate.getMonth()],
     queryFn: () =>
       getMonthBookmark(currentDate.getFullYear(), currentDate.getMonth() + 1),
+    enabled: !!isLogin,
   });
 
   const policies = Array.isArray(MonthBookmark?.data?.bookmarks)
@@ -143,29 +155,49 @@ const Calendar = () => {
     setSelectDate(format(startOfMonth(newDate), 'yyyy-MM-dd'));
   };
 
+  const handleMoveToToday = () => {
+    setCurrentDate(nowToday);
+    setSelectDate(format(nowToday, 'yyyy-MM-dd'));
+  };
+
   return (
-    <S.Layout>
-      {isLogin && (
-        <>
-          <CalendarHeader
-            currentDate={currentDate}
-            prevMonth={prevMonth}
-            nextMonth={nextMonth}
-            setCurrentDate={setCurrentDate}
-            setSelectDate={setSelectDate}
-          />
-          <S.CalendarBox>
-            <S.WeekLayout>
-              {weekDays.map((day, index) => (
-                <S.Week key={index}>{day}</S.Week>
-              ))}
-            </S.WeekLayout>
-            <S.DayLayout>{generateCalendarDays()}</S.DayLayout>
-          </S.CalendarBox>
-          {selectDate && <Day day={selectDate} {...policies} />}
-        </>
+    <>
+      <S.Layout>
+        <CalendarHeader
+          currentDate={currentDate}
+          prevMonth={prevMonth}
+          nextMonth={nextMonth}
+          setCurrentDate={setCurrentDate}
+          setSelectDate={setSelectDate}
+          handleMoveToToday={handleMoveToToday}
+        />
+        <S.CalendarBox>
+          <S.WeekLayout>
+            {weekDays.map((day, index) => (
+              <S.Week key={index}>{day}</S.Week>
+            ))}
+          </S.WeekLayout>
+          <S.DayLayout>{generateCalendarDays()}</S.DayLayout>
+        </S.CalendarBox>
+        {selectDate && <Day day={selectDate} {...policies} />}
+      </S.Layout>
+
+      {isModalOpen && (
+        <Portal>
+          <ContentModal
+            title="로그인하시겠습니까?"
+            message="로그인이 필요한 서비스입니다."
+            btnText1="로그인"
+            btnText2="닫기"
+            onBtn1Click={() => navigate('/')}
+            onBtn2Click={() => {
+              navigate('/home');
+              setIsModalOpen(false);
+            }}
+          ></ContentModal>
+        </Portal>
       )}
-    </S.Layout>
+    </>
   );
 };
 
