@@ -1,8 +1,20 @@
 import { useContext } from 'react';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { getKakaoOAuth, getProfile, postInitProfile } from '../apis/auth';
+import {
+  useMutation,
+  useQuery,
+  useInfiniteQuery,
+  QueryClient,
+} from '@tanstack/react-query';
+import {
+  getKakaoOAuth,
+  getProfile,
+  getProfileBookmarks,
+  getProfileDetails,
+  postInitProfile,
+} from '../apis/auth';
 import { useNavigate } from 'react-router-dom';
 import { LoginContext } from '../context/LoginContext';
+import { deleteBookmark } from '../apis/bookmark';
 
 function useGetKakaoOAuth(code) {
   return useQuery({
@@ -36,4 +48,41 @@ function useGetProfile() {
   });
 }
 
-export { useGetKakaoOAuth, usePostInitProfile, useGetProfile };
+function useGetProfileDetails() {
+  return useQuery({
+    queryFn: () => getProfileDetails(),
+    queryKey: ['getProfileDetails'],
+  });
+}
+
+function useGetProfileBookmarks() {
+  return useInfiniteQuery({
+    queryFn: ({ pageParam = 0 }) =>
+      getProfileBookmarks({
+        cursor: pageParam,
+        offset: 10,
+      }),
+    queryKey: ['profileBookmarks'],
+    getNextPageParam: (lastPage) => {
+      return lastPage.data.hasNext ? lastPage.data.cursor : undefined;
+    },
+  });
+}
+
+function useDeleteBookmark() {
+  return useMutation({
+    mutationFn: (bookmarkId) => deleteBookmark(bookmarkId),
+    mutationKey: ['deleteBookmark'],
+    onSuccess: console.log('북마크 삭제'),
+    onError: (error) => console.log('북마크 삭제 오류', error),
+  });
+}
+
+export {
+  useGetKakaoOAuth,
+  usePostInitProfile,
+  useGetProfile,
+  useGetProfileDetails,
+  useGetProfileBookmarks,
+  useDeleteBookmark,
+};

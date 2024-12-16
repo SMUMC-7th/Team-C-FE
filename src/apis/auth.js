@@ -33,4 +33,22 @@ const getProfile = async () => {
   return data;
 };
 
-export { getKakaoOAuth, postInitProfile, getProfile };
+const getProfileDetails = async () => {
+  const { data } = await axiosInstance.get('/profiles/details');
+  return data;
+};
+
+const getProfileBookmarks = async ({ cursor, offset }) => {
+  const { data } = await axiosInstance.get(
+    `/profiles/bookmarks?cursor=${cursor}&offset=${offset}`
+  );
+  return data;
+};
+
+export {
+  getKakaoOAuth,
+  postInitProfile,
+  getProfile,
+  getProfileDetails,
+  getProfileBookmarks,
+};
