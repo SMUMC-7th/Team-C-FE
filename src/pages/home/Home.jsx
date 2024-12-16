@@ -1,15 +1,13 @@
 import * as S from './Home.style';
 import PolicyListLogin from '../../components/policyList/policyList';
 import PolicyList from '../../components/policyList/notLogin/policyList';
-import { useState } from 'react';
+import { useContext } from 'react';
 import Banner from '../../components/banner/banner';
-import userInfo from '../../mocks/userData.json';
 import { updateVh } from '../../utils/calculateVH';
-
-const user = userInfo[0];
+import { LoginContext } from '../../context/LoginContext';
 
 const Home = () => {
-  const [isLogin, setIsLogin] = useState(true);
+  const { isLogin, nickName } = useContext(LoginContext);
   updateVh();
   window.addEventListener('resize', updateVh);
 
@@ -19,21 +17,12 @@ const Home = () => {
       <S.PolicyContainer>
         {isLogin ? (
           <>
-            <S.Title>
-              ✨ {user.nickName}
-              <span>님을 위한 추천정책</span>님을 위한 추천정책
-            </S.Title>
-            <S.Button onClick={() => setIsLogin(!isLogin)}>
-              로그인 버튼
-            </S.Button>
-            <PolicyListLogin {...user}></PolicyListLogin>
+            <S.Title>✨ {nickName}<span>님을 위한 추천정책</span></S.Title>
+            <PolicyListLogin></PolicyListLogin>
           </>
         ) : (
           <>
             <S.Title>🎯 랜덤 정책 추천</S.Title>
-            <S.Button onClick={() => setIsLogin(!isLogin)}>
-              로그인 버튼
-            </S.Button>
             <PolicyList></PolicyList>
           </>
         )}

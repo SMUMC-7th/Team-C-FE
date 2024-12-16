@@ -6,14 +6,37 @@ const GlobalStyle = createGlobalStyle`
 
   :root {
     /* color */
-    --color-blue-main: #588BE2;
-    --color-gray-main: #61646B;
+    --color-gray-900: #090909;
+    --color-gray-800: #53565D;
+    --color-gray-700: #61646B;
+    --color-gray-600: #83858C;
+    --color-gray-500: #B2B2B2;
+    --color-gray-400: #C5C5C5;
+    --color-gray-300: #D9D9D9;
+    --color-gray-200: #E4E4E4;
+    --color-gray-100: #E7E7E7;
+    --color-gray-50:  #F3F3F3;
+
+    --color-blue-900: #5058EE;
+    --color-blue-800: #426ACC;
+    --color-blue-700: #588BE2;
+    --color-blue-600: #729DEE;
+
+    --color-red-900: #DF4747;
+    --color-red-800: #F05353;
+    --color-red-700: #FF0000;
+
+    --color-kakao-yellow: #FEE500;
+    --color-naver-green: #03C75A;
 
     /* size */
-    --size-max-width: 393px;
+    --size-max-width: 640px;
+    --size-inner-max-width: 590px;
+    --size-min-width: 345px;
     --size-header: 80px;
     --size-navbar: 89px;
-    --size-side-gap: 20px;
+    --size-side-gap: 24px;
+    --size-logo: 97px;
   }
 
   * {
@@ -27,11 +50,22 @@ const GlobalStyle = createGlobalStyle`
     margin: 0 auto;
     background-color: #ffffff;
     font-family: 'Pretendard-Regular';
+    overflow: hidden;
+
+    #portal {
+      height: 100vh;
+      position: absolute;
+      overflow: hidden;
+      z-index: 10;
+    }
 
     #root {
       height: 100vh;
-      padding: calc(var(--size-header) + 1rem) var(--size-side-gap) calc(var(--size-navbar) + 1rem);
-      position: relative;
+      padding: calc(var(--size-header) + 0.5rem) var(--size-side-gap) calc(var(--size-navbar) + 0.5rem);
+      position: absolute;
+      overflow: hidden;
+      max-width: var(--size-max-width);
+      width: 100%;
     }
 
     h1, h2, span, div {

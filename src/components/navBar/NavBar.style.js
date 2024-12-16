@@ -8,6 +8,7 @@ const BottomNav = styled.nav`
   position: fixed;
   bottom: 0;
   margin-left: calc(-1 * var(--size-side-gap));
+  background-color: white;
   box-shadow: 0 -5px 10px -5px rgba(0, 0, 0, 0.1);
 `;
 
@@ -24,12 +25,12 @@ const NavItem = styled.div`
   gap: 10px;
   align-items: center;
   color: ${(props) =>
-    props.selected ? 'var(--color-blue-main)' : 'var(--color-gray-main)'};
+    props.selected ? 'var(--color-blue-700)' : 'var(--color-gray-700)'};
   cursor: pointer;
 
   svg {
-    width: 1.8rem;
-    height: 1.8rem;
+    width: 1.6rem;
+    height: 1.6rem;
   }
 
   span {

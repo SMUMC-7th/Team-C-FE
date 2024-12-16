@@ -1,8 +1,8 @@
 import { GrHomeRounded } from 'react-icons/gr';
-import { HiMiniMagnifyingGlass } from 'react-icons/hi2';
-import { PiChatCircleDots } from 'react-icons/pi';
+import { GrSearch } from 'react-icons/gr';
+import { AiOutlineMessage } from 'react-icons/ai';
 import { LuCalendarDays } from 'react-icons/lu';
-import { IoPersonOutline } from 'react-icons/io5';
+import { FaRegUser } from 'react-icons/fa';
 
 const NAVMENU = [
   {
@@ -14,13 +14,13 @@ const NAVMENU = [
   {
     id: 2,
     name: '맞춤 추천',
-    img: <HiMiniMagnifyingGlass />,
+    img: <GrSearch />,
     path: '/recommend',
   },
   {
     id: 3,
     name: '커뮤니티',
-    img: <PiChatCircleDots />,
+    img: <AiOutlineMessage />,
     path: '/community',
   },
   {
@@ -32,7 +32,7 @@ const NAVMENU = [
   {
     id: 5,
     name: 'MY',
-    img: <IoPersonOutline />,
+    img: <FaRegUser />,
     path: '/my',
   },
 ];

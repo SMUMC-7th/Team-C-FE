@@ -1,8 +1,18 @@
 import styled from 'styled-components';
 
 const Container = styled.div`
+  width: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 `;
 
-export { Container };
+const OutletContainer = styled.div`
+  display: flex;
+  max-width: var(--size-max-width);
+  width: 100%;
+  justify-content: center;
+`;
+
+export { Container, OutletContainer };
