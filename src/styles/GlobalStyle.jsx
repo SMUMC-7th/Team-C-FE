@@ -27,6 +27,7 @@ const GlobalStyle = createGlobalStyle`
     --color-red-700: #FF0000;
 
     --color-kakao-yellow: #FEE500;
+    --color-naver-green: #03C75A;
 
     /* size */
     --size-max-width: 640px;
@@ -55,6 +56,7 @@ const GlobalStyle = createGlobalStyle`
       height: 100vh;
       position: absolute;
       overflow: hidden;
+      z-index: 10;
     }
 
     #root {
