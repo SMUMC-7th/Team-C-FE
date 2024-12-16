@@ -17,7 +17,7 @@ const Home = () => {
       <S.PolicyContainer>
         {isLogin ? (
           <>
-            <S.Title>✨ {nickName}님을 위한 추천정책</S.Title>
+            <S.Title>✨ {nickName}<span>님을 위한 추천정책</span></S.Title>
             <PolicyListLogin></PolicyListLogin>
           </>
         ) : (
