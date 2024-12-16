@@ -5,6 +5,7 @@ const Container = styled.div`
   position: fixed;
   max-width: var(--size-inner-max-width);
   min-width: var(--size-min-width);
+  width: 100%;
   bottom: 100px;
   justify-content: center;
   z-index: 1;
