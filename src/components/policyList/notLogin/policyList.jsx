@@ -7,14 +7,15 @@ import { useEffect, useState } from 'react';
 import Portal from '../../Portal';
 import ContentModal from '../../../components/modal/ContentModal';
 import PolicyListSkeleton from '../policyListSkeleton/policyListSkeleton';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const PolicyList = ({ user }) => {
   const { ref, inView } = useInView({
     threshold: 0,
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const navigate = Navigate();
+  const [isUpload, setIsUpload] = useState(false);
+  const navigate = useNavigate();
   useEffect(() => {
     if (inView) {
       setIsModalOpen(true);
@@ -37,7 +38,12 @@ const PolicyList = ({ user }) => {
       <S.Container>
         <S.PolicyList>
           {policiesData?.map((policyData) => (
-            <PolicyCard key={policyData.bizId} {...policyData} {...user} />
+            <PolicyCard
+              key={policyData.bizId}
+              setIsUpload={setIsUpload}
+              {...policyData}
+              {...user}
+            />
           ))}
         </S.PolicyList>
         <div ref={ref} style={{ height: '5px' }}></div>
