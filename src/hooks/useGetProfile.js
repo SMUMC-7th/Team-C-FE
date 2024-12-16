@@ -5,12 +5,12 @@ import {
   useInfiniteQuery,
   QueryClient,
 } from '@tanstack/react-query';
+import { getGoogleOAuth, getKakaoOAuth, getNaverOAuth } from '../apis/auth';
 import {
-  getKakaoOAuth,
-  getNaverOAuth,
   getProfile,
   postInitProfile,
-} from '../apis/auth';
+  getProfileBookmarks,
+} from '../apis/profile';
 import { useNavigate } from 'react-router-dom';
 import { LoginContext } from '../context/LoginContext';
 import { deleteBookmark } from '../apis/bookmark';
@@ -26,6 +26,13 @@ function useGetNaverOAuth(code) {
   return useQuery({
     queryFn: () => getNaverOAuth(code),
     queryKey: ['getNaverOAuth', code],
+  });
+}
+
+function useGetGoogleOAuth(code) {
+  return useQuery({
+    queryFn: () => getGoogleOAuth(code),
+    queryKey: ['getGoogleOAuth', code],
   });
 }
 
@@ -70,6 +77,8 @@ function useGetProfileBookmarks() {
       }),
     queryKey: ['profileBookmarks'],
     getNextPageParam: (lastPage) => {
+      console.log('마지막페이지 커서', lastPage.data.cursor);
+
       return lastPage.data.hasNext ? lastPage.data.cursor : undefined;
     },
   });
@@ -92,4 +101,5 @@ export {
   useGetProfileBookmarks,
   useDeleteBookmark,
   useGetNaverOAuth,
+  useGetGoogleOAuth,
 };

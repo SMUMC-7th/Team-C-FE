@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import { axiosInstance } from './axiosInstance';
 
@@ -16,47 +15,11 @@ const getNaverOAuth = async (code) => {
   return data;
 };
 
-const postInitProfile = async ({
-  nickname,
-  age,
-  regions,
-  keyword,
-  majors,
-  educations,
-}) => {
-  const { data } = await axiosInstance.post('/profiles/init-profile', {
-    nickname: nickname,
-    age: Number(age),
-    regions: regions,
-    keyword: keyword,
-    majors: majors,
-    educations: educations,
-  });
+const getGoogleOAuth = async (code) => {
+  const url = `${import.meta.env.VITE_API_BASE_URL}/auth/google-oauth?code=${code}`;
+
+  const { data } = await axiosInstance.get(url);
   return data;
 };
 
-const getProfile = async () => {
-  const { data } = await axiosInstance.get('/profiles');
-  return data;
-};
-
-const getProfileDetails = async () => {
-  const { data } = await axiosInstance.get('/profiles/details');
-  return data;
-};
-
-const getProfileBookmarks = async ({ cursor, offset }) => {
-  const { data } = await axiosInstance.get(
-    `/profiles/bookmarks?cursor=${cursor}&offset=${offset}`
-  );
-  return data;
-};
-
-export {
-  getKakaoOAuth,
-  postInitProfile,
-  getProfile,
-  getProfileDetails,
-  getProfileBookmarks,
-  getNaverOAuth,
-};
+export { getKakaoOAuth, getNaverOAuth, getGoogleOAuth };
