@@ -7,14 +7,14 @@ import { useEffect, useState } from 'react';
 import Portal from '../../Portal';
 import ContentModal from '../../../components/modal/ContentModal';
 import PolicyListSkeleton from '../policyListSkeleton/policyListSkeleton';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const PolicyList = ({ user }) => {
   const { ref, inView } = useInView({
     threshold: 0,
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const navigate = Navigate();
+  const navigate = useNavigate();
   useEffect(() => {
     if (inView) {
       setIsModalOpen(true);
