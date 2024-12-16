@@ -29,8 +29,8 @@ const GlobalStyle = createGlobalStyle`
     --color-kakao-yellow: #FEE500;
 
     /* size */
-    --size-max-width: 393px;
-    --size-inner-max-width: 345px;
+    --size-max-width: 640px;
+    --size-inner-max-width: 590px;
     --size-header: 80px;
     --size-navbar: 89px;
     --size-side-gap: 24px;
