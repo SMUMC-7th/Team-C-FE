@@ -13,6 +13,8 @@ import {
   NotFound,
   PostWrite,
   EditProfile,
+  KakaoOAuthHandler,
+  PostEdit,
 } from '../pages/index';
 
 const router = createBrowserRouter([
@@ -24,6 +26,10 @@ const router = createBrowserRouter([
   {
     path: '/settings',
     element: <UserSettings />,
+  },
+  {
+    path: '/auth/kakao-oauth',
+    element: <KakaoOAuthHandler />,
   },
   {
     path: '/',
@@ -65,6 +71,10 @@ const router = createBrowserRouter([
       {
         path: '/postwrite',
         element: <PostWrite />,
+      },
+      {
+        path: '/postedit/:postId',
+        element: <PostEdit />,
       },
     ],
   },

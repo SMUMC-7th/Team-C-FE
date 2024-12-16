@@ -2,8 +2,7 @@ import styled from 'styled-components';
 import { IoSearch } from 'react-icons/io5';
 
 const Container = styled.div`
-  width: 100%;
-  max-width: 800px;
+  width: var(--size-inner-max-width);
   height: calc(100vh - 190px);
   margin: 0 auto;
   padding: 10px;
@@ -42,7 +41,7 @@ const SearchIcon = styled(IoSearch)`
 const WriteButton = styled.div`
   position: fixed;
   left: 50%;
-  bottom: 14%;
+  bottom: 19%;
   transform: translate(-50%, 50%);
 
   button {

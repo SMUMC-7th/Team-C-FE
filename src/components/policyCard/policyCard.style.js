@@ -26,8 +26,8 @@ const Card = styled(Link)`
 `;
 const BookmarkIcon = styled(BsBookmarkDash)`
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 11px;
+  left: 13px;
   cursor: pointer;
   z-index: 1;
   color: var(--color-blue-700);
@@ -36,8 +36,8 @@ const BookmarkIcon = styled(BsBookmarkDash)`
 `;
 const BookmarkFillIcon = styled(BsBookmarkFill)`
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 11px;
+  left: 13px;
   cursor: pointer;
   z-index: 1;
   color: var(--color-blue-700);
@@ -57,7 +57,7 @@ const Texts = styled.div`
 
 const Title = styled.div`
   display: -webkit-box;
-  font-size: 26px;
+  font-size: 23px;
   color: var(--color-blue-700);
   font-weight: bold;
   word-break: break-word;
@@ -69,18 +69,26 @@ const Title = styled.div`
 `;
 
 const Content = styled.div`
-  display: flex;
+  display: -webkit-box;
   font-size: 15px;
-  word-break: keep-all;
+  word-break: break-word;
   font-weight: bold;
   color: #000000;
-  /* width: 150px; */
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 200px;
+  margin-top: 5px;
 `;
 
 const Img = styled.div`
   display: flex;
   width: 123px;
   height: 123px;
+  img {
+    object-fit: cover;
+  }
 `;
 export {
   Container,

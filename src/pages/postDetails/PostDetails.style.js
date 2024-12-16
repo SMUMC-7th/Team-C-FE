@@ -2,8 +2,7 @@ import styled from 'styled-components';
 import { FaCommentDots } from 'react-icons/fa';
 
 const Container = styled.div`
-  width: 100%;
-  max-width: 800px;
+  width: var(--size-inner-max-width);
   height: calc(100vh - 190px);
   margin: 0 auto;
   padding: 10px;

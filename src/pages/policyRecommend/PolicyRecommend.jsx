@@ -7,10 +7,12 @@ import Portal from '../../components/Portal';
 import ContentModal from '../../components/modal/ContentModal';
 import { Navigate } from 'react-router-dom';
 
+
 function PolicyRec() {
   const { isLogin } = useContext(LoginContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = Navigate();
+  
   useEffect(() => {
     updateVh();
     const handleResize = () => updateVh();

@@ -1,41 +1,36 @@
 import * as S from './policyList.style';
 import PolicyCard from '../policyCard/policyCard';
-import { useInView } from 'react-intersection-observer';
-import { useEffect } from 'react';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { getRandomPolicyLogin } from '../../apis/policy';
 
-const policyFieldCodesLetter = {
-  일자리: '023010',
-  주거: '023020',
-  교육: '023030',
-  '복지 / 문화': '023040',
-  '참여 / 권리': '023050',
-};
-function useGetInfinitePolicy(interest) {
+import { useInView } from 'react-intersection-observer';
+import { useContext, useEffect, useState } from 'react';
+import { useInfiniteQuery } from '@tanstack/react-query';
+
+import { getRecommendPolicy } from '../../apis/policy';
+import PolicyListSkeleton from './policyListSkeleton/policyListSkeleton';
+import { LoginContext } from '../../context/LoginContext';
+import { canApplyNow } from '../../utils/formatDate';
+import Alert from '../alert/alert';
+
+function useGetInfinitePolicy() {
+  const { isLogin } = useContext(LoginContext);
   return useInfiniteQuery({
-    queryKey: ['categoryPolicies', interest],
-    queryFn: ({ pageParam = 1 }) => getRandomPolicyLogin(pageParam, interest),
+    queryKey: ['categoryPolicies'],
+    queryFn: ({ pageParam = 1 }) => getRecommendPolicy(pageParam),
     initialPageParam: 1,
-    getNextPageParam: (lastPage, allPages) => {
-      const lastPolicy = lastPage?.data?.emp?.[lastPage.data.emp.length - 1];
-      return lastPolicy ? allPages.length + 1 : undefined;
+    getNextPageParam: (lastPage) => {
+      const currentIndex = lastPage?.data?.pageIndex || 1;
+      const totalPolicies = lastPage?.data?.totalCnt || 0;
+      const policiesPerPage = 10;
+      const maxPageIndex = Math.ceil(totalPolicies / policiesPerPage);
+      return currentIndex < maxPageIndex ? currentIndex + 1 : undefined;
     },
     cacheTime: 10000,
     staleTime: 10000,
-    enabled: !!interest && interest.length > 0,
+    enabled: !!isLogin,
   });
 }
-const PolicyListLogin = (props) => {
-  const { ...user } = props;
-  let interestCode = '';
 
-  const interest = user.interest;
-  interestCode = interest
-    .map((interestItem) => policyFieldCodesLetter[interestItem])
-    .filter((code) => code)
-    .join(',');
-
+const PolicyListLogin = () => {
   const {
     data,
     error,
@@ -44,78 +39,45 @@ const PolicyListLogin = (props) => {
     hasNextPage,
     isFetching,
     isPending,
-  } = useGetInfinitePolicy(interestCode);
-
+  } = useGetInfinitePolicy();
   const { ref, inView } = useInView({
     threshold: 0,
   });
-
+  const [isUpload, setIsUpload] = useState(false);
+  const [uploadResponse, setUploadResponse] = useState('');
   useEffect(() => {
     if (inView && !isFetching && hasNextPage) {
       fetchNextPage();
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
 
-  if (isPending) {
-    return <p>Loading...</p>;
+  if (isPending || isLoading) {
+    return <PolicyListSkeleton />;
   }
 
-  if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error loading policies</p>;
 
   const policiesData = data?.pages;
 
-  function extractSubstring(text) {
-    if (!text) return true;
-    const keyword = '신청기간:';
-    const keywordIndex = text.indexOf(keyword);
-
-    if (keywordIndex !== -1) {
-      return true;
-    } else {
-      const newText = text.slice(0, 21);
-      try {
-        const [start, end] = newText.split('~', 2).map((date) => date.trim());
-        const endDate = new Date(end);
-        const today = new Date();
-
-        if (endDate < today) {
-          return false;
-        }
-        return start;
-      } catch {
-        return true;
-      }
-    }
-  }
-
   return (
     <S.Container>
       <S.PolicyList>
-        {policiesData?.map((page) => {
-          return page?.data?.emp.map((policyData) => {
-            const isValid = extractSubstring(policyData.rqutPrdCn);
-            if (isValid === false) {
-              return null;
-            }
-            return (
-              <PolicyCard key={policyData.bizId} {...policyData} {...user} />
-            );
-          });
-        })}
+        {policiesData?.map((page) =>
+          page?.data?.emp.map((policyData) =>
+            canApplyNow(policyData.rqutPrdCn) ? (
+              <PolicyCard
+                key={policyData.bizId}
+                setIsUpload={setIsUpload}
+                setUploadResponse={setUploadResponse}
+                {...policyData}
+              />
+            ) : null
+          )
+        )}
       </S.PolicyList>
-      <div
-        ref={ref}
-        style={{
-          height: '50px',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: '100%',
-        }}
-      >
-        {isFetching && <p>Loading more...</p>}
-      </div>
+      {hasNextPage && !isFetching && <S.Ref ref={ref}></S.Ref>}
+      {isFetching && <PolicyListSkeleton />}
+      {isUpload && <Alert content={uploadResponse}></Alert>}
     </S.Container>
   );
 };

@@ -5,6 +5,7 @@ const Header = styled.header`
   max-width: var(--size-max-width);
   width: 100%;
   height: var(--size-header);
+  background-color: white;
   overflow: hidden;
   position: fixed;
   top: 0;

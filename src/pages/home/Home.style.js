@@ -1,21 +1,23 @@
 import styled from 'styled-components';
 
 const Container = styled.div`
+  position: fixed;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 190px);
+  height: calc(var(--vh, 1vh) * 100 - 190px);
   align-items: center;
-  position: relative;
   gap: 20px;
-  transform: translateX(20px);
-  max-width: 100%;
-  margin-left: calc(-1 * var(--size-side-gap));
+  width: var(--size-inner-max-width);
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
 `;
 
 const PolicyContainer = styled.div`
   flex: 1;
   overflow-y: scroll;
-  width: 345px;
+  width: 100%;
+  max-height: 75%;
 `;
 
 const Title = styled.div`
@@ -34,5 +36,15 @@ const Title = styled.div`
   z-index: 3;
   margin-bottom: 10px;
 `;
-
-export { Container, PolicyContainer, Title };
+const Button = styled.button`
+  padding: 10px;
+  justify-self: center;
+  display: flex;
+  position: absolute;
+  top: 165px;
+  right: 10px;
+  z-index: 100;
+  border-radius: 5px;
+  font-size: 10px;
+`;
+export { Container, PolicyContainer, Title, Button };

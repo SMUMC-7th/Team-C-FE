@@ -1,15 +1,5 @@
 import styled from 'styled-components';
 
-const Layout = styled.div`
-  margin: 100px auto;
-  gap: 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 40px;
-`;
-
 const Header = styled.div`
   display: flex;
   justify-content: center;
@@ -17,6 +7,8 @@ const Header = styled.div`
   min-height: 40px;
   border-radius: 30px;
   background-color: var(--color-gray-50);
+  position: relative;
+  margin-top: 15px;
 `;
 
 const Title = styled.div`
@@ -24,7 +16,7 @@ const Title = styled.div`
   color: var(--color-gray-800);
   font-weight: 700;
   display: flex;
-  min-width: 110px;
+  min-width: 120px;
   align-items: center;
   justify-content: center;
 `;
@@ -36,4 +28,12 @@ const Button = styled.div`
   align-items: center;
 `;
 
-export { Layout, Header, Title, Button };
+const TodayButton = styled.button`
+  position: absolute;
+  right: -40px;
+  top: 13px;
+  font-size: 15px;
+  padding: 0 5px;
+  border-radius: 10px;
+`;
+export { Header, Title, Button, TodayButton };
