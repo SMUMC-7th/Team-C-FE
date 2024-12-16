@@ -5,14 +5,13 @@ import { useContext, useState, useEffect } from 'react';
 import { LoginContext } from '../../context/LoginContext';
 import Portal from '../../components/Portal';
 import ContentModal from '../../components/modal/ContentModal';
-import { Navigate } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
 
 function PolicyRec() {
   const { isLogin } = useContext(LoginContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const navigate = Navigate();
-  
+  const navigate = useNavigate();
+
   useEffect(() => {
     updateVh();
     const handleResize = () => updateVh();
