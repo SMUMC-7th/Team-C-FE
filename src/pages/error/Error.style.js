@@ -3,7 +3,9 @@ import styled from 'styled-components';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: var(--size-max-width);
+  max-width: var(--size-max-width);
+  width: 100%;
+  min-width: var(--size-min-width);
   height: 100vh;
   padding: 0;
   margin: 0;
