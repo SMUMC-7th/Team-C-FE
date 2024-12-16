@@ -5,6 +5,9 @@ import CommentList from '../../components/comment/CommentList';
 import CommentInput from '../../components/comment/CommentInput';
 import EditMenu from '../../components/editMenu/EditMenu';
 import { getPostDetail, deletePost } from '../../apis/post';
+import Portal from '../../components/Portal';
+import { AlertModal } from '../../components/modal/AlertModal';
+import checked from '../../images/checked.svg';
 
 function PostDetails() {
   const { postId } = useParams();
@@ -13,6 +16,7 @@ function PostDetails() {
   const [newComment, setNewComment] = useState('');
   const [commentCount, setCommmetCount] = useState(0); // 초기값 0
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchPostDetail = async () => {
@@ -42,8 +46,11 @@ function PostDetails() {
   const handleDeletePost = async () => {
     try {
       await deletePost({ articleId: postId });
-      alert('게시글이 삭제되었습니다.');
-      navigate('/community');
+      setIsModalOpen(true);
+      setTimeout(() => {
+        setIsModalOpen(false);
+        navigate('/community');
+      }, 2000);
     } catch (error) {
       console.error('게시글 삭제 실패:', error);
       alert('게시글 삭제 중 오류가 발생했습니다.');
@@ -101,6 +108,15 @@ function PostDetails() {
           handleAddComment={handleAddComment}
         />
       </form>
+      {isModalOpen && (
+        <Portal>
+          <AlertModal
+            setIsModalOpen={setIsModalOpen}
+            imgSrc={checked}
+            content="삭제되었습니다."
+          />
+        </Portal>
+      )}
     </S.Container>
   );
 }

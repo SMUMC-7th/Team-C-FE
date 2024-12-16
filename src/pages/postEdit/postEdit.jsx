@@ -3,6 +3,9 @@ import { BsPencil } from 'react-icons/bs';
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { updatePost, getPostDetail } from '../../apis/post';
+import Portal from '../../components/Portal';
+import { AlertModal } from '../../components/modal/AlertModal';
+import updateImg from '../../images/updateImg.svg';
 
 const PostEdit = () => {
   const { postId } = useParams();
@@ -10,6 +13,7 @@ const PostEdit = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // 게시글 수정 함수
   const handleSubmit = async (e) => {
@@ -22,8 +26,11 @@ const PostEdit = () => {
 
     try {
       await updatePost({ articleId: postId, title, content });
-      alert('게시글이 수정되었습니다!');
-      navigate(`/community/${postId}`); // 수정 완료 후 게시글 상세로 이동
+      setIsModalOpen(true);
+      setTimeout(() => {
+        setIsModalOpen(false);
+        navigate(`/community/${postId}`);
+      }, 2000);
     } catch (error) {
       console.error('게시글 수정 실패:', error);
       alert('수정 중 오류가 발생했습니다.');
@@ -73,6 +80,15 @@ const PostEdit = () => {
           수정하기
         </button>
       </S.UploadButton>
+      {isModalOpen && (
+        <Portal>
+          <AlertModal
+            setIsModalOpen={setIsModalOpen}
+            imgSrc={updateImg}
+            content="수정되었습니다."
+          />
+        </Portal>
+      )}
     </S.WriteContainer>
   );
 };
