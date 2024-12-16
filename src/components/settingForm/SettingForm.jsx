@@ -62,7 +62,6 @@ function SettingForm({
     }
     setNickName(values.nickName);
     setProfileImgUrl(profileImg);
-    setUserNickName(nickName);
   };
 
   return (
