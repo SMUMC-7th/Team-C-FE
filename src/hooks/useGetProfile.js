@@ -1,6 +1,11 @@
 import { useContext } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { getKakaoOAuth, getProfile, postInitProfile } from '../apis/auth';
+import {
+  getKakaoOAuth,
+  getNaverOAuth,
+  getProfile,
+  postInitProfile,
+} from '../apis/auth';
 import { useNavigate } from 'react-router-dom';
 import { LoginContext } from '../context/LoginContext';
 
@@ -8,6 +13,13 @@ function useGetKakaoOAuth(code) {
   return useQuery({
     queryFn: () => getKakaoOAuth(code),
     queryKey: ['getKakaoOAuth', code],
+  });
+}
+
+function useGetNaverOAuth(code) {
+  return useQuery({
+    queryFn: () => getNaverOAuth(code),
+    queryKey: ['getNaverOAuth', code],
   });
 }
 
@@ -36,4 +48,9 @@ function useGetProfile() {
   });
 }
 
-export { useGetKakaoOAuth, usePostInitProfile, useGetProfile };
+export {
+  useGetKakaoOAuth,
+  useGetNaverOAuth,
+  usePostInitProfile,
+  useGetProfile,
+};
