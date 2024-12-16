@@ -8,13 +8,6 @@ import { generateToken, messaging } from './remote/firebase.js';
 import { onMessage } from 'firebase/messaging';
 
 function App() {
-  useEffect(() => {
-    generateToken();
-    onMessage(messaging, (payload) => {
-      console.log(payload);
-    });
-  }, []);
-
   const queryClient = new QueryClient();
 
   return (

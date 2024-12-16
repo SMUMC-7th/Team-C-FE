@@ -2,7 +2,11 @@ import { useContext, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { LoginContext } from '../../context/LoginContext';
 import { useGetGoogleOAuth } from '../../hooks/useGetProfile';
-
+import { generateToken } from '../../remote/firebase';
+import { postDeviceToken } from '../../apis/deviceToken';
+import { onMessage } from 'firebase/messaging';
+import { messaging } from '../../remote/firebase';
+import { useQuery } from '@tanstack/react-query';
 function GoogleOAuthHandler() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -41,6 +45,25 @@ function GoogleOAuthHandler() {
       console.error('구글 토큰 발급 실패');
     }
   }, [isError]);
+
+  const useDeviceToken = () => {
+    return useQuery({
+      queryKey: ['token'],
+      queryFn: async () => {
+        const token = await generateToken();
+        console.log('토큰', token);
+        return postDeviceToken(token);
+      },
+      enabled: true,
+    });
+  };
+
+  const { data: tokenResponse, error } = useDeviceToken();
+  console.log('data', tokenResponse);
+
+  onMessage(messaging, (payload) => {
+    console.log(payload);
+  });
 
   if (isLoading) {
     return <div></div>;
