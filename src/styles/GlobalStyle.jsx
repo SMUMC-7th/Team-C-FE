@@ -62,6 +62,7 @@ const GlobalStyle = createGlobalStyle`
       padding: calc(var(--size-header) + 0.5rem) var(--size-side-gap) calc(var(--size-navbar) + 0.5rem);
       position: absolute;
       overflow: hidden;
+      max-width: var(--size-max-width);
       width: 100%;
     }
 
