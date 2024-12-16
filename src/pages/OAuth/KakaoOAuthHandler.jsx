@@ -1,6 +1,5 @@
 import { useEffect, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
 import { useGetKakaoOAuth } from '../../hooks/useGetProfile';
 import { useQuery } from '@tanstack/react-query';
 import { LoginContext } from '../../context/LoginContext';
