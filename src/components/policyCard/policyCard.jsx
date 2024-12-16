@@ -87,16 +87,18 @@ const PolicyCard = (props) => {
             <S.Title canApply={canApply}>{polyBizSjnm}</S.Title>
             <S.Content>{editDate}</S.Content>
           </S.Texts>
-          <S.Img>
+          <S.Img canApply={canApply}>
             {RandomImage && <img src={RandomImage} alt="랜덤 이미지" />}
           </S.Img>
         </S.Card>
         {isClicked === true ? (
           <S.BookmarkFillIcon
+            canApply={canApply}
             onClick={handleBookmarkClick}
           ></S.BookmarkFillIcon>
         ) : (
           <S.BookmarkIcon
+            canApply={canApply}
             onClick={handleBookmarkClick}
             isclicked={data?.data}
           />
