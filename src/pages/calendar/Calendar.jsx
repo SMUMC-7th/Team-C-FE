@@ -21,7 +21,7 @@ import { updateVh } from '../../utils/calculateVH';
 import { LoginContext } from '../../context/LoginContext';
 import Portal from '../../components/Portal';
 import ContentModal from '../../components/modal/ContentModal';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const weekDays = ['일', '월', '화', '수', '목', '금', '토'];
 
@@ -29,7 +29,7 @@ const Calendar = () => {
   const { isLogin } = useContext(LoginContext);
   const nowToday = new Date();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const navigate = Navigate();
+  const navigate = useNavigate();
   updateVh();
   window.addEventListener('resize', updateVh);
 
