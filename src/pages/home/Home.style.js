@@ -1,14 +1,15 @@
 import styled from 'styled-components';
 
 const Container = styled.div`
-  position: fixed;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 190px);
+  height: calc(var(--vh, 1vh) * 100 - 190px);
   align-items: center;
   gap: 20px;
-  width: 346px;
+  width: var(--size-inner-max-width);
   overflow: hidden;
+  margin: 0;
+  padding: 0;
 `;
 
 const PolicyContainer = styled.div`

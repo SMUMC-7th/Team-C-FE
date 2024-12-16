@@ -29,7 +29,9 @@ const GlobalStyle = createGlobalStyle`
     --color-kakao-yellow: #FEE500;
 
     /* size */
-    --size-max-width: 393px;
+    --size-max-width: 640px;
+    --size-inner-max-width: 590px;
+    --size-min-width: 345px;
     --size-header: 80px;
     --size-navbar: 89px;
     --size-side-gap: 24px;
@@ -47,12 +49,20 @@ const GlobalStyle = createGlobalStyle`
     margin: 0 auto;
     background-color: #ffffff;
     font-family: 'Pretendard-Regular';
+    overflow: hidden;
+
+    #portal {
+      height: 100vh;
+      position: absolute;
+      overflow: hidden;
+    }
 
     #root {
       height: 100vh;
       padding: calc(var(--size-header) + 0.5rem) var(--size-side-gap) calc(var(--size-navbar) + 0.5rem);
-      position: relative;
+      position: absolute;
       overflow: hidden;
+      width: 100%;
     }
 
     h1, h2, span, div {

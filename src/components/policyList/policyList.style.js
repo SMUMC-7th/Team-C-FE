@@ -4,6 +4,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  width: 100%;
 `;
 
 const Title = styled.div`
@@ -25,14 +26,23 @@ const PolicyList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 345px;
+  width: 100%;
+  min-width: var(--size-min-width);
 `;
 
 const Alert = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  margin-top: 30px;
+  flex-direction: column;
+  gap: 10px;
 `;
 
-export { Container, Title, PolicyList, Alert };
+const Ref = styled.div`
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+`;
+export { Container, Title, PolicyList, Alert, Ref };

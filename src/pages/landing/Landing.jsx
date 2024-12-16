@@ -1,7 +1,11 @@
 import * as S from './Landing.style';
 import { RiKakaoTalkFill } from 'react-icons/ri';
+import { SiNaver } from 'react-icons/si';
+import { FcGoogle } from 'react-icons/fc';
 import { useNavigate } from 'react-router-dom';
 import logo_wg from '../../images/logo_wg.svg';
+import Portal from './../../components/Portal';
+import { updateVh } from '../../utils/calculateVH';
 
 function requestPermission() {
   console.log('권한 요청 중...');
@@ -16,23 +20,49 @@ function requestPermission() {
   });
 }
 function Landing() {
-  const loginUrl = `${import.meta.env.VITE_KAKAO_URL}?response_type=code&client_id=${import.meta.env.VITE_KAKAO_REST_API_KEY}&redirect_uri=${import.meta.env.VITE_KAKAO_REDIRECT_URI}`;
   requestPermission();
+
+  const kakaoLoginUrl = `${import.meta.env.VITE_KAKAO_URL}?response_type=code&client_id=${import.meta.env.VITE_KAKAO_REST_API_KEY}&redirect_uri=${import.meta.env.VITE_KAKAO_REDIRECT_URI}`;
+
+  const naverLoginUrl = `https://nid.naver.com/oauth2.0/authorize?client_id=${import.meta.env.VITE_NAVER_CLIENT_ID}&response_type=code&redirect_uri=${import.meta.env.VITE_NAVER_REDIRECT_URI}&state=${import.meta.env.VITE_NAVER_CLIENT_SECRET}`;
+
+  const handleNonMember = () => {
+    document.cookie =
+      'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    document.cookie =
+      'refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+  };
+
+  updateVh();
+  window.addEventListener('resize', updateVh);
+
+
   return (
-    <S.Container>
-      <S.LogoContainer>
-        <S.Logo src={logo_wg} />
-        <S.Slogan>청년들의 사회 적응 길라잡이</S.Slogan>
-      </S.LogoContainer>
-      <S.LoginContainer>
-        <S.LoginTitle>간편 로그인</S.LoginTitle>
-        <S.KakaoLoginButton href={loginUrl}>
-          <RiKakaoTalkFill size={'1.5rem'} />
-          카카오 로그인
-        </S.KakaoLoginButton>
-        <S.GuestLogin to="/home">비회원으로 이용하기</S.GuestLogin>
-      </S.LoginContainer>
-    </S.Container>
+    <Portal>
+      <S.Container>
+        <S.LogoContainer>
+          <S.Logo src={logo_wg} />
+          <S.Slogan>청년들의 사회 적응 길라잡이</S.Slogan>
+        </S.LogoContainer>
+        <S.LoginContainer>
+          <S.LoginTitle>간편 로그인</S.LoginTitle>
+          <S.LoginBtnContainer>
+            <S.LoginButton type={'kakao'} href={kakaoLoginUrl}>
+              <RiKakaoTalkFill size={'1.5rem'} />
+            </S.LoginButton>
+            <S.LoginButton type={'naver'} href={naverLoginUrl}>
+              <SiNaver size={'1rem'} />
+            </S.LoginButton>
+            <S.LoginButton type={'google'}>
+              <FcGoogle size={'1.5rem'} />
+            </S.LoginButton>
+            <S.GuestLogin onClick={handleNonMember} to="/home">
+              비회원으로 이용하기
+            </S.GuestLogin>
+          </S.LoginBtnContainer>
+        </S.LoginContainer>
+      </S.Container>
+    </Portal>
   );
 }
 

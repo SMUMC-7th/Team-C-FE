@@ -2,14 +2,9 @@ import { styled } from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const Container = styled.div`
-  height: 100vh;
-  width: 100%;
-  padding: calc(var(--size-header) + 0.5rem) var(--size-side-gap)
-    calc(var(--size-navbar) + 0.5rem) var(--size-side-gap);
+  height: calc(var(--vh, 1vh) * 100);
+  width: min(100vw, var(--size-max-width));
   background-color: var(--color-blue-700);
-  position: absolute;
-  top: 0;
-  left: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -65,33 +60,44 @@ const LoginTitle = styled.div`
   }
 `;
 
-const KakaoLoginButton = styled.a`
+const LoginBtnContainer = styled.div`
+  width: 100%;
+  display: flex;
+  gap: 10px;
+`;
+
+const LoginButton = styled.a`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  background-color: var(--color-kakao-yellow);
-  color: #000000;
-  font-size: 16px;
-  padding: 10px 20px;
+  width: 44px;
+  padding: ${({ type }) => (type === 'naver' ? '10px 16px' : '10px')};
+  background-color: ${({ type }) =>
+    type === 'kakao'
+      ? 'var(--color-kakao-yellow)'
+      : type === 'naver'
+        ? 'var(--color-naver-green)'
+        : type === 'google'
+          ? 'white'
+          : 'transparent'};
+  color: ${({ type }) => (type === 'naver' ? 'white' : '#000000')};
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-weight: bold;
-  text-decoration: none;
-
-  svg {
-    margin-right: 4px;
-  }
 `;
 
 const GuestLogin = styled(Link)`
   width: 100%;
   font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: white;
   cursor: pointer;
   text-align: center;
   text-decoration: none;
+  border: 1px solid white;
+  border-radius: 5px;
 `;
 
 export {
@@ -101,6 +107,7 @@ export {
   Slogan,
   LoginContainer,
   LoginTitle,
-  KakaoLoginButton,
+  LoginBtnContainer,
+  LoginButton,
   GuestLogin,
 };

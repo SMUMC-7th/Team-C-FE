@@ -1,47 +1,35 @@
 import * as S from './policyList.style';
 import PolicyCard from '../policyCard/policyCard';
-import { useInView } from 'react-intersection-observer';
-import { useEffect } from 'react';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { getRecommendPolicy } from '../../apis/policy';
-import ClipLoader from 'react-spinners/ClipLoader';
 
-const policyFieldCodesLetter = {
-  일자리: '023010',
-  주거: '023020',
-  교육: '023030',
-  '복지 / 문화': '023040',
-  '참여 / 권리': '023050',
-};
-function useGetInfinitePolicy(interest) {
+import { useInView } from 'react-intersection-observer';
+import { useContext, useEffect, useState } from 'react';
+import { useInfiniteQuery } from '@tanstack/react-query';
+
+import { getRecommendPolicy } from '../../apis/policy';
+import PolicyListSkeleton from './policyListSkeleton/policyListSkeleton';
+import { LoginContext } from '../../context/LoginContext';
+import Alert from '../alert/alert';
+
+function useGetInfinitePolicy() {
+  const { isLogin } = useContext(LoginContext);
   return useInfiniteQuery({
-    queryKey: ['categoryPolicies', interest],
+    queryKey: ['categoryPolicies'],
     queryFn: ({ pageParam = 1 }) => getRecommendPolicy(pageParam),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {
       const currentIndex = lastPage?.data?.pageIndex || 1;
       const totalPolicies = lastPage?.data?.totalCnt || 0;
       const policiesPerPage = 10;
-
       const maxPageIndex = Math.ceil(totalPolicies / policiesPerPage);
       return currentIndex < maxPageIndex ? currentIndex + 1 : undefined;
     },
     cacheTime: 10000,
     staleTime: 10000,
-    enabled: !!interest && interest.length > 0,
+    enabled: !!isLogin,
   });
 }
 
-const PolicyListLogin = (props) => {
-  const { ...user } = props;
-  let interestCode = '';
-
-  const interest = user.interest;
-  interestCode = interest
-    .map((interestItem) => policyFieldCodesLetter[interestItem])
-    .filter((code) => code)
-    .join(',');
-
+const PolicyListLogin = () => {
   const {
     data,
     error,
@@ -50,12 +38,12 @@ const PolicyListLogin = (props) => {
     hasNextPage,
     isFetching,
     isPending,
-  } = useGetInfinitePolicy(interestCode);
-
+  } = useGetInfinitePolicy();
   const { ref, inView } = useInView({
     threshold: 0,
   });
-
+  const [isUpload, setIsUpload] = useState(false);
+  const [uploadResponse, setUploadResponse] = useState('');
   useEffect(() => {
     if (inView && !isFetching && hasNextPage) {
       fetchNextPage();
@@ -63,11 +51,7 @@ const PolicyListLogin = (props) => {
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
 
   if (isPending || isLoading) {
-    return (
-      <S.Alert>
-        <ClipLoader />
-      </S.Alert>
-    );
+    return <PolicyListSkeleton />;
   }
 
   if (error) return <p>Error loading policies</p>;
@@ -79,24 +63,18 @@ const PolicyListLogin = (props) => {
       <S.PolicyList>
         {policiesData?.map((page) =>
           page?.data?.emp.map((policyData) => (
-            <PolicyCard key={policyData.bizId} {...policyData} {...user} />
+            <PolicyCard
+              key={policyData.bizId}
+              setIsUpload={setIsUpload}
+              setUploadResponse={setUploadResponse}
+              {...policyData}
+            />
           ))
         )}
       </S.PolicyList>
-      {hasNextPage && (
-        <div
-          ref={ref}
-          style={{
-            height: '50px',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: '100%',
-          }}
-        >
-          {isFetching && <ClipLoader />}
-        </div>
-      )}
+      {hasNextPage && !isFetching && <S.Ref ref={ref}></S.Ref>}
+      {isFetching && <PolicyListSkeleton />}
+      {isUpload && <Alert content={uploadResponse}></Alert>}
     </S.Container>
   );
 };

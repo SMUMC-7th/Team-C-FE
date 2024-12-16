@@ -1,8 +1,8 @@
 import styled from 'styled-components';
+import { FaCommentDots } from 'react-icons/fa';
 
 const CommentList = styled.div`
   margin-top: 10px;
-  height: 280px;
   overflow-y: scroll;
 `;
 
@@ -43,4 +43,48 @@ const EditBox = styled.div`
   justify-content: space-between;
 `;
 
-export { CommentList, CommentBox, Comment, EditBox };
+const Edit = styled.div`
+  display: flex;
+  align-items: center;
+  background-color: var(--color-gray-100);
+  width: 60px;
+  border-radius: 7px;
+`;
+
+const CommentIcon = styled(FaCommentDots)`
+  font-size: 16px;
+  margin: 0 10px;
+  color: var(--color-gray-700);
+`;
+
+const CommentUpdate = styled.div`
+  display: flex;
+  align-items: center;
+
+  input {
+    width: 180px;
+    border: none;
+    background-color: var(--color-gray-100);
+    border-radius: 5px;
+    font-size: 15px;
+    padding-left: 7px;
+  }
+
+  button {
+    margin-left: 10px;
+    background-color: white;
+    color: var(--color-gray-600);
+    border-radius: 10px;
+    cursor: pointer;
+  }
+`;
+
+export {
+  CommentList,
+  CommentBox,
+  Comment,
+  EditBox,
+  Edit,
+  CommentIcon,
+  CommentUpdate,
+};

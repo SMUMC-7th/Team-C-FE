@@ -5,15 +5,15 @@ import { BsBookmarkDash, BsBookmarkFill } from 'react-icons/bs';
 const Container = styled.div`
   display: flex;
   min-height: 156px;
-  background: linear-gradient(
-    to top left,
-    rgba(244, 244, 244, 0.1),
-    rgba(116, 215, 216, 0.1),
-    rgba(88, 139, 226, 0.05)
-  );
+  background: ${(props) =>
+    props.canApply
+      ? 'linear-gradient(to top left, rgba(244, 244, 244, 0.1), rgba(116, 215, 216, 0.1), rgba(88, 139, 226, 0.05))'
+      : 'linear-gradient(to top right, rgba(178, 178, 178, 0.15), rgba(96, 99, 106, 0.2), rgba(83, 86, 93, 0.25))'};
+
   border-radius: 20px;
   align-items: center;
-  width: 345px;
+  max-width: var(--size-inner-max-width);
+  min-width: var(--size-min-width);
   justify-content: center;
   position: relative;
 `;
@@ -21,51 +21,59 @@ const Card = styled(Link)`
   text-decoration: none;
   display: flex;
   min-height: 156px;
+  width: 80%;
   justify-content: center;
   align-items: center;
 `;
 const BookmarkIcon = styled(BsBookmarkDash)`
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 11px;
+  left: 13px;
   cursor: pointer;
   z-index: 1;
-  color: var(--color-blue-700);
+  color: ${(props) =>
+    props.canApply ? 'var(--color-blue-700)' : 'var(--color-gray-800)'};
+  font-weight: bold;
   width: 23px;
   height: 20px;
 `;
 const BookmarkFillIcon = styled(BsBookmarkFill)`
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 11px;
+  left: 13px;
   cursor: pointer;
   z-index: 1;
-  color: var(--color-blue-700);
+  color: ${(props) =>
+    props.canApply ? 'var(--color-blue-700)' : 'var(--color-gray-800)'};
   width: 23px;
   height: 20px;
 `;
 const Texts = styled.div`
   display: flex;
-  width: 200px;
+  min-width: 200px;
+  max-width: 400px;
   height: 100%;
   justify-content: center;
   flex-direction: column;
   gap: 8px;
   margin-left: 10px;
   margin-top: 15px;
+  margin-right: 10px;
 `;
 
 const Title = styled.div`
   display: -webkit-box;
-  font-size: 26px;
-  color: var(--color-blue-700);
+  font-size: 23px;
+  color: ${(props) =>
+    props.canApply ? 'var(--color-blue-700)' : 'var(--color-gray-800)'};
   font-weight: bold;
   word-break: break-word;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 200px;
+  min-width: 200px;
+  max-width: 300px;
 `;
 
 const Content = styled.div`
@@ -79,12 +87,17 @@ const Content = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   width: 200px;
+  margin-top: 5px;
 `;
 
 const Img = styled.div`
   display: flex;
   width: 123px;
   height: 123px;
+  img {
+    object-fit: cover;
+    opacity: ${(props) => (props.canApply ? '1' : '0.65')};
+  }
 `;
 export {
   Container,
