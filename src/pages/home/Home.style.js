@@ -33,6 +33,9 @@ const Title = styled.div`
   font-weight: bold;
   z-index: 3;
   margin-bottom: 10px;
+  span {
+    font-size: 18px;
+  }
 `;
 const Button = styled.button`
   padding: 10px;

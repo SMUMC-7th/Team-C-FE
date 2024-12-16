@@ -19,7 +19,10 @@ const Home = () => {
       <S.PolicyContainer>
         {isLogin ? (
           <>
-            <S.Title>✨ {user.nickName}님을 위한 추천정책</S.Title>
+            <S.Title>
+              ✨ {user.nickName}
+              <span>님을 위한 추천정책</span>님을 위한 추천정책
+            </S.Title>
             <S.Button onClick={() => setIsLogin(!isLogin)}>
               로그인 버튼
             </S.Button>
