@@ -10,8 +10,9 @@ const Container = styled.div`
 
 const OutletContainer = styled.div`
   display: flex;
-  width: 100%;
   max-width: var(--size-max-width);
+  width: 100%;
+  justify-content: center;
 `;
 
 export { Container, OutletContainer };

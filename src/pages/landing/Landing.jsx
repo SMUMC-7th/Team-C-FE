@@ -7,7 +7,21 @@ import logo_wg from '../../images/logo_wg.svg';
 import Portal from './../../components/Portal';
 import { updateVh } from '../../utils/calculateVH';
 
+function requestPermission() {
+  console.log('권한 요청 중...');
+  Notification.requestPermission().then((permission) => {
+    if (permission === 'granted') {
+      console.log('알림 권한이 허용됨');
+
+      // FCM 메세지 처리
+    } else {
+      console.log('알림 권한 허용 안됨');
+    }
+  });
+}
 function Landing() {
+  requestPermission();
+
   const kakaoLoginUrl = `${import.meta.env.VITE_KAKAO_URL}?response_type=code&client_id=${import.meta.env.VITE_KAKAO_REST_API_KEY}&redirect_uri=${import.meta.env.VITE_KAKAO_REDIRECT_URI}`;
 
   const naverLoginUrl = `https://nid.naver.com/oauth2.0/authorize?client_id=${import.meta.env.VITE_NAVER_CLIENT_ID}&response_type=code&redirect_uri=${import.meta.env.VITE_NAVER_REDIRECT_URI}&state=${import.meta.env.VITE_NAVER_CLIENT_SECRET}`;
@@ -23,6 +37,7 @@ function Landing() {
 
   updateVh();
   window.addEventListener('resize', updateVh);
+
 
   return (
     <Portal>
