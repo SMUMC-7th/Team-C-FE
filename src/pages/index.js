@@ -7,7 +7,7 @@ import PolicyDetails from './policyDetails/PolicyDetails';
 import Community from './community/Community';
 import PostDetails from './postDetails/PostDetails';
 import Calendar from './calendar/Calendar';
-import NotFound from './NotFound/NotFound';
+import NotFound from './notFound/NotFound';
 import PostWrite from './postWrite/postWrite';
 import EditProfile from './editProfile/EditProfile';
 import KakaoOAuthHandler from './kakaoOAuth/KakaoOAuthHandler';
