@@ -18,6 +18,7 @@ import ContentModal from '../../components/modal/ContentModal';
 import Loading from '../loading/Loading';
 import Error from '../error/Error';
 import Alert from '../../components/alert/alert';
+import { useNavigate } from 'react-router-dom';
 
 const PolicyDetails = () => {
   useEffect(() => {
@@ -27,7 +28,7 @@ const PolicyDetails = () => {
 
   const { isLogin } = useContext(LoginContext);
   const params = useParams();
-
+  const navigate = useNavigate();
   const {
     data: bookmark,
     error: bookmarkError,
@@ -55,7 +56,7 @@ const PolicyDetails = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsUpload(false);
-    }, 2000);
+    }, 1000);
     return () => clearTimeout(timer);
   }, [isUpload]);
 
@@ -236,7 +237,7 @@ const PolicyDetails = () => {
             message="로그인이 필요한 서비스입니다."
             btnText1="로그인"
             btnText2="닫기"
-            onBtn1Click={() => (window.location.href = '/')}
+            onBtn1Click={() => navigate('/')}
             onBtn2Click={() => setIsModalOpen(false)}
           />
         </Portal>

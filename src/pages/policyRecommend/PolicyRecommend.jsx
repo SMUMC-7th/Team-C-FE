@@ -5,10 +5,12 @@ import { useContext, useState, useEffect } from 'react';
 import { LoginContext } from '../../context/LoginContext';
 import Portal from '../../components/Portal';
 import ContentModal from '../../components/modal/ContentModal';
+import { useNavigate } from 'react-router-dom';
 
 function PolicyRec() {
   const { isLogin } = useContext(LoginContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     updateVh();
@@ -38,9 +40,9 @@ function PolicyRec() {
             message="로그인이 필요한 서비스입니다."
             btnText1="로그인"
             btnText2="닫기"
-            onBtn1Click={() => (window.location.href = '/')}
+            onBtn1Click={() => navigate('/')}
             onBtn2Click={() => {
-              window.location.href = '/home';
+              navigate('/home');
               setIsModalOpen(false);
             }}
           />

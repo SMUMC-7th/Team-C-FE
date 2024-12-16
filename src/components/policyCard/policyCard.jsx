@@ -17,6 +17,7 @@ import { LoginContext } from '../../context/LoginContext';
 import Portal from '../Portal';
 import ContentModal from '../modal/ContentModal';
 import { useNavigate } from 'react-router-dom';
+import { canApplyNow } from '../../utils/formatDate';
 
 const ImagesArr = [img1, img2, img3, img4, img5, img6, img7, img8, img9];
 
@@ -77,25 +78,27 @@ const PolicyCard = (props) => {
   const randomIndex = parseInt(bizId.slice(1, 14), 10) % 9;
   const RandomImage = ImagesArr[randomIndex];
   const editDate = extractDates(rqutPrdCn);
-
+  const canApply = canApplyNow(rqutPrdCn);
   return (
     <>
-      <S.Container>
+      <S.Container canApply={canApply}>
         <S.Card to={`/policy/${bizId}`}>
           <S.Texts>
-            <S.Title>{polyBizSjnm}</S.Title>
+            <S.Title canApply={canApply}>{polyBizSjnm}</S.Title>
             <S.Content>{editDate}</S.Content>
           </S.Texts>
-          <S.Img>
+          <S.Img canApply={canApply}>
             {RandomImage && <img src={RandomImage} alt="랜덤 이미지" />}
           </S.Img>
         </S.Card>
         {isClicked === true ? (
           <S.BookmarkFillIcon
+            canApply={canApply}
             onClick={handleBookmarkClick}
           ></S.BookmarkFillIcon>
         ) : (
           <S.BookmarkIcon
+            canApply={canApply}
             onClick={handleBookmarkClick}
             isclicked={data?.data}
           />

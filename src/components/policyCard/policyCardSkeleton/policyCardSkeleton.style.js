@@ -39,13 +39,15 @@ const Container = styled.div`
   min-height: 156px;
   border-radius: 20px;
   align-items: center;
-  width: 345px;
+  min-width: var(--size-min-width);
+  max-width: var(--size-inner-max-width);
   justify-content: center;
   animation: ${skeleton} 1s ease-in infinite;
   gap: 10px;
 `;
 const Title = styled.div`
   width: 198px;
+  max-width: 300px;
   height: 42px;
   border-radius: 10px;
   animation: ${skeletonInner} 1s ease-in infinite;
