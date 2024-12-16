@@ -3,6 +3,10 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useGetKakaoOAuth } from '../../hooks/useGetProfile';
 import { useQuery } from '@tanstack/react-query';
 import { LoginContext } from '../../context/LoginContext';
+import { generateToken } from '../../remote/firebase';
+import { postDeviceToken } from '../../apis/deviceToken';
+import { onMessage } from 'firebase/messaging';
+import { messaging } from '../../remote/firebase';
 
 function KakaoOAuthHandler() {
   const navigate = useNavigate();
@@ -41,6 +45,27 @@ function KakaoOAuthHandler() {
       console.error('카카오 토큰 발급 실패');
     }
   }, [isError]);
+  if ('Notification' in window && 'serviceWorker' in navigator) {
+    console.log('통과');
+    const useDeviceToken = () => {
+      return useQuery({
+        queryKey: ['token'],
+        queryFn: async () => {
+          const token = await generateToken();
+          console.log('토큰', token);
+          return postDeviceToken(token);
+        },
+        enabled: true,
+      });
+    };
+
+    const { data: tokenResponse, error } = useDeviceToken();
+    console.log('data', tokenResponse);
+
+    onMessage(messaging, (payload) => {
+      console.log(payload);
+    });
+  }
 
   if (isLoading) {
     return <div></div>;

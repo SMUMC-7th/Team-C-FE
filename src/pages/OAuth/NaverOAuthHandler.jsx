@@ -2,7 +2,11 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useGetNaverOAuth } from '../../hooks/useGetProfile';
 import { useEffect, useContext } from 'react';
 import { LoginContext } from '../../context/LoginContext';
-
+import { generateToken } from '../../remote/firebase';
+import { postDeviceToken } from '../../apis/deviceToken';
+import { onMessage } from 'firebase/messaging';
+import { messaging } from '../../remote/firebase';
+import { useQuery } from '@tanstack/react-query';
 function NaverOAuthHandler() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -42,6 +46,26 @@ function NaverOAuthHandler() {
       console.error('네이버 토큰 발급 실패');
     }
   }, [isError]);
+  if ('Notification' in window && 'serviceWorker' in navigator) {
+    const useDeviceToken = () => {
+      return useQuery({
+        queryKey: ['token'],
+        queryFn: async () => {
+          const token = await generateToken();
+          console.log('토큰', token);
+          return postDeviceToken(token);
+        },
+        enabled: true,
+      });
+    };
+
+    const { data: tokenResponse, error } = useDeviceToken();
+    console.log('data', tokenResponse);
+
+    onMessage(messaging, (payload) => {
+      console.log(payload);
+    });
+  }
 
   if (isLoading) {
     return <div></div>;

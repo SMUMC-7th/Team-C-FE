@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getMessaging, getToken } from 'firebase/messaging';
-
+import { postDeviceToken } from '../apis/deviceToken';
+import { useQuery } from '@tanstack/react-query';
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -20,6 +21,6 @@ export const generateToken = async () => {
   const token = await getToken(messaging, {
     vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY,
   });
-
-  console.log(token);
+  // console.log(token);
+  return token;
 };

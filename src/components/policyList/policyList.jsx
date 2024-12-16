@@ -54,7 +54,12 @@ const PolicyListLogin = () => {
     return <PolicyListSkeleton />;
   }
 
-  if (error) return <p>Error loading policies</p>;
+  if (error)
+    return (
+      <p style={{ display: 'flex', justifyContent: 'center' }}>
+        Error loading policies
+      </p>
+    );
 
   const policiesData = data?.pages;
 
