@@ -8,4 +8,10 @@ const Container = styled.div`
   overflow: hidden;
 `;
 
-export { Container };
+const OutletContainer = styled.div`
+  display: flex;
+  width: 100%;
+  max-width: var(--size-max-width);
+`;
+
+export { Container, OutletContainer };
