@@ -32,7 +32,7 @@ const Calendar = () => {
   window.addEventListener('resize', updateVh);
 
   useEffect(() => {
-    if (!isLogin) {
+    if (isLogin === false) {
       setIsModalOpen(true);
     }
   }, [isLogin]);
@@ -179,12 +179,6 @@ const Calendar = () => {
         </S.CalendarBox>
         {selectDate && <Day day={selectDate} {...policies} />}
       </S.Layout>
-      {format(nowToday, 'yyyy-MM-dd') != selectDate && (
-        <S.TodayButton onClick={handleMoveToToday}>
-          {'< '}
-          <S.TodayButtonSpan>TODAY</S.TodayButtonSpan>
-        </S.TodayButton>
-      )}
 
       {isModalOpen && (
         <Portal>

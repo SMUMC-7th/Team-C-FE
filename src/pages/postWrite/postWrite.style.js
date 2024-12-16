@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const WriteContainer = styled.div`
+  width: var(--size-inner-max-width);
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -24,13 +25,14 @@ const WriteContainer = styled.div`
     border-radius: 10px;
     background-color: var(--color-gray-50);
     padding: 10px;
+    resize: none;
   }
 `;
 
 const UploadButton = styled.div`
   position: fixed;
   left: 50%;
-  bottom: 14%;
+  bottom: 19%;
   transform: translate(-50%, 50%);
 
   button {

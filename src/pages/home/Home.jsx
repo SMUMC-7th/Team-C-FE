@@ -1,11 +1,10 @@
 import * as S from './Home.style';
 import PolicyListLogin from '../../components/policyList/policyList';
 import PolicyList from '../../components/policyList/notLogin/policyList';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import Banner from '../../components/banner/banner';
 import { updateVh } from '../../utils/calculateVH';
 import { LoginContext } from '../../context/LoginContext';
-import { useEffect } from 'react';
 
 const Home = () => {
   const { isLogin, nickName } = useContext(LoginContext);

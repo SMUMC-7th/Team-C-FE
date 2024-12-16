@@ -4,16 +4,17 @@ import { useQuery } from '@tanstack/react-query';
 import { getRandomPolicy } from '../../../apis/policy';
 import { useInView } from 'react-intersection-observer';
 import { useEffect, useState } from 'react';
-import ClipLoader from 'react-spinners/ClipLoader';
 import Portal from '../../Portal';
 import ContentModal from '../../../components/modal/ContentModal';
+import PolicyListSkeleton from '../policyListSkeleton/policyListSkeleton';
+import { Navigate } from 'react-router-dom';
 
 const PolicyList = ({ user }) => {
   const { ref, inView } = useInView({
     threshold: 0,
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const navigate = Navigate();
   useEffect(() => {
     if (inView) {
       setIsModalOpen(true);
@@ -27,12 +28,7 @@ const PolicyList = ({ user }) => {
 
   const policiesData = data?.data.emp;
 
-  if (isLoading)
-    return (
-      <S.Alert>
-        <ClipLoader />
-      </S.Alert>
-    );
+  if (isLoading) return <PolicyListSkeleton />;
 
   if (error) return <S.Alert>Error loading policies</S.Alert>;
 
@@ -46,6 +42,7 @@ const PolicyList = ({ user }) => {
         </S.PolicyList>
         <div ref={ref} style={{ height: '5px' }}></div>
       </S.Container>
+
       {isModalOpen && (
         <Portal>
           <ContentModal
@@ -53,7 +50,7 @@ const PolicyList = ({ user }) => {
             message="로그인이 필요한 서비스입니다."
             btnText1="로그인"
             btnText2="닫기"
-            onBtn1Click={() => (window.location.href = '/')}
+            onBtn1Click={() => navigate('/')}
             onBtn2Click={() => setIsModalOpen(false)}
           />
         </Portal>
