@@ -7,9 +7,8 @@ import {
 } from '@tanstack/react-query';
 import {
   getKakaoOAuth,
+  getNaverOAuth,
   getProfile,
-  getProfileBookmarks,
-  getProfileDetails,
   postInitProfile,
 } from '../apis/auth';
 import { useNavigate } from 'react-router-dom';
@@ -20,6 +19,13 @@ function useGetKakaoOAuth(code) {
   return useQuery({
     queryFn: () => getKakaoOAuth(code),
     queryKey: ['getKakaoOAuth', code],
+  });
+}
+
+function useGetNaverOAuth(code) {
+  return useQuery({
+    queryFn: () => getNaverOAuth(code),
+    queryKey: ['getNaverOAuth', code],
   });
 }
 
@@ -85,4 +91,5 @@ export {
   useGetProfileDetails,
   useGetProfileBookmarks,
   useDeleteBookmark,
+  useGetNaverOAuth,
 };

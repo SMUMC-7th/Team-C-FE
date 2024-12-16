@@ -18,9 +18,8 @@ function SettingForm({
 }) {
   const navigate = useNavigate();
   const [profileImg, setProfileImg] = useState(initialData.profileImg);
-  const [nickName, setNickName] = useState(initialData.nickName);
   const [age, setAge] = useState(initialData.age);
-  const { setProfileImgUrl, setNickName: setUserNickName } =
+  const { setNickName, nickName, setProfileImgUrl, setKakaoProfileImg } =
     useContext(LoginContext);
 
   const {
@@ -32,10 +31,7 @@ function SettingForm({
     setToggleSelections,
     getSelectedOptions,
   } = useForm({
-    initialValue: {
-      nickName: initialData.nickName || '',
-      age: initialData.age || '',
-    },
+    initialValue: initialData,
     validate: validateUser,
     formMenu: FORM_MENU,
   });
@@ -56,7 +52,7 @@ function SettingForm({
       const [educations, majors, regions, keyword] = getSelectedOptions();
       onSubmit({
         profileImg,
-        nickName: values.nickName,
+        nickname: values.nickName,
         age: values.age,
         educations,
         majors,
@@ -64,6 +60,7 @@ function SettingForm({
         keyword,
       });
     }
+    setNickName(values.nickName);
     setProfileImgUrl(profileImg);
     setUserNickName(nickName);
   };
