@@ -1,53 +1,58 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import * as S from './PostDetails.style';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import CommentList from '../../components/comment/CommentList';
 import CommentInput from '../../components/comment/CommentInput';
 import EditMenu from '../../components/editMenu/EditMenu';
 import { getPostDetail, deletePost } from '../../apis/post';
 import { getComments } from '../../apis/comment';
 import { axiosInstance } from '../../apis/axiosInstance';
+import { LoginContext } from '../../context/LoginContext';
+import useStore from '../../store/store';
 
 function PostDetails() {
   const { postId } = useParams();
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
-  const [commentCount, setCommmetCount] = useState(0); // 초기값 0
   const [cursorId, setCursorId] = useState(0);
   const navigate = useNavigate();
+  const { profileImgUrl, nickName } = useContext(LoginContext);
+  const { commentCount, setCommentCount } = useStore();
+
+  console.log(nickName);
+
+  const fetchPostDetail = async () => {
+    try {
+      const data = await getPostDetail({ articleId: postId });
+      setPost(data);
+      setCommentCount(data.commentCount || 0); // 댓글 수 초기화
+    } catch (error) {
+      console.error('게시물 불러오기 실패:', error);
+    }
+  };
+
+  const fetchComments = async () => {
+    try {
+      const res = await getComments({
+        articleId: postId,
+        cursorId: cursorId,
+        pageSize: 15,
+      });
+      const replyList = res?.data?.replyList || [];
+      setComments(replyList);
+
+      if (res.data.nextCursorId) {
+        setCursorId(res.data.nextCursorId);
+      }
+
+      console.log(replyList);
+    } catch (error) {
+      console.error('댓글 불러오기 실패:', error);
+    }
+  };
 
   useEffect(() => {
-    const fetchPostDetail = async () => {
-      try {
-        const data = await getPostDetail({ articleId: postId });
-        setPost(data);
-        setCommmetCount(data.commentCount || 0); // 댓글 수 초기화
-      } catch (error) {
-        console.error('게시물 불러오기 실패:', error);
-      }
-    };
-
-    const fetchComments = async () => {
-      try {
-        const res = await getComments({
-          articleId: postId,
-          cursorId: cursorId,
-          pageSize: 15,
-        });
-        const replyList = res?.data?.replyList || [];
-        setComments(replyList);
-
-        if (res.data.nextCursorId) {
-          setCursorId(res.data.nextCursorId);
-        }
-
-        console.log(replyList);
-      } catch (error) {
-        console.error('댓글 불러오기 실패:', error);
-      }
-    };
-
     fetchPostDetail();
     fetchComments();
     console.log(comments);
@@ -66,7 +71,7 @@ function PostDetails() {
     const commentData = {
       articleId: postId,
       content: newComment,
-      nickName: '이름',
+      nickName: nickName,
     };
 
     try {
@@ -78,7 +83,7 @@ function PostDetails() {
       const newReply = response.data.data;
 
       setComments((prev) => [...prev, newReply]);
-      setCommmetCount((count) => count + 1);
+      setCommentCount(commentCount + 1);
       setNewComment('');
     } catch (error) {
       console.error('댓글 추가 실패:', error);
@@ -118,15 +123,15 @@ function PostDetails() {
     <S.Container>
       <S.AuthorBox>
         <S.AuthorInfo>
-          <img src={'https://bit.ly/4fhflX4'} alt={'사진'} />
+          <img src={profileImgUrl} alt={'사진'} />
           <div>
-            <p>{postData.memberDataDTO.nickName}</p>
+            <p>{nickName}</p>
             <h6>{displayDateTime}</h6>
           </div>
         </S.AuthorInfo>
         <EditMenu
           onEdit={() => handleEditPost(postId)}
-          onDelete={handleDeletePost}
+          onDelete={() => handleDeletePost()}
         />
       </S.AuthorBox>
       <S.PostContent>
@@ -139,7 +144,12 @@ function PostDetails() {
       </S.CommentCount>
       <S.Divider />
 
-      <CommentList comments={comments} articleId={postId} />
+      <CommentList
+        comments={comments}
+        articleId={postId}
+        setComments={setComments}
+        profileImgUrl={profileImgUrl}
+      />
 
       <form onSubmit={handleAddComment}>
         <CommentInput

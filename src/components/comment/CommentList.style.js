@@ -57,4 +57,34 @@ const CommentIcon = styled(FaCommentDots)`
   color: var(--color-gray-700);
 `;
 
-export { CommentList, CommentBox, Comment, EditBox, Edit, CommentIcon };
+const CommentUpdate = styled.div`
+  display: flex;
+  align-items: center;
+
+  input {
+    width: 180px;
+    border: none;
+    background-color: var(--color-gray-100);
+    border-radius: 5px;
+    font-size: 15px;
+    padding-left: 7px;
+  }
+
+  button {
+    margin-left: 10px;
+    background-color: white;
+    color: var(--color-gray-600);
+    border-radius: 10px;
+    cursor: pointer;
+  }
+`;
+
+export {
+  CommentList,
+  CommentBox,
+  Comment,
+  EditBox,
+  Edit,
+  CommentIcon,
+  CommentUpdate,
+};
