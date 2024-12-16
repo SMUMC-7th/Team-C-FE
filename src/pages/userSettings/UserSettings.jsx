@@ -4,13 +4,14 @@ import { LoginContext } from '../../context/LoginContext';
 import { usePostInitProfile } from '../../hooks/useGetProfile';
 import { Container } from './UserSetting.style';
 import { useContext } from 'react';
+import DefaultProfile from '../../images/defaultProfile.svg';
 
 function UserSettings() {
   const { profileImgUrl, nickName } = useContext(LoginContext);
   const initialData = {
-    profileImg: profileImgUrl || '',
+    profileImg: profileImgUrl || DefaultProfile,
     nickName: nickName || '',
-    age: 1,
+    age: '',
   };
 
   const { mutate, isLoading, isError } = usePostInitProfile();
