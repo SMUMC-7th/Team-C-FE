@@ -11,7 +11,7 @@ function ProfileImgUploader({ profileImg, setProfileImg }) {
   const { kakaoProfileImg } = useContext(LoginContext);
 
   const handleUseKakaoProfile = () => {
-    setProfileImg(kakaoProfileImg || '');
+    setProfileImg(kakaoProfileImg || DefaultProfile);
     setIsModalOpen(false);
   };
 
