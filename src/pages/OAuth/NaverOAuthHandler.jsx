@@ -46,25 +46,26 @@ function NaverOAuthHandler() {
       console.error('네이버 토큰 발급 실패');
     }
   }, [isError]);
+  if ('Notification' in window && 'serviceWorker' in navigator) {
+    const useDeviceToken = () => {
+      return useQuery({
+        queryKey: ['token'],
+        queryFn: async () => {
+          const token = await generateToken();
+          console.log('토큰', token);
+          return postDeviceToken(token);
+        },
+        enabled: true,
+      });
+    };
 
-  const useDeviceToken = () => {
-    return useQuery({
-      queryKey: ['token'],
-      queryFn: async () => {
-        const token = await generateToken();
-        console.log('토큰', token);
-        return postDeviceToken(token);
-      },
-      enabled: true,
+    const { data: tokenResponse, error } = useDeviceToken();
+    console.log('data', tokenResponse);
+
+    onMessage(messaging, (payload) => {
+      console.log(payload);
     });
-  };
-
-  const { data: tokenResponse, error } = useDeviceToken();
-  console.log('data', tokenResponse);
-
-  onMessage(messaging, (payload) => {
-    console.log(payload);
-  });
+  }
 
   if (isLoading) {
     return <div></div>;
