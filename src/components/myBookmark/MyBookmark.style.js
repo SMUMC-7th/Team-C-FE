@@ -21,7 +21,6 @@ const BookmarkList = styled.div`
   flex-direction: column;
   gap: 16px;
   padding: 0 28px;
-  overflow-y: scroll;
 `;
 
 const BookmarkPolicy = styled.div`
