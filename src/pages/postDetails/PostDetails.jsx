@@ -5,9 +5,8 @@ import CommentList from '../../components/comment/CommentList';
 import CommentInput from '../../components/comment/CommentInput';
 import EditMenu from '../../components/editMenu/EditMenu';
 import { getPostDetail, deletePost } from '../../apis/post';
-import Portal from '../../components/Portal';
-import { AlertModal } from '../../components/modal/AlertModal';
-import checked from '../../images/checked.svg';
+import { getComments } from '../../apis/comment';
+import { axiosInstance } from '../../apis/axiosInstance';
 
 function PostDetails() {
   const { postId } = useParams();
@@ -15,8 +14,8 @@ function PostDetails() {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
   const [commentCount, setCommmetCount] = useState(0); // 초기값 0
+  const [cursorId, setCursorId] = useState(0);
   const navigate = useNavigate();
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchPostDetail = async () => {
@@ -29,28 +28,69 @@ function PostDetails() {
       }
     };
 
+    const fetchComments = async () => {
+      try {
+        const res = await getComments({
+          articleId: postId,
+          cursorId: cursorId,
+          pageSize: 15,
+        });
+        const replyList = res?.data?.replyList || [];
+        setComments(replyList);
+
+        if (res.data.nextCursorId) {
+          setCursorId(res.data.nextCursorId);
+        }
+
+        console.log(replyList);
+      } catch (error) {
+        console.error('댓글 불러오기 실패:', error);
+      }
+    };
+
     fetchPostDetail();
-  }, [postId]);
+    fetchComments();
+    console.log(comments);
+  }, [postId, cursorId]);
 
   // console.log(postId);
 
-  const handleAddComment = (e) => {
+  const handleAddComment = async (e) => {
     e.preventDefault();
-    if (newComment.trim() !== '') {
-      setComments((comments) => [...comments, newComment]);
+
+    if (!newComment.trim()) {
+      alert('댓글을 입력해주세요.');
+      return;
+    }
+
+    const commentData = {
+      articleId: postId,
+      content: newComment,
+      nickName: '이름',
+    };
+
+    try {
+      const response = await axiosInstance.post(
+        '/replies/articles',
+        commentData
+      );
+      console.log(response);
+      const newReply = response.data.data;
+
+      setComments((prev) => [...prev, newReply]);
       setCommmetCount((count) => count + 1);
       setNewComment('');
+    } catch (error) {
+      console.error('댓글 추가 실패:', error);
+      alert('댓글 추가에 실패했습니다.');
     }
   };
 
   const handleDeletePost = async () => {
     try {
       await deletePost({ articleId: postId });
-      setIsModalOpen(true);
-      setTimeout(() => {
-        setIsModalOpen(false);
-        navigate('/community');
-      }, 2000);
+      alert('게시글이 삭제되었습니다.');
+      navigate('/community');
     } catch (error) {
       console.error('게시글 삭제 실패:', error);
       alert('게시글 삭제 중 오류가 발생했습니다.');
@@ -99,7 +139,7 @@ function PostDetails() {
       </S.CommentCount>
       <S.Divider />
 
-      <CommentList comments={comments} />
+      <CommentList comments={comments} articleId={postId} />
 
       <form onSubmit={handleAddComment}>
         <CommentInput
@@ -108,15 +148,6 @@ function PostDetails() {
           handleAddComment={handleAddComment}
         />
       </form>
-      {isModalOpen && (
-        <Portal>
-          <AlertModal
-            setIsModalOpen={setIsModalOpen}
-            imgSrc={checked}
-            content="삭제되었습니다."
-          />
-        </Portal>
-      )}
     </S.Container>
   );
 }
