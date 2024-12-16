@@ -3,11 +3,13 @@ import EditMenu from '../editMenu/EditMenu';
 import { deleteComment, updateComment } from '../../apis/comment';
 import { useState } from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
+import useStore from '../../store/store';
 
 function CommentList({ comments, articleId, setComments, profileImgUrl }) {
   console.log(comments);
   const [editingReplyId, setEditingReplyId] = useState(null);
   const [newContent, setNewContent] = useState('');
+  const { commentCount, setCommentCount } = useStore();
 
   // 댓글 삭제
   const handleDeleteReply = async (replyId) => {
@@ -17,6 +19,7 @@ function CommentList({ comments, articleId, setComments, profileImgUrl }) {
       setComments((prevComments) =>
         prevComments.filter((comment) => comment.replyId !== replyId)
       );
+      setCommentCount(commentCount - 1);
     } catch (error) {
       console.error('댓글 삭제 실패:', error);
       alert('댓글 삭제 중 오류가 발생했습니다.');

@@ -13,9 +13,14 @@ function Community() {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteQuery({
       queryKey: ['postList'],
-      queryFn: ({ pageParam = 50 }) =>
+      queryFn: ({ pageParam = 99999 }) =>
         getPostList({ cursorId: pageParam, pageSize: 10 }),
-      getNextPageParam: (lastPage) => lastPage?.data?.nextCursorId || undefined,
+      getNextPageParam: (lastPage) => {
+        const articleList = lastPage?.data?.articleList || [];
+        return articleList.length > 0
+          ? articleList[articleList.length - 1].articleId
+          : undefined;
+      },
     });
 
   console.log(data);
