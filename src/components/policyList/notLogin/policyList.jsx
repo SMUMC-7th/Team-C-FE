@@ -14,6 +14,8 @@ const PolicyList = ({ user }) => {
     threshold: 0,
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUpload, setIsUpload] = useState(false);
+
   const navigate = useNavigate();
   useEffect(() => {
     if (inView) {
@@ -37,7 +39,12 @@ const PolicyList = ({ user }) => {
       <S.Container>
         <S.PolicyList>
           {policiesData?.map((policyData) => (
-            <PolicyCard key={policyData.bizId} {...policyData} {...user} />
+            <PolicyCard
+              key={policyData.bizId}
+              setIsUpload={setIsUpload}
+              {...policyData}
+              {...user}
+            />
           ))}
         </S.PolicyList>
         <div ref={ref} style={{ height: '5px' }}></div>

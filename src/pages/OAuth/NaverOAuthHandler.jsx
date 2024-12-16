@@ -1,16 +1,15 @@
-import { useEffect, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
-import { useGetKakaoOAuth } from '../../hooks/useGetProfile';
-import { useQuery } from '@tanstack/react-query';
+import { useGetNaverOAuth } from '../../hooks/useGetProfile';
+import { useEffect, useContext } from 'react';
 import { LoginContext } from '../../context/LoginContext';
 
-function KakaoOAuthHandler() {
+function NaverOAuthHandler() {
   const navigate = useNavigate();
   const location = useLocation();
 
   const url = new URLSearchParams(location.search);
   const code = url.get('code');
+  console.log(code);
 
   const { setNickName, setProfileImgUrl, setKakaoProfileImg } =
     useContext(LoginContext);
@@ -19,7 +18,8 @@ function KakaoOAuthHandler() {
     isLoading,
     isError,
     isSuccess,
-  } = useGetKakaoOAuth(code);
+  } = useGetNaverOAuth(code);
+  console.log(response);
 
   useEffect(() => {
     if (isSuccess) {
@@ -39,7 +39,7 @@ function KakaoOAuthHandler() {
 
   useEffect(() => {
     if (isError) {
-      console.error('카카오 토큰 발급 실패');
+      console.error('네이버 토큰 발급 실패');
     }
   }, [isError]);
 
@@ -50,4 +50,4 @@ function KakaoOAuthHandler() {
   return <></>;
 }
 
-export default KakaoOAuthHandler;
+export default NaverOAuthHandler;

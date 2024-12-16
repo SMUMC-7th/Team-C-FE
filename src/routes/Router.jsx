@@ -15,6 +15,8 @@ import {
   EditProfile,
   KakaoOAuthHandler,
   PostEdit,
+  NaverOAuthHandler,
+  GoogleOAuthHandler,
 } from '../pages/index';
 
 const router = createBrowserRouter([
@@ -30,6 +32,14 @@ const router = createBrowserRouter([
   {
     path: '/auth/kakao-oauth',
     element: <KakaoOAuthHandler />,
+  },
+  {
+    path: '/auth/naver-oauth',
+    element: <NaverOAuthHandler />,
+  },
+  {
+    path: '/auth/google-oauth',
+    element: <GoogleOAuthHandler />,
   },
   {
     path: '/',

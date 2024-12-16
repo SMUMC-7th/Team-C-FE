@@ -1,61 +1,80 @@
 import * as S from './MyBookmark.style';
-import userInfo from '../../mocks/userData.json';
-import policyDatas from '../../mocks/policyData.json';
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-const user = userInfo[2];
-
-function getBookmarkPolicyId() {
-  return user.bookmarked;
-}
-
-function getPolicyInfo(policies) {
-  return policies.flatMap((id) =>
-    policyDatas.filter((policy) => policy.bizId === id)
-  );
-}
+import { LoginContext } from '../../context/LoginContext';
+import {
+  useDeleteBookmark,
+  useGetProfileBookmarks,
+} from '../../hooks/useGetProfile';
+import { useInView } from 'react-intersection-observer';
 
 const MyBookmark = () => {
-  const [isLogin, setIsLogin] = useState(true);
+  const { isLogin } = useContext(LoginContext);
   const [selectedBookmarks, setSelectedBookmarks] = useState([]);
   const navigate = useNavigate();
+  const cursor = 0;
 
-  const policies = isLogin ? getPolicyInfo(getBookmarkPolicyId()) : [];
+  const {
+    data: bookmarks,
+    isFetching,
+    hasNextPage,
+    fetchNextPage,
+    isPending,
+    isError: isGetBookmarksError,
+  } = useGetProfileBookmarks(cursor);
+  console.log(bookmarks);
 
-  const handleBookmarkToggle = (policyId) => {
-    setSelectedBookmarks((prevSelected) =>
-      prevSelected.includes(policyId)
-        ? prevSelected.filter((id) => id !== policyId)
-        : [...prevSelected, policyId]
-    );
+  const { ref, inView } = useInView({
+    threshold: 0,
+  });
+
+  useEffect(() => {
+    console.log('InView:', inView);
+    console.log('IsFetching:', isFetching);
+    console.log('HasNextPage:', hasNextPage);
+    if (inView) {
+      !isFetching && hasNextPage && fetchNextPage();
+    }
+  }, [inView, isFetching, hasNextPage, fetchNextPage]);
+
+  const { mutate } = useDeleteBookmark();
+
+  const handleDeleteBookmark = (srchPolicyId) => {
+    mutate(srchPolicyId);
   };
 
-  const handleArrowClick = (policyId) => {
-    navigate(`/policy/${policyId}`);
+  const handleArrowClick = (srchPolicyId) => {
+    navigate(`/policy/${srchPolicyId}`);
   };
+
+  if (isPending) {
+    return <div></div>;
+  }
+
+  if (isGetBookmarksError) {
+    return <div></div>;
+  }
 
   return (
     <S.Container>
       <S.Title>북마크</S.Title>
       <S.BookmarkList>
-        {policies.map((policy) => (
-          <S.BookmarkPolicy key={policy.bizId}>
-            <S.BookmarkTitle>
-              {selectedBookmarks.includes(policy.bizId) ? (
+        {bookmarks?.pages?.map((page) =>
+          page.data?.bookmarkResponses?.map((bookmark) => (
+            <S.BookmarkPolicy key={bookmark.bookmarkId}>
+              <S.BookmarkTitle>
                 <S.BookmarkFillIcon
-                  onClick={() => handleBookmarkToggle(policy.bizId)}
+                  onClick={() => handleDeleteBookmark(bookmark.srchPolicyId)}
                 />
-              ) : (
-                <S.BookmarkIcon
-                  onClick={() => handleBookmarkToggle(policy.bizId)}
-                />
-              )}
-              <S.PolicyTitle>{policy.policyTitle}</S.PolicyTitle>
-            </S.BookmarkTitle>
-            <S.ArrowIcon onClick={() => handleArrowClick(policy.bizId)} />
-          </S.BookmarkPolicy>
-        ))}
+                <S.PolicyTitle>{bookmark.name}</S.PolicyTitle>
+              </S.BookmarkTitle>
+              <S.ArrowIcon
+                onClick={() => handleArrowClick(bookmark.srchPolicyId)}
+              />
+            </S.BookmarkPolicy>
+          ))
+        )}
+        <div ref={ref}>{isFetching && <p>o</p>}</div>
       </S.BookmarkList>
     </S.Container>
   );

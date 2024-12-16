@@ -10,7 +10,9 @@ import Calendar from './calendar/Calendar';
 import NotFound from './notFound/NotFound';
 import PostWrite from './postWrite/postWrite';
 import EditProfile from './editProfile/EditProfile';
-import KakaoOAuthHandler from './kakaoOAuth/KakaoOAuthHandler';
+import KakaoOAuthHandler from './OAuth/KakaoOAuthHandler';
+import NaverOAuthHandler from './OAuth/NaverOAuthHandler';
+import GoogleOAuthHandler from './OAuth/GoogleOAuthHandler';
 import PostEdit from './postEdit/postEdit';
 
 export {
@@ -27,5 +29,7 @@ export {
   PostWrite,
   EditProfile,
   KakaoOAuthHandler,
+  NaverOAuthHandler,
+  GoogleOAuthHandler,
   PostEdit,
 };

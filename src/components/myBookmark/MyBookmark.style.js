@@ -16,6 +16,7 @@ const Title = styled.h2`
 
 const BookmarkList = styled.div`
   width: 100%;
+  max-height: 280px;
   display: flex;
   flex-direction: column;
   gap: 16px;
