@@ -12,6 +12,7 @@ const MyBookmark = () => {
   const { isLogin } = useContext(LoginContext);
   const [selectedBookmarks, setSelectedBookmarks] = useState([]);
   const navigate = useNavigate();
+  const cursor = 0;
 
   const {
     data: bookmarks,
@@ -20,13 +21,17 @@ const MyBookmark = () => {
     fetchNextPage,
     isPending,
     isError: isGetBookmarksError,
-  } = useGetProfileBookmarks();
+  } = useGetProfileBookmarks(cursor);
+  console.log(bookmarks);
 
   const { ref, inView } = useInView({
-    throeshold: 0,
+    threshold: 0,
   });
 
   useEffect(() => {
+    console.log('InView:', inView);
+    console.log('IsFetching:', isFetching);
+    console.log('HasNextPage:', hasNextPage);
     if (inView) {
       !isFetching && hasNextPage && fetchNextPage();
     }
