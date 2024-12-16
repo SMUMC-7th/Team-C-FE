@@ -20,7 +20,8 @@ function SettingForm({
   const [profileImg, setProfileImg] = useState(initialData.profileImg);
   const [nickName, setNickName] = useState(initialData.nickName);
   const [age, setAge] = useState(initialData.age);
-  const { setProfileImgUrl } = useContext(LoginContext);
+  const { setProfileImgUrl, setNickName: setUserNickName } =
+    useContext(LoginContext);
 
   const {
     values,
@@ -55,8 +56,8 @@ function SettingForm({
       const [educations, majors, regions, keyword] = getSelectedOptions();
       onSubmit({
         profileImg,
-        nickName,
-        age,
+        nickName: values.nickName,
+        age: values.age,
         educations,
         majors,
         regions,
@@ -64,6 +65,7 @@ function SettingForm({
       });
     }
     setProfileImgUrl(profileImg);
+    setUserNickName(nickName);
   };
 
   return (
