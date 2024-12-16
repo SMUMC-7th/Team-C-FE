@@ -21,9 +21,10 @@ const Card = styled(Link)`
   text-decoration: none;
   display: flex;
   min-height: 156px;
-  width: 80%;
+  min-width: var(--size-min-width);
   justify-content: center;
   align-items: center;
+  padding: 0 20px;
 `;
 const BookmarkIcon = styled(BsBookmarkDash)`
   position: absolute;
@@ -50,13 +51,12 @@ const BookmarkFillIcon = styled(BsBookmarkFill)`
 `;
 const Texts = styled.div`
   display: flex;
-  min-width: 200px;
+  width: 60%;
   max-width: 400px;
   height: 100%;
   justify-content: center;
   flex-direction: column;
   gap: 8px;
-  margin-left: 10px;
   margin-top: 15px;
   margin-right: 10px;
 `;
@@ -72,8 +72,7 @@ const Title = styled.div`
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  min-width: 200px;
-  max-width: 300px;
+  width: 100%;
 `;
 
 const Content = styled.div`
@@ -92,8 +91,9 @@ const Content = styled.div`
 
 const Img = styled.div`
   display: flex;
-  width: 123px;
+  min-width: 123px;
   height: 123px;
+
   img {
     object-fit: cover;
     opacity: ${(props) => (props.canApply ? '1' : '0.65')};
