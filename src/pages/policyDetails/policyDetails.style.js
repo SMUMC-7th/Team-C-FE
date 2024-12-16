@@ -28,7 +28,10 @@ const Table = styled.table`
   border-collapse: collapse;
 `;
 
-const Row = styled.tr``;
+const Row = styled.tr`
+  display: flex;
+  min-width: 100%;
+`;
 
 const CategoryHeader = styled.th`
   font-size: 16px;
@@ -42,7 +45,8 @@ const Category = styled.td`
   font-size: 15px;
   font-weight: 600;
   margin: 20px 5px 10px 20px;
-  width: 90px;
+  min-width: 90px;
+  max-width: 90px;
   display: flex;
   flex-wrap: wrap;
   word-break: keep-all;
@@ -105,13 +109,6 @@ const Explain = styled.div`
   border-bottom: 1px solid var(--color-gray-300);
 `;
 
-const Alert = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 345px;
-  margin-top: 30px;
-`;
-
 export {
   Container,
   Header,
@@ -125,5 +122,4 @@ export {
   BookmarkFillIcon,
   BookmarkIcon,
   PolicyInfoCard,
-  Alert,
 };

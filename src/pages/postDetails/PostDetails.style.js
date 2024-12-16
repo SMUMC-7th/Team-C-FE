@@ -3,7 +3,7 @@ import { FaCommentDots } from 'react-icons/fa';
 
 const Container = styled.div`
   width: var(--size-inner-max-width);
-  height: calc(100vh - 190px);
+  height: calc(100vh - 230px);
   margin: 0 auto;
   padding: 10px;
   overflow-y: auto;

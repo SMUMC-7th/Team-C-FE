@@ -39,12 +39,14 @@ const isBookmarked = async (bookmarkId) => {
 
   return data;
 };
+
 const deleteBookmark = async (bookmarkId) => {
   const { data } = await axiosInstance.delete(
     `/profiles/bookmarks/${bookmarkId}`
   );
   return data;
 };
+
 export {
   requestBookmark,
   getMonthBookmark,

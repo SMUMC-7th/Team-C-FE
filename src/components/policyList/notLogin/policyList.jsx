@@ -15,6 +15,7 @@ const PolicyList = ({ user }) => {
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpload, setIsUpload] = useState(false);
+
   const navigate = useNavigate();
   useEffect(() => {
     if (inView) {
