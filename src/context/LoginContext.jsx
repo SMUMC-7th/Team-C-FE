@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useState, useEffect } from 'react';
 
 export const LoginContext = createContext({
-  isLogin: false,
+  isLogin: undefined,
   setIsLogin: () => {},
   nickName: '',
   setNickName: () => {},
@@ -12,16 +12,13 @@ export const LoginContext = createContext({
 });
 
 export function LoginContextProvider({ children }) {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(undefined);
   const [nickName, setNickName] = useState('');
   const [profileImgUrl, setProfileImgUrl] = useState('');
   const [kakaoProfileImg, setKakaoProfileImg] = useState('');
 
   useEffect(() => {
     console.log('isLogin: ', isLogin);
-    console.log('nickName', nickName);
-    console.log('profileImg', profileImgUrl);
-    console.log('kakaoProfileImg', kakaoProfileImg);
   }, [isLogin]);
 
   return (
