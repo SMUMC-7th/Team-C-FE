@@ -13,7 +13,7 @@ function Community() {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteQuery({
       queryKey: ['postList'],
-      queryFn: ({ pageParam = 30 }) =>
+      queryFn: ({ pageParam = 50 }) =>
         getPostList({ cursorId: pageParam, pageSize: 10 }),
       getNextPageParam: (lastPage) => lastPage?.data?.nextCursorId || undefined,
     });
@@ -45,7 +45,7 @@ function Community() {
         <input type="text" />
         <S.SearchIcon />
       </S.SearchContainer>
-      {data.pages.map((page, index) => (
+      {data?.pages.map((page, index) => (
         <PostList key={index} posts={page.data.articleList} />
       ))}
       <div ref={observerRef} style={{ height: '1px' }} />

@@ -1,12 +1,13 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import * as S from './PostDetails.style';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import CommentList from '../../components/comment/CommentList';
 import CommentInput from '../../components/comment/CommentInput';
 import EditMenu from '../../components/editMenu/EditMenu';
 import { getPostDetail, deletePost } from '../../apis/post';
 import { getComments } from '../../apis/comment';
 import { axiosInstance } from '../../apis/axiosInstance';
+import { LoginContext } from '../../context/LoginContext';
 
 function PostDetails() {
   const { postId } = useParams();
@@ -16,6 +17,9 @@ function PostDetails() {
   const [commentCount, setCommmetCount] = useState(0); // 초기값 0
   const [cursorId, setCursorId] = useState(0);
   const navigate = useNavigate();
+  const { profileImgUrl, nickName } = useContext(LoginContext);
+
+  console.log(nickName);
 
   useEffect(() => {
     const fetchPostDetail = async () => {
@@ -66,7 +70,7 @@ function PostDetails() {
     const commentData = {
       articleId: postId,
       content: newComment,
-      nickName: '이름',
+      nickName: nickName,
     };
 
     try {
@@ -118,9 +122,9 @@ function PostDetails() {
     <S.Container>
       <S.AuthorBox>
         <S.AuthorInfo>
-          <img src={'https://bit.ly/4fhflX4'} alt={'사진'} />
+          <img src={profileImgUrl} alt={'사진'} />
           <div>
-            <p>{postData.memberDataDTO.nickName}</p>
+            <p>{nickName}</p>
             <h6>{displayDateTime}</h6>
           </div>
         </S.AuthorInfo>
@@ -143,6 +147,7 @@ function PostDetails() {
         comments={comments}
         articleId={postId}
         setComments={setComments}
+        profileImgUrl={profileImgUrl}
       />
 
       <form onSubmit={handleAddComment}>
