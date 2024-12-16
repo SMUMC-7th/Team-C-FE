@@ -19,9 +19,6 @@ export function LoginContextProvider({ children }) {
 
   useEffect(() => {
     console.log('isLogin: ', isLogin);
-    console.log('nickName', nickName);
-    console.log('profileImg', profileImgUrl);
-    console.log('kakaoProfileImg', kakaoProfileImg);
   }, [isLogin]);
 
   return (
