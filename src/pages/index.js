@@ -12,6 +12,7 @@ import PostWrite from './postWrite/postWrite';
 import EditProfile from './editProfile/EditProfile';
 import KakaoOAuthHandler from './OAuth/KakaoOAuthHandler';
 import NaverOAuthHandler from './OAuth/NaverOAuthHandler';
+import GoogleOAuthHandler from './OAuth/GoogleOAuthHandler';
 import PostEdit from './postEdit/postEdit';
 
 export {
@@ -29,5 +30,6 @@ export {
   EditProfile,
   KakaoOAuthHandler,
   NaverOAuthHandler,
+  GoogleOAuthHandler,
   PostEdit,
 };
