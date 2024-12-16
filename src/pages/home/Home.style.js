@@ -20,7 +20,7 @@ const PolicyContainer = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 22px;
+  font-size: 21px;
   height: 25px;
   position: sticky;
   top: 0;
@@ -34,6 +34,11 @@ const Title = styled.div`
   font-weight: bold;
   z-index: 3;
   margin-bottom: 10px;
+  align-items: center;
+  span {
+    font-size: 19px;
+    align-self: center;
+  }
 `;
 const Button = styled.button`
   padding: 10px;

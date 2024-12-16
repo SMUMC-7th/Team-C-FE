@@ -3,7 +3,9 @@ import styled from 'styled-components';
 const Container = styled.div`
   display: flex;
   position: fixed;
-  width: var(--size-inner-max-width);
+  max-width: var(--size-inner-max-width);
+  min-width: var(--size-min-width);
+  width: 100%;
   bottom: 100px;
   justify-content: center;
   z-index: 1;
