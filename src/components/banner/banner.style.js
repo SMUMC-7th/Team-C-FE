@@ -5,7 +5,6 @@ const StyledSlider = styled(Slider)`
   min-width: 345px;
   max-width: var(--size-inner-max-width);
   width: 100%;
-
   overflow-y: hidden;
   .slick-list {
     overflow: hidden;
@@ -70,7 +69,7 @@ const Texts = styled.div`
   flex-direction: column;
   max-width: 60%;
   justify-content: center;
-  /* margin-left: 20px; */
+  margin-left: 20px;
   gap: 10px;
 `;
 

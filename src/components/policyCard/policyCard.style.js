@@ -12,7 +12,8 @@ const Container = styled.div`
 
   border-radius: 20px;
   align-items: center;
-  width: 345px;
+  max-width: var(--size-inner-max-width);
+  min-width: var(--size-min-width);
   justify-content: center;
   position: relative;
 `;
@@ -20,6 +21,7 @@ const Card = styled(Link)`
   text-decoration: none;
   display: flex;
   min-height: 156px;
+  width: 80%;
   justify-content: center;
   align-items: center;
 `;
@@ -48,13 +50,15 @@ const BookmarkFillIcon = styled(BsBookmarkFill)`
 `;
 const Texts = styled.div`
   display: flex;
-  width: 200px;
+  min-width: 200px;
+  max-width: 400px;
   height: 100%;
   justify-content: center;
   flex-direction: column;
   gap: 8px;
   margin-left: 10px;
   margin-top: 15px;
+  margin-right: 10px;
 `;
 
 const Title = styled.div`
@@ -68,7 +72,8 @@ const Title = styled.div`
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 200px;
+  min-width: 200px;
+  max-width: 300px;
 `;
 
 const Content = styled.div`
