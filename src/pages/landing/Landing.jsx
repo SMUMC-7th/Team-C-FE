@@ -8,17 +8,29 @@ import Portal from './../../components/Portal';
 import { updateVh } from '../../utils/calculateVH';
 
 function requestPermission() {
-  console.log('권한 요청 중...');
-  Notification.requestPermission().then((permission) => {
-    if (permission === 'granted') {
-      console.log('알림 권한이 허용됨');
+  // Notification 지원 여부 확인
+  if (!('Notification' in window)) {
+    console.warn('이 브라우저는 알림을 지원하지 않습니다.');
+    return;
+  }
 
-      // FCM 메세지 처리
-    } else {
-      console.log('알림 권한 허용 안됨');
-    }
-  });
+  console.log('권한 요청 중...');
+  Notification.requestPermission()
+    .then((permission) => {
+      if (permission === 'granted') {
+        console.log('알림 권한이 허용됨');
+        // FCM 메시지 처리 로직 추가 가능
+      } else if (permission === 'denied') {
+        console.log('알림 권한이 거부됨');
+      } else {
+        console.log('알림 권한 요청이 무시됨');
+      }
+    })
+    .catch((error) => {
+      console.error('알림 권한 요청 중 오류 발생:', error);
+    });
 }
+
 function Landing() {
   requestPermission();
 
@@ -37,7 +49,6 @@ function Landing() {
 
   updateVh();
   window.addEventListener('resize', updateVh);
-
 
   return (
     <Portal>
