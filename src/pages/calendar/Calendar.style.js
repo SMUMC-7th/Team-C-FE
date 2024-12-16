@@ -9,6 +9,7 @@ const Layout = styled.div`
   align-items: center;
   height: calc(var(--vh, 1vh) * 100 - 190px);
   overflow-y: scroll;
+  position: relative;
 `;
 
 const Title = styled.div`
@@ -78,13 +79,16 @@ const Day = styled.div`
   height: 51px;
   display: flex;
   flex-direction: column;
-  background-color: ${(props) =>
-    props.selected ? 'var(--color-gray-500)' : 'white'};
+  background-color: white;
+  border: 1px solid #61646b;
   align-items: center;
-  border: none;
+  border: ${(props) => (props.selected ? '1px solid #61646b' : 'none')};
+  align-items: center;
   border-radius: 5px;
   font-size: 11px;
   position: relative;
+  box-shadow: ${(props) =>
+    props.selected ? '  0px 2px 5px 0px rgba(0, 0, 0, 0.25)' : 'none'};
 `;
 
 const DaySpan = styled.span`
@@ -143,6 +147,7 @@ const ArrowForwardIcon = styled(IoIosArrowForward)`
   color: ${(props) =>
     props.isSelected ? 'var(--color-blue-900)' : 'var(--color-blue-800)'};
 `;
+
 export {
   Layout,
   Title,

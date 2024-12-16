@@ -11,6 +11,10 @@ import {
   PostDetails,
   Calendar,
   NotFound,
+  PostWrite,
+  EditProfile,
+  KakaoOAuthHandler,
+  PostEdit,
 } from '../pages/index';
 
 const router = createBrowserRouter([
@@ -18,6 +22,14 @@ const router = createBrowserRouter([
     path: '/',
     element: <Landing />,
     errorElement: <NotFound />,
+  },
+  {
+    path: '/settings',
+    element: <UserSettings />,
+  },
+  {
+    path: '/auth/kakao-oauth',
+    element: <KakaoOAuthHandler />,
   },
   {
     path: '/',
@@ -31,12 +43,10 @@ const router = createBrowserRouter([
       {
         path: '/my',
         element: <Mypage />,
-        children: [
-          {
-            path: 'settings',
-            element: <UserSettings />,
-          },
-        ],
+      },
+      {
+        path: '/my/settings',
+        element: <EditProfile />,
       },
       {
         path: '/recommend',
@@ -49,16 +59,22 @@ const router = createBrowserRouter([
       {
         path: '/community',
         element: <Community />,
-        children: [
-          {
-            path: ':postId',
-            element: <PostDetails />,
-          },
-        ],
+      },
+      {
+        path: '/community/:postId',
+        element: <PostDetails />,
       },
       {
         path: '/calendar',
         element: <Calendar />,
+      },
+      {
+        path: '/postwrite',
+        element: <PostWrite />,
+      },
+      {
+        path: '/postedit/:postId',
+        element: <PostEdit />,
       },
     ],
   },

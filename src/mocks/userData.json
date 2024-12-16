@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1,
+    "nickName": "코튼",
+    "age": 18,
+    "Education": "고등학교 졸업 이하",
+    "field": "공학",
+    "region": "경기",
+    "interest": ["교육", "주거"],
+    "bookmarked": [1, 2, 3],
+    "checked": [2]
+  },
+  {
+    "id": 2,
+    "nickName": "유니",
+    "age": 20,
+    "Education": "대학교 재학",
+    "field": "예체능",
+    "region": "서울",
+    "interest": ["복지 / 문화"],
+    "bookmarked": [3, 7, 2],
+    "checked": [7]
+  },
+  {
+    "id": 3,
+    "nickName": "윰",
+    "age": 24,
+    "Education": "대학교 졸업",
+    "field": "IT",
+    "region": "부산",
+    "interest": ["일자리"],
+    "bookmarked": [4, 6, 7, 9, 10],
+    "checked": [4, 9]
+  }
+]
