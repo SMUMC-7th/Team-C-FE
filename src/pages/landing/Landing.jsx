@@ -9,7 +9,7 @@ import { updateVh } from '../../utils/calculateVH';
 
 function requestPermission() {
   // Notification 지원 여부 확인
-  if (!('Notification' in window)) {
+  if (typeof Notification === 'undefined') {
     console.warn('이 브라우저는 알림을 지원하지 않습니다.');
     return;
   }
