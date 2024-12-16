@@ -1,16 +1,18 @@
 import { useState, useEffect, useContext } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 
 import * as S from './policyDetails.style';
 
 import { getSinglePolicy } from '../../apis/policy';
-import { requestBookmark } from '../../apis/bookmark';
-
+import {
+  requestBookmark,
+  deleteBookmark,
+  isBookmarked,
+} from '../../apis/bookmark';
 import { extractDatesAPIVer, extractDates } from '../../utils/formatDate';
 import { getRpttDescription, getpolyRlmCd } from '../../utils/policyCodeFormat';
 import { parseLinks, getSafeValue } from '../../utils/policyDetailParse';
-import { isBookmarked, deleteBookmark } from '../../apis/bookmark';
 import { updateVh } from '../../utils/calculateVH';
 import Portal from '../../components/Portal';
 import { LoginContext } from '../../context/LoginContext';
@@ -29,6 +31,8 @@ const PolicyDetails = () => {
   const { isLogin } = useContext(LoginContext);
   const params = useParams();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
   const {
     data: bookmark,
     error: bookmarkError,
@@ -60,36 +64,42 @@ const PolicyDetails = () => {
     return () => clearTimeout(timer);
   }, [isUpload]);
 
-  const handleBookmarkClick = async () => {
-    const { start, end } = extractDatesAPIVer(data?.data?.emp?.rqutPrdCn);
-    if (!isLogin) {
-      setIsModalOpen(true);
-      return;
-    }
-    const polyBizSjnm = data?.data?.emp?.polyBizSjnm;
-    const bizId = params.policyId;
-    try {
-      if (isClicked === true) {
-        const response = deleteBookmark(bizId);
-        console.log(response);
-        setIsClicked(false);
-        setIsUpload(true);
-        setUploadResponse('북마크가 삭제되었습니다');
-      } else {
-        const response = requestBookmark({
+  const bookmarkMutation = useMutation({
+    mutationFn: async (isAdding) => {
+      const { start, end } = extractDatesAPIVer(data?.data?.emp?.rqutPrdCn);
+      const polyBizSjnm = data?.data?.emp?.polyBizSjnm;
+      const bizId = params.policyId;
+
+      if (isAdding) {
+        return requestBookmark({
           polyBizSjnm,
           srchPolicyId: bizId,
           startDate: start,
           deadline: end,
         });
-        setIsClicked(true);
-        setIsUpload(true);
-        setUploadResponse('성공적으로 북마크되었습니다');
-        console.log('북마크 성공:', response);
+      } else {
+        return deleteBookmark(bizId);
       }
-    } catch (error) {
+    },
+    onSuccess: (response, isAdding) => {
+      setIsClicked(isAdding);
+      setIsUpload(true);
+      setUploadResponse(
+        isAdding ? '성공적으로 북마크되었습니다' : '북마크가 삭제되었습니다'
+      );
+      queryClient.invalidateQueries(['bookmark', params]);
+    },
+    onError: (error) => {
       console.error('북마크 요청 실패:', error);
+    },
+  });
+
+  const handleBookmarkClick = () => {
+    if (!isLogin) {
+      setIsModalOpen(true);
+      return;
     }
+    bookmarkMutation.mutate(!isClicked);
   };
 
   if (isLoading || bookmarkLoading) {

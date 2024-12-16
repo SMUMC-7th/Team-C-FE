@@ -57,7 +57,7 @@ const PolicyListLogin = () => {
   if (error)
     return (
       <p style={{ display: 'flex', justifyContent: 'center' }}>
-        Error loading policies
+        정책을 불러오는 데에 실패하였습니다.
       </p>
     );
 
