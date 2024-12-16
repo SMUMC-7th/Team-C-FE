@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 const CommentList = styled.div`
   margin-top: 10px;
-  height: 280px;
   overflow-y: scroll;
 `;
 
