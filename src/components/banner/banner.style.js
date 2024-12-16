@@ -2,7 +2,10 @@ import styled from 'styled-components';
 import Slider from 'react-slick';
 
 const StyledSlider = styled(Slider)`
-  width: var(--size-inner-max-width);
+  min-width: 345px;
+  max-width: var(--size-inner-max-width);
+  width: 100%;
+
   overflow-y: hidden;
   .slick-list {
     overflow: hidden;
@@ -12,6 +15,9 @@ const StyledSlider = styled(Slider)`
     display: flex;
     justify-content: center;
     border-radius: 20px;
+    div {
+      width: 100%;
+    }
   }
 
   .slick-dots {
@@ -43,9 +49,11 @@ const StyledSlider = styled(Slider)`
 const Banner = styled.div`
   display: flex !important;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  min-width: 345px;
+  width: 100%;
+  /* max-width: var(--size-inner-max-width);
+  min-width: 345px; */
   min-height: 150px;
   background-color: var(--color-gray-800);
   background-image: radial-gradient(
@@ -60,9 +68,9 @@ const Banner = styled.div`
 const Texts = styled.div`
   display: flex;
   flex-direction: column;
-  width: 60%;
+  max-width: 60%;
   justify-content: center;
-  margin-left: 20px;
+  /* margin-left: 20px; */
   gap: 10px;
 `;
 
@@ -83,7 +91,13 @@ const Content = styled.div`
 const Img = styled.img`
   width: 120px;
   object-fit: cover;
-  margin-right: 10px;
+  /* margin-right: 10px; */
 `;
 
-export { Texts, Title, Content, Img, Banner, StyledSlider };
+const Contents = styled.div`
+  display: flex;
+  max-width: 480px;
+  justify-content: center;
+`;
+
+export { Texts, Title, Content, Img, Banner, StyledSlider, Contents };

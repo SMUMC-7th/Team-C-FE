@@ -7,7 +7,9 @@ const RootLayout = () => {
   return (
     <S.Container>
       <Header />
-      <Outlet />
+      <S.OutletContainer>
+        <Outlet />
+      </S.OutletContainer>
       <NavBar />
     </S.Container>
   );

@@ -57,11 +57,13 @@ const Banner = () => {
     <S.StyledSlider {...settings}>
       {banners.map((banner, index) => (
         <S.Banner key={index}>
-          <S.Texts>
-            <S.Title>{banner.title}</S.Title>
-            <S.Content>{banner.content}</S.Content>
-          </S.Texts>
-          <S.Img src={banner.img} alt={banner.alt} />
+          <S.Contents>
+            <S.Texts>
+              <S.Title>{banner.title}</S.Title>
+              <S.Content>{banner.content}</S.Content>
+            </S.Texts>
+            <S.Img src={banner.img} alt={banner.alt} />
+          </S.Contents>
         </S.Banner>
       ))}
     </S.StyledSlider>
