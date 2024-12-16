@@ -29,8 +29,9 @@ const GlobalStyle = createGlobalStyle`
     --color-kakao-yellow: #FEE500;
 
     /* size */
-    --size-max-width: 393px;
-    --size-inner-max-width: 345px;
+    --size-max-width: 640px;
+    --size-inner-max-width: 590px;
+    --size-min-width: 345px;
     --size-header: 80px;
     --size-navbar: 89px;
     --size-side-gap: 24px;
@@ -61,6 +62,7 @@ const GlobalStyle = createGlobalStyle`
       padding: calc(var(--size-header) + 0.5rem) var(--size-side-gap) calc(var(--size-navbar) + 0.5rem);
       position: absolute;
       overflow: hidden;
+      width: 100%;
     }
 
     h1, h2, span, div {

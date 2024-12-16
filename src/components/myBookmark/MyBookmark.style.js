@@ -16,10 +16,12 @@ const Title = styled.h2`
 
 const BookmarkList = styled.div`
   width: 100%;
+  max-height: 280px;
   display: flex;
   flex-direction: column;
   gap: 16px;
   padding: 0 28px;
+  overflow-y: scroll;
 `;
 
 const BookmarkPolicy = styled.div`

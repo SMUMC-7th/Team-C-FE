@@ -62,7 +62,7 @@ function SettingForm({
     }
     setNickName(values.nickName);
     setProfileImgUrl(profileImg);
-    setKakaoProfileImg(profileImg);
+    setUserNickName(nickName);
   };
 
   return (
