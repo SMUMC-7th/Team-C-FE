@@ -139,7 +139,11 @@ function PostDetails() {
       </S.CommentCount>
       <S.Divider />
 
-      <CommentList comments={comments} articleId={postId} />
+      <CommentList
+        comments={comments}
+        articleId={postId}
+        setComments={setComments}
+      />
 
       <form onSubmit={handleAddComment}>
         <CommentInput
