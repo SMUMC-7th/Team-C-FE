@@ -4,6 +4,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  width: 100%;
 `;
 
 const Title = styled.div`
@@ -25,7 +26,8 @@ const PolicyList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 345px;
+  width: 100%;
+  min-width: var(--size-min-width);
 `;
 
 const Alert = styled.div`
