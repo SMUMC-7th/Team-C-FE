@@ -14,8 +14,9 @@ import KakaoOAuthHandler from './OAuth/KakaoOAuthHandler';
 import NaverOAuthHandler from './OAuth/NaverOAuthHandler';
 import GoogleOAuthHandler from './OAuth/GoogleOAuthHandler';
 import PostEdit from './postEdit/postEdit';
-
+import Alarm from './alarm/alarm';
 export {
+  Alarm,
   Landing,
   Home,
   UserSettings,

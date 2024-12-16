@@ -36,4 +36,17 @@ const getProfileBookmarks = async ({ cursor, offset }) => {
   return data;
 };
 
-export { postInitProfile, getProfile, getProfileDetails, getProfileBookmarks };
+const getAlarm = async ({ cursor, offset }) => {
+  const { data } = await axiosInstance.get(
+    `https://api.youthstepup.site/profiles/alarm?cursor=${cursor}&offset=${offset}`
+  );
+  return data;
+};
+
+export {
+  postInitProfile,
+  getProfile,
+  getProfileDetails,
+  getProfileBookmarks,
+  getAlarm,
+};
