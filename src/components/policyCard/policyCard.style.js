@@ -5,12 +5,11 @@ import { BsBookmarkDash, BsBookmarkFill } from 'react-icons/bs';
 const Container = styled.div`
   display: flex;
   min-height: 156px;
-  background: linear-gradient(
-    to top left,
-    rgba(244, 244, 244, 0.1),
-    rgba(116, 215, 216, 0.1),
-    rgba(88, 139, 226, 0.05)
-  );
+  background: ${(props) =>
+    props.canApply
+      ? 'linear-gradient(to top left, rgba(244, 244, 244, 0.1), rgba(116, 215, 216, 0.1), rgba(88, 139, 226, 0.05))'
+      : 'linear-gradient(to top left, rgba(244, 244, 244, 0.1), rgba(116, 215, 216, 0.1), rgba(88, 139, 226, 0.05))'};
+
   border-radius: 20px;
   align-items: center;
   width: 345px;
@@ -58,7 +57,8 @@ const Texts = styled.div`
 const Title = styled.div`
   display: -webkit-box;
   font-size: 23px;
-  color: var(--color-blue-700);
+  color: ${(props) =>
+    props.canApply ? 'var(--color-blue-700)' : 'var(--color-blue-700)'};
   font-weight: bold;
   word-break: break-word;
   -webkit-line-clamp: 2;

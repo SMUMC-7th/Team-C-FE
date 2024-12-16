@@ -8,7 +8,6 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { getRecommendPolicy } from '../../apis/policy';
 import PolicyListSkeleton from './policyListSkeleton/policyListSkeleton';
 import { LoginContext } from '../../context/LoginContext';
-import { canApplyNow } from '../../utils/formatDate';
 import Alert from '../alert/alert';
 
 function useGetInfinitePolicy() {
@@ -63,16 +62,14 @@ const PolicyListLogin = () => {
     <S.Container>
       <S.PolicyList>
         {policiesData?.map((page) =>
-          page?.data?.emp.map((policyData) =>
-            canApplyNow(policyData.rqutPrdCn) ? (
-              <PolicyCard
-                key={policyData.bizId}
-                setIsUpload={setIsUpload}
-                setUploadResponse={setUploadResponse}
-                {...policyData}
-              />
-            ) : null
-          )
+          page?.data?.emp.map((policyData) => (
+            <PolicyCard
+              key={policyData.bizId}
+              setIsUpload={setIsUpload}
+              setUploadResponse={setUploadResponse}
+              {...policyData}
+            />
+          ))
         )}
       </S.PolicyList>
       {hasNextPage && !isFetching && <S.Ref ref={ref}></S.Ref>}
