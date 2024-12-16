@@ -18,7 +18,7 @@ import ContentModal from '../../components/modal/ContentModal';
 import Loading from '../loading/Loading';
 import Error from '../error/Error';
 import Alert from '../../components/alert/alert';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const PolicyDetails = () => {
   useEffect(() => {
@@ -28,7 +28,7 @@ const PolicyDetails = () => {
 
   const { isLogin } = useContext(LoginContext);
   const params = useParams();
-  const navigate = Navigate();
+  const navigate = useNavigate();
   const {
     data: bookmark,
     error: bookmarkError,
