@@ -11,5 +11,14 @@
     <div id="portal"></div>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script>
+      window.addEventListener('DOMContentLoaded', function (ev) {
+        const { innerHeight } = window;
+        document.documentElement.style.setProperty(
+          '--app-height',
+          `${innerHeight}px`
+        );
+      });
+    </script>
   </body>
 </html>
