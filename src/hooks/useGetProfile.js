@@ -88,6 +88,7 @@ function useDeleteBookmark() {
   return useMutation({
     mutationFn: (bookmarkId) => deleteBookmark(bookmarkId),
     mutationKey: ['deleteBookmark'],
+    onSuccess: (data) => console.log('북마크 삭제', data),
     onError: (error) => console.log('북마크 삭제 오류', error),
   });
 }
