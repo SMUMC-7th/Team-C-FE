@@ -94,13 +94,12 @@ function useDeleteBookmark() {
 
 function useGetAlarm() {
   return useInfiniteQuery({
-    queryFn: ({ pageParam = 0 }) =>
-      getAlarm({
-        cursor: pageParam,
-        offset: 10,
-      }),
+    queryFn: ({ pageParam = 7 }) => {
+      return getAlarm({ cursor: pageParam, offset: 10 });
+    },
     queryKey: ['profileAlarm'],
     getNextPageParam: (lastPage) => {
+      console.log(lastPage, lastPage.data.cursor);
       return lastPage.data.hasNext ? lastPage.data.cursor : undefined;
     },
   });
