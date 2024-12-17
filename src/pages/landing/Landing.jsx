@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import logo_wg from '../../images/logo_wg.svg';
 import Portal from './../../components/Portal';
 import { updateVh } from '../../utils/calculateVH';
-
+import { useEffect } from 'react';
 function requestPermission() {
   useEffect(() => {
     updateVh();
