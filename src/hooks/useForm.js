@@ -5,7 +5,15 @@ function useForm({ initialValue, validate, formMenu }) {
   const [touched, setTouched] = useState({});
   const [errors, setErrors] = useState({});
   const [toggles, setToggles] = useState(
-    formMenu.map((item) => Array(item.options.length).fill(false))
+    formMenu.map((item, menuIdx) => {
+      return Array(item.options.length)
+        .fill(false)
+        .map((_, idx) =>
+          Array.isArray(initialValue[item.id])
+            ? initialValue[item.id].includes(item.options[idx])
+            : initialValue[item.id] === item.options[idx]
+        );
+    })
   );
   const [isFormValid, setIsFormValid] = useState(false);
 
