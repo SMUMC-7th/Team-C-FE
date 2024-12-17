@@ -66,6 +66,31 @@ const ArrowIcon = styled(IoIosArrowForward)`
   color: var(--color-gray-700);
 `;
 
+const EmptyContainer = styled.div`
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+
+  h3 {
+    color: var(--color-gray-900);
+  }
+
+  p {
+    color: var(--color-gray-600);
+  }
+`;
+
+const Ref = styled.div`
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+`;
+
 export {
   Container,
   Title,
@@ -76,4 +101,6 @@ export {
   BookmarkIcon,
   BookmarkFillIcon,
   ArrowIcon,
+  EmptyContainer,
+  Ref,
 };
