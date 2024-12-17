@@ -39,6 +39,8 @@ function EditProfile() {
     },
   };
 
+  const handleSubmitEditData = () => {};
+
   return (
     <S.Container>
       <SettingForm
