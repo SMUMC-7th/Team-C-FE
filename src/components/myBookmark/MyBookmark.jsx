@@ -19,19 +19,14 @@ const MyBookmark = () => {
     isFetching,
     hasNextPage,
     fetchNextPage,
-    isPending,
     isError: isGetBookmarksError,
   } = useGetProfileBookmarks(cursor);
-  console.log(bookmarks);
 
   const { ref, inView } = useInView({
-    threshold: 0,
+    threshold: 0.1,
   });
 
   useEffect(() => {
-    console.log('InView:', inView);
-    console.log('IsFetching:', isFetching);
-    console.log('HasNextPage:', hasNextPage);
     if (inView) {
       !isFetching && hasNextPage && fetchNextPage();
     }
@@ -40,42 +35,63 @@ const MyBookmark = () => {
   const { mutate } = useDeleteBookmark();
 
   const handleDeleteBookmark = (srchPolicyId) => {
-    mutate(srchPolicyId);
+    const optimisticUpdate = () => {
+      setSelectedBookmarks((prevBookmarks) =>
+        prevBookmarks.filter(
+          (bookmark) => bookmark.srchPolicyId !== srchPolicyId
+        )
+      );
+    };
+
+    mutate(srchPolicyId, {
+      onMutate: optimisticUpdate,
+      onSettled: () => {
+        fetchNextPage();
+      },
+    });
   };
 
   const handleArrowClick = (srchPolicyId) => {
     navigate(`/policy/${srchPolicyId}`);
   };
 
-  if (isPending) {
-    return <div></div>;
-  }
-
   if (isGetBookmarksError) {
     return <div></div>;
   }
 
+  const hasBookmarks = bookmarks?.pages?.some(
+    (page) => page.data?.bookmarkResponses?.length > 0
+  );
+
   return (
     <S.Container>
       <S.Title>북마크</S.Title>
-      <S.BookmarkList>
-        {bookmarks?.pages?.map((page) =>
-          page.data?.bookmarkResponses?.map((bookmark) => (
-            <S.BookmarkPolicy key={bookmark.bookmarkId}>
-              <S.BookmarkTitle>
-                <S.BookmarkFillIcon
-                  onClick={() => handleDeleteBookmark(bookmark.srchPolicyId)}
+      {hasBookmarks ? (
+        <S.BookmarkList>
+          {bookmarks?.pages?.map((page) =>
+            page.data?.bookmarkResponses?.map((bookmark) => (
+              <S.BookmarkPolicy key={bookmark.bookmarkId}>
+                <S.BookmarkTitle>
+                  <S.BookmarkFillIcon
+                    onClick={() => handleDeleteBookmark(bookmark.srchPolicyId)}
+                  />
+                  <S.PolicyTitle>{bookmark.name}</S.PolicyTitle>
+                </S.BookmarkTitle>
+                <S.ArrowIcon
+                  onClick={() => handleArrowClick(bookmark.srchPolicyId)}
                 />
-                <S.PolicyTitle>{bookmark.name}</S.PolicyTitle>
-              </S.BookmarkTitle>
-              <S.ArrowIcon
-                onClick={() => handleArrowClick(bookmark.srchPolicyId)}
-              />
-            </S.BookmarkPolicy>
-          ))
-        )}
-        <div ref={ref}>{isFetching && <p>o</p>}</div>
-      </S.BookmarkList>
+              </S.BookmarkPolicy>
+            ))
+          )}
+          {hasNextPage && !isFetching && <S.Ref ref={ref}></S.Ref>}
+          {/* {isFetching && <BookmarkSkeleton />} */}
+        </S.BookmarkList>
+      ) : (
+        <S.EmptyContainer>
+          <h3>저장된 북마크가 없어요.</h3>
+          <p>맞춤 정책을 저장하고 한눈에 보관해 보세요!</p>
+        </S.EmptyContainer>
+      )}
     </S.Container>
   );
 };

@@ -17,9 +17,8 @@ function SettingForm({
   onSubmit,
 }) {
   const navigate = useNavigate();
-  const [profileImg, setProfileImg] = useState(initialData.profileImg);
+  const [profileImg, setProfileImg] = useState(initialData.profileImgUrl);
   const [age, setAge] = useState(initialData.age);
-  const [toggles, setToggles] = useState(initialData.toggles || []);
   const { setNickName, nickName, setProfileImgUrl, setKakaoProfileImg } =
     useContext(LoginContext);
 
@@ -38,14 +37,12 @@ function SettingForm({
   });
 
   useEffect(() => {
-    setProfileImg(initialData.profileImg);
+    setProfileImg(initialData.profileImgUrl);
     setNickName(initialData.nickName);
     setAge(initialData.age);
-    setToggles(initialData.toggles || []);
   }, [initialData]);
 
   const handleToggleChange = (toggles) => {
-    setToggles(toggles);
     setToggleSelections(toggles);
   };
 
@@ -95,7 +92,6 @@ function SettingForm({
         <ToggleBtnGroup
           formMenu={FORM_MENU}
           onToggleChange={handleToggleChange}
-          initialToggles={toggles}
         />
       </S.Section>
 

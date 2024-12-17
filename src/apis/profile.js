@@ -1,6 +1,7 @@
 import { axiosInstance } from './axiosInstance';
 
 const postInitProfile = async ({
+  profileImg,
   nickname,
   age,
   regions,
@@ -9,6 +10,7 @@ const postInitProfile = async ({
   educations,
 }) => {
   const { data } = await axiosInstance.post('/profiles/init-profile', {
+    profileImg: profileImg,
     nickname: nickname,
     age: Number(age),
     regions: regions,

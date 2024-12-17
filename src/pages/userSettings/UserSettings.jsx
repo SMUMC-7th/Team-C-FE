@@ -5,6 +5,7 @@ import { usePostInitProfile } from '../../hooks/useGetProfile';
 import { Container } from './UserSetting.style';
 import { useContext } from 'react';
 import DefaultProfile from '../../images/defaultProfile.svg';
+import Loading from '../loading/Loading';
 
 function UserSettings() {
   const { profileImgUrl, nickName } = useContext(LoginContext);
@@ -21,7 +22,7 @@ function UserSettings() {
   };
 
   if (isLoading) {
-    return <div></div>;
+    return <Loading />;
   }
 
   return (
