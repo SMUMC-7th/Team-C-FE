@@ -12,6 +12,7 @@ import {
   postInitProfile,
   getProfileBookmarks,
   getAlarm,
+  getEditProfile,
 } from '../apis/profile';
 import { useNavigate } from 'react-router-dom';
 import { LoginContext } from '../context/LoginContext';
@@ -106,6 +107,23 @@ function useGetAlarm() {
   });
 }
 
+function useEditProfile() {
+  const navigate = useNavigate();
+  const { setIsLogin } = useContext(LoginContext);
+
+  const onSuccess = () => {
+    alert('프로필 수정이 완료되었습니다.');
+    navigate('/my');
+  };
+
+  return useMutation({
+    mutationFn: (data) => getEditProfile(data),
+    mutationKey: ['editProfile'],
+    onSuccess: onSuccess,
+    onError: (error) => console.log('프로필 수정 오류', error),
+  });
+}
+
 export {
   useGetKakaoOAuth,
   usePostInitProfile,
@@ -116,4 +134,5 @@ export {
   useGetNaverOAuth,
   useGetGoogleOAuth,
   useGetAlarm,
+  useEditProfile,
 };
