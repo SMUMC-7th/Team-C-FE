@@ -30,6 +30,7 @@ function Header() {
       '/calendar',
       '/recommend',
       '/postwrite',
+      '/alarm',
     ];
 
     return backBtnPath.some((path) => location.pathname.startsWith(path));
@@ -48,13 +49,9 @@ function Header() {
       <S.Nav>
         {showBackBtn() && <IoChevronBack onClick={() => navigate(-1)} />}
         {showLogoAndProfile() && <S.Logo src={logo_bg} />}
-        <S.Profile onClick={() => navigate('/my')}>
-          {isSuccess && isLogin && profileImgUrl ? (
-            <S.UserImg src={profileImgUrl} alt="사용자 프로필" />
-          ) : (
-            <LuUserCircle2 />
-          )}
-        </S.Profile>
+        <S.Bell onClick={() => navigate('/alarm')}>
+          <S.BellIcon></S.BellIcon>
+        </S.Bell>
       </S.Nav>
     </S.Header>
   );

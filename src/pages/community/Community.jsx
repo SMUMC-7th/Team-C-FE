@@ -5,6 +5,7 @@ import PostList from '../../components/postList/PostList';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getPostList } from '../../apis/post';
 import { useRef, useEffect } from 'react';
+import Loading from '../loading/Loading';
 
 function Community() {
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ function Community() {
     return () => observer.disconnect();
   }, [fetchNextPage, hasNextPage]);
 
-  if (isLoading) return <div>로딩 중...</div>;
+  if (isLoading) return <Loading></Loading>;
 
   return (
     <S.Container>
