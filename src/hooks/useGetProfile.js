@@ -97,7 +97,7 @@ function useDeleteBookmark() {
 function useGetAlarm() {
   return useInfiniteQuery({
     queryFn: ({ pageParam = 7 }) => {
-      return getAlarm({ cursor: pageParam, offset: 20 });
+      return getAlarm();
     },
     queryKey: ['profileAlarm'],
     getNextPageParam: (lastPage) => {
