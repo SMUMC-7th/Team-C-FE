@@ -101,8 +101,6 @@ function useGetAlarm() {
       }),
     queryKey: ['profileAlarm'],
     getNextPageParam: (lastPage) => {
-      console.log('마지막페이지 커서', lastPage.data.cursor);
-
       return lastPage.data.hasNext ? lastPage.data.cursor : undefined;
     },
   });
