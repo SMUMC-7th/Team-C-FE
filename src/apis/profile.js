@@ -38,9 +38,9 @@ const getProfileBookmarks = async ({ cursor, offset }) => {
   return data;
 };
 
-const getAlarm = async ({ cursor, offset }) => {
+const getAlarm = async () => {
   const { data } = await axiosInstance.get(
-    `https://api.youthstepup.site/profiles/alarm?cursor=${cursor}&offset=${offset}`
+    `https://api.youthstepup.site/profiles/alarm?cursor=29302402390319&offset=10`
   );
   return data;
 };
