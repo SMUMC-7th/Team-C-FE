@@ -10,13 +10,15 @@ import { useGetProfile } from '../../hooks/useGetProfile';
 function Header() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { isLogin, setIsLogin, profileImgUrl } = useContext(LoginContext);
+  const { isLogin, setIsLogin, profileImgUrl, setNickName } =
+    useContext(LoginContext);
 
   const { data, isLoading, isSuccess, isError } = useGetProfile();
-
+  console.log(data);
   useEffect(() => {
     if (isSuccess) {
       setIsLogin(true);
+      setNickName(data?.data?.nickName);
     } else if (isError) {
       setIsLogin(false);
     }
