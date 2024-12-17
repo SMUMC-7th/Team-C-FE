@@ -58,7 +58,7 @@ function CommentList({ comments, articleId, setComments }) {
     <S.CommentList>
       {comments.map((comment) => (
         <S.CommentBox key={comment.replyId}>
-          {/* <img src={}} alt={'사진'} /> */}
+          <img src={comment.imgUrl} alt={'사진'} />
           <S.Comment>
             <S.EditBox>
               <h6>{comment.nickName}</h6>
