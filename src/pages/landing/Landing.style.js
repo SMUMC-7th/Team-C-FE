@@ -40,7 +40,7 @@ const LoginContainer = styled.div`
   gap: 10px;
   width: 300px;
   position: absolute;
-  bottom: 30px;
+  bottom: 60px;
   color: white;
   text-align: center;
 `;
