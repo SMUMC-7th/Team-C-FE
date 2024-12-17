@@ -23,7 +23,7 @@ function KakaoOAuthHandler() {
   } = useGetKakaoOAuth(code);
 
   useEffect(() => {
-    if (isSuccess) {
+    if (isSuccess && response?.data) {
       const { profileImgUrl, nickName, isOriginMember } = response.data;
 
       setNickName(nickName);
@@ -43,6 +43,7 @@ function KakaoOAuthHandler() {
       console.error('카카오 토큰 발급 실패');
     }
   }, [isError]);
+
   const { data: tokenResponse, error: tokenError } = useDeviceToken(isSuccess);
   useEffect(() => {
     const unsubscribe = onMessage(messaging, (payload) => {
