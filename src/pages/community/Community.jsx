@@ -14,10 +14,10 @@ function Community() {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteQuery({
       queryKey: ['postList'],
-      queryFn: ({ pageParam = 99999 }) =>
+      queryFn: ({ pageParam = 999 }) =>
         getPostList({ cursorId: pageParam, pageSize: 10 }),
       getNextPageParam: (lastPage) => {
-        const articleList = lastPage?.data?.articleList || [];
+        const articleList = lastPage?.data?.articleList;
         return articleList.length > 0
           ? articleList[articleList.length - 1].articleId
           : undefined;
@@ -52,7 +52,7 @@ function Community() {
         <S.SearchIcon />
       </S.SearchContainer>
       {data?.pages.map((page, index) => (
-        <PostList key={index} posts={page.data.articleList} />
+        <PostList key={index} posts={page?.data.articleList} />
       ))}
       <div ref={observerRef} style={{ height: '1px' }} />
       {isFetchingNextPage && <div>불러오는 중..</div>}

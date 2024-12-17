@@ -5,7 +5,7 @@ const CommentInputBox = styled.div`
   margin: 10px 0;
   position: fixed;
   left: 50%;
-  bottom: 13.5%;
+  bottom: 16%;
   transform: translate(-50%, 50%);
 `;
 
