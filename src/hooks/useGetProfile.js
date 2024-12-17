@@ -96,12 +96,12 @@ function useDeleteBookmark() {
 function useGetAlarm() {
   return useInfiniteQuery({
     queryFn: ({ pageParam = 7 }) => {
-      return getAlarm({ cursor: pageParam, offset: 10 });
+      return getAlarm({ cursor: pageParam, offset: 20 });
     },
     queryKey: ['profileAlarm'],
     getNextPageParam: (lastPage) => {
-      console.log(lastPage, lastPage.data.cursor);
-      return lastPage.data.hasNext ? lastPage.data.cursor : undefined;
+      console.log(lastPage.data?.nextCursor);
+      return lastPage.data?.hasNext ? lastPage.data?.nextCursor : undefined;
     },
   });
 }

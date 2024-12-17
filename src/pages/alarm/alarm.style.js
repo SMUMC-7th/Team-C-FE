@@ -18,5 +18,12 @@ const Explain = styled.div`
   margin-top: 30px;
   color: var(--color-gray-600);
 `;
+const Ref = styled.div`
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+`;
 
-export { Container, Explain };
+export { Container, Explain, Ref };
