@@ -8,6 +8,10 @@ import Portal from './../../components/Portal';
 import { updateVh } from '../../utils/calculateVH';
 
 function requestPermission() {
+  useEffect(() => {
+    updateVh();
+    window.addEventListener('resize', updateVh);
+  }, []);
   // Notification 지원 여부 확인
   if (typeof Notification === 'undefined') {
     console.warn('이 브라우저는 알림을 지원하지 않습니다.');
