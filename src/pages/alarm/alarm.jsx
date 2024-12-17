@@ -25,7 +25,6 @@ const Alarm = () => {
       setIsModalOpen(true);
     }
   }, [isLogin]);
-  const cursor = 0;
 
   const {
     data: alarms,
@@ -34,8 +33,7 @@ const Alarm = () => {
     fetchNextPage,
     isPending,
     isError,
-  } = useGetAlarm(cursor);
-  console.log(alarms);
+  } = useGetAlarm();
   const { ref, inView } = useInView({
     threshold: 0,
   });
