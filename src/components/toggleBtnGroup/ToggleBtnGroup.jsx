@@ -3,9 +3,10 @@ import { ToggleBtn } from './ToggleBtn';
 import { useState } from 'react';
 import { FormSectionTitle } from '../formSectionTitle/FormSectionTitle';
 
-function ToggleBtnGroup({ formMenu, onToggleChange }) {
+function ToggleBtnGroup({ formMenu, onToggleChange, initialToggles }) {
   const [toggles, setToggles] = useState(
-    formMenu.map((item) => Array(item.options.length).fill(false))
+    initialToggles ||
+      formMenu.map((item) => Array(item.options.length).fill(false))
   );
 
   const handleToggle = (menuIdx, optionIdx) => {
