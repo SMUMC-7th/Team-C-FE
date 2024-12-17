@@ -1,5 +1,16 @@
 import { axiosInstance } from './axiosInstance';
 
+// 댓글 생성
+export const createComment = async (commentData) => {
+  try {
+    const response = await axiosInstance.post(`/replies/articles`, commentData);
+    return response.data.data;
+  } catch (error) {
+    console.error('댓글 생성 실패', error);
+    throw error;
+  }
+};
+
 // 댓글 조회
 export const getComments = async ({ articleId, cursorId, pageSize }) => {
   try {
