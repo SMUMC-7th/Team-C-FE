@@ -5,10 +5,11 @@ const Container = styled.div`
   width: 100%;
   max-width: var(--size-inner-max-width);
   min-width: var(--size-min-width);
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100 - 190px);
   flex-direction: column;
   align-items: center;
   gap: 13px;
+  overflow-y: scroll;
 `;
 
 const Explain = styled.div`
