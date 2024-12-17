@@ -9,11 +9,11 @@ function NavBar() {
   return (
     <S.BottomNav>
       <S.NavDiv>
-        {NAVMENU.map((item, _) => (
+        {NAVMENU.map((item) => (
           <S.NavItem
             key={item.id}
             onClick={() => navigate(item.path)}
-            selected={path === item.path ? true : false}
+            selected={path === item.path || path.startsWith(item.path + '/')}
           >
             {item.img}
             <span>{item.name}</span>
