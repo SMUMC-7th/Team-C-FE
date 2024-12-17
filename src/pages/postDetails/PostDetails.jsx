@@ -5,22 +5,19 @@ import CommentList from '../../components/comment/CommentList';
 import CommentInput from '../../components/comment/CommentInput';
 import EditMenu from '../../components/editMenu/EditMenu';
 import { getPostDetail, deletePost } from '../../apis/post';
-import { getComments } from '../../apis/comment';
-import { axiosInstance } from '../../apis/axiosInstance';
-import { LoginContext } from '../../context/LoginContext';
+import { getComments, createComment } from '../../apis/comment';
 import useStore from '../../store/store';
+import Loading from '../loading/Loading';
 
 function PostDetails() {
   const { postId } = useParams();
+  const articleId = Number(postId);
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
   const [cursorId, setCursorId] = useState(0);
   const navigate = useNavigate();
-  const { profileImgUrl, nickName } = useContext(LoginContext);
   const { commentCount, setCommentCount } = useStore();
-
-  console.log(nickName);
 
   const fetchPostDetail = async () => {
     try {
@@ -35,7 +32,7 @@ function PostDetails() {
   const fetchComments = async () => {
     try {
       const res = await getComments({
-        articleId: postId,
+        articleId,
         cursorId: cursorId,
         pageSize: 15,
       });
@@ -69,19 +66,14 @@ function PostDetails() {
     }
 
     const commentData = {
-      articleId: postId,
+      articleId,
       content: newComment,
-      nickName: nickName,
+      nickName: name,
+      parentId: null,
     };
 
     try {
-      const response = await axiosInstance.post(
-        '/replies/articles',
-        commentData
-      );
-      console.log(response);
-      const newReply = response.data.data;
-
+      const newReply = await createComment(commentData);
       setComments((prev) => [...prev, newReply]);
       setCommentCount(commentCount + 1);
       setNewComment('');
@@ -108,9 +100,11 @@ function PostDetails() {
 
   // postData가 null이 아닐 때만 접근
   const postData = post?.data;
+  console.log(postData);
+  const name = postData?.memberDataDTO.nickName;
 
   if (!postData) {
-    return <S.Container>게시글을 불러오는 중입니다...</S.Container>;
+    return <Loading></Loading>;
   }
 
   // 날짜, 시간 포맷팅
@@ -123,9 +117,9 @@ function PostDetails() {
     <S.Container>
       <S.AuthorBox>
         <S.AuthorInfo>
-          <img src={profileImgUrl} alt={'사진'} />
+          <img src={postData.memberDataDTO.imgUrl} alt={'사진'} />
           <div>
-            <p>{nickName}</p>
+            <p>{postData.memberDataDTO.nickName}</p>
             <h6>{displayDateTime}</h6>
           </div>
         </S.AuthorInfo>
@@ -148,7 +142,6 @@ function PostDetails() {
         comments={comments}
         articleId={postId}
         setComments={setComments}
-        profileImgUrl={profileImgUrl}
       />
 
       <form onSubmit={handleAddComment}>

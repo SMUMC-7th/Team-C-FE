@@ -8,6 +8,7 @@ import {
 import { getGoogleOAuth, getKakaoOAuth, getNaverOAuth } from '../apis/auth';
 import {
   getProfile,
+  getProfileDetails,
   postInitProfile,
   getProfileBookmarks,
   getAlarm,
@@ -78,8 +79,6 @@ function useGetProfileBookmarks() {
       }),
     queryKey: ['profileBookmarks'],
     getNextPageParam: (lastPage) => {
-      console.log('마지막페이지 커서', lastPage.data.cursor);
-
       return lastPage.data.hasNext ? lastPage.data.cursor : undefined;
     },
   });
@@ -89,7 +88,6 @@ function useDeleteBookmark() {
   return useMutation({
     mutationFn: (bookmarkId) => deleteBookmark(bookmarkId),
     mutationKey: ['deleteBookmark'],
-    onSuccess: console.log('북마크 삭제'),
     onError: (error) => console.log('북마크 삭제 오류', error),
   });
 }

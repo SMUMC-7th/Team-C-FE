@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
 import useStore from '../../store/store';
 
-function CommentList({ comments, articleId, setComments, profileImgUrl }) {
+function CommentList({ comments, articleId, setComments }) {
   console.log(comments);
   const [editingReplyId, setEditingReplyId] = useState(null);
   const [newContent, setNewContent] = useState('');
@@ -58,7 +58,7 @@ function CommentList({ comments, articleId, setComments, profileImgUrl }) {
     <S.CommentList>
       {comments.map((comment) => (
         <S.CommentBox key={comment.replyId}>
-          <img src={profileImgUrl} alt={'사진'} />
+          {/* <img src={}} alt={'사진'} /> */}
           <S.Comment>
             <S.EditBox>
               <h6>{comment.nickName}</h6>

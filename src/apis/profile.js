@@ -25,7 +25,7 @@ const getProfile = async () => {
 };
 
 const getProfileDetails = async () => {
-  const { data } = await axiosInstance.get('/profiles/details');
+  const { data } = await axiosInstance.get('/profiles/detail');
   return data;
 };
 
