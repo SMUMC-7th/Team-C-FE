@@ -45,10 +45,32 @@ const getAlarm = async ({ cursor, offset }) => {
   return data;
 };
 
+const getEditProfile = async ({
+  profileImg,
+  nickname,
+  age,
+  regions,
+  keyword,
+  majors,
+  educations,
+}) => {
+  const { data } = await axiosInstance.put('/profiles', {
+    profileImg: profileImg,
+    nickname: nickname,
+    age: Number(age),
+    regions: regions,
+    keyword: keyword,
+    majors: majors,
+    educations: educations,
+  });
+  return data;
+};
+
 export {
   postInitProfile,
   getProfile,
   getProfileDetails,
   getProfileBookmarks,
   getAlarm,
+  getEditProfile,
 };

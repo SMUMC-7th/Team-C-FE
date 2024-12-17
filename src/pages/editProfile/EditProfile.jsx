@@ -2,11 +2,18 @@ import * as S from './EditProfile.style';
 import { SettingForm } from '../../components/settingForm/SettingForm';
 import { useContext } from 'react';
 import { LoginContext } from '../../context/LoginContext';
-import { useGetProfileDetails } from '../../hooks/useGetProfile';
+import {
+  useEditProfile,
+  useGetProfileDetails,
+} from '../../hooks/useGetProfile';
 import Error from '../error/Error';
 import Loading from './../loading/Loading';
+import { updateVh } from '../../utils/calculateVH';
 
 function EditProfile() {
+  updateVh();
+  window.addEventListener('resize', updateVh);
+
   const { data: response, isLoading, isError } = useGetProfileDetails();
 
   if (isLoading) {
@@ -21,7 +28,7 @@ function EditProfile() {
     response?.data;
 
   const initialData = {
-    profileImgUrl: profileImg || '',
+    profileImg: profileImg || '',
     age: age || '',
     education: education || '',
     nickName: nickName || '',
@@ -31,8 +38,6 @@ function EditProfile() {
       region: region || [],
     },
   };
-
-  const handleSubmitEditData = (data) => {};
 
   return (
     <S.Container>
