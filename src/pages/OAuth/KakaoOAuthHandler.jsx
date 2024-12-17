@@ -1,12 +1,10 @@
 import { useEffect, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useGetKakaoOAuth } from '../../hooks/useGetProfile';
-import { useQuery } from '@tanstack/react-query';
 import { LoginContext } from '../../context/LoginContext';
-import { generateToken } from '../../remote/firebase';
-import { postDeviceToken } from '../../apis/deviceToken';
 import { onMessage } from 'firebase/messaging';
 import { messaging } from '../../remote/firebase';
+import { useDeviceToken } from '../../apis/deviceToken';
 
 function KakaoOAuthHandler() {
   const navigate = useNavigate();
@@ -45,25 +43,16 @@ function KakaoOAuthHandler() {
       console.error('카카오 토큰 발급 실패');
     }
   }, [isError]);
-
-  const useDeviceToken = () => {
-    return useQuery({
-      queryKey: ['token'],
-      queryFn: async () => {
-        const token = await generateToken();
-        console.log('토큰', token);
-        return postDeviceToken(token);
-      },
-      enabled: true,
+  const { data: tokenResponse, error: tokenError } = useDeviceToken(isSuccess);
+  useEffect(() => {
+    const unsubscribe = onMessage(messaging, (payload) => {
+      console.log('푸시 메시지 수신:', payload);
     });
-  };
 
-  const { data: tokenResponse, error } = useDeviceToken();
-  console.log('data', tokenResponse);
-
-  onMessage(messaging, (payload) => {
-    console.log(payload);
-  });
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   if (isLoading) {
     return <div></div>;

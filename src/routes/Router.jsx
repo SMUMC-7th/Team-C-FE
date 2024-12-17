@@ -17,6 +17,7 @@ import {
   PostEdit,
   NaverOAuthHandler,
   GoogleOAuthHandler,
+  Alarm,
 } from '../pages/index';
 
 const router = createBrowserRouter([
@@ -85,6 +86,10 @@ const router = createBrowserRouter([
       {
         path: '/postedit/:postId',
         element: <PostEdit />,
+      },
+      {
+        path: '/alarm',
+        element: <Alarm />,
       },
     ],
   },

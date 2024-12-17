@@ -3,8 +3,8 @@ import styled from 'styled-components';
 const Container = styled.div`
   display: flex;
   position: fixed;
-  width: var(--size-inner-max-width);
   bottom: 100px;
+  align-self: center;
   justify-content: center;
   z-index: 1;
 `;

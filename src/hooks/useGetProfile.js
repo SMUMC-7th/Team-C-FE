@@ -11,6 +11,7 @@ import {
   getProfileDetails,
   postInitProfile,
   getProfileBookmarks,
+  getAlarm,
 } from '../apis/profile';
 import { useNavigate } from 'react-router-dom';
 import { LoginContext } from '../context/LoginContext';
@@ -91,6 +92,22 @@ function useDeleteBookmark() {
   });
 }
 
+function useGetAlarm() {
+  return useInfiniteQuery({
+    queryFn: ({ pageParam = 0 }) =>
+      getAlarm({
+        cursor: pageParam,
+        offset: 10,
+      }),
+    queryKey: ['profileAlarm'],
+    getNextPageParam: (lastPage) => {
+      console.log('마지막페이지 커서', lastPage.data.cursor);
+
+      return lastPage.data.hasNext ? lastPage.data.cursor : undefined;
+    },
+  });
+}
+
 export {
   useGetKakaoOAuth,
   usePostInitProfile,
@@ -100,4 +117,5 @@ export {
   useDeleteBookmark,
   useGetNaverOAuth,
   useGetGoogleOAuth,
+  useGetAlarm,
 };

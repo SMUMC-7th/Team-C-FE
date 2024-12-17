@@ -9,9 +9,12 @@ import img7 from '../../images/policyImg7.svg';
 import img8 from '../../images/policyImg8.svg';
 import img9 from '../../images/policyImg9.svg';
 import { extractDatesAPIVer, extractDates } from '../../utils/formatDate';
-import { deleteBookmark, requestBookmark } from '../../apis/bookmark';
-import { useQuery } from '@tanstack/react-query';
-import { isBookmarked } from '../../apis/bookmark';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  isBookmarked,
+  deleteBookmark,
+  requestBookmark,
+} from '../../apis/bookmark';
 import { useContext, useEffect, useState } from 'react';
 import { LoginContext } from '../../context/LoginContext';
 import Portal from '../Portal';
@@ -23,6 +26,7 @@ const ImagesArr = [img1, img2, img3, img4, img5, img6, img7, img8, img9];
 
 const PolicyCard = (props) => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { isLogin } = useContext(LoginContext);
   const { bizId, polyBizSjnm, rqutPrdCn, setIsUpload, setUploadResponse } =
     props;
@@ -38,47 +42,56 @@ const PolicyCard = (props) => {
     setIsClicked(data?.data);
   }, [data?.data]);
 
-  const handleBookmarkClick = async () => {
-    const { start, end } = extractDatesAPIVer(rqutPrdCn);
-    if (!isLogin) {
-      setIsModalOpen(true);
-      return;
-    }
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsUpload(false);
+    }, 100000);
+    return () => clearTimeout(timer);
+  }, [isClicked]);
 
-    try {
-      if (isClicked === true) {
-        const response = deleteBookmark(bizId);
-        setIsClicked(false);
-        setIsUpload(true);
-        setUploadResponse('북마크가 삭제되었습니다');
-      } else {
-        const response = requestBookmark({
+  const bookmarkMutation = useMutation({
+    mutationFn: async (isAdding) => {
+      const { start, end } = extractDatesAPIVer(rqutPrdCn);
+
+      if (isAdding) {
+        return requestBookmark({
           polyBizSjnm,
           srchPolicyId: bizId,
           startDate: start,
           deadline: end,
         });
-        setIsClicked(true);
-        setIsUpload(true);
-        setUploadResponse('성공적으로 북마크 되었습니다');
+      } else {
+        return deleteBookmark(bizId);
       }
-    } catch (error) {
+    },
+    onSuccess: (response, isAdding) => {
+      setIsClicked(isAdding);
+      setIsUpload(true);
+      setUploadResponse(
+        isAdding ? '성공적으로 북마크되었습니다' : '북마크가 삭제되었습니다'
+      );
+      queryClient.invalidateQueries(['bookmark', bizId]);
+    },
+    onError: (error) => {
+      console.error('북마크 요청 실패:', error);
       setIsUpload(true);
       setUploadResponse('북마크에 실패하였습니다');
-    }
-  };
+    },
+  });
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsUpload(false);
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, [isClicked]);
+  const handleBookmarkClick = () => {
+    if (!isLogin) {
+      setIsModalOpen(true);
+      return;
+    }
+    bookmarkMutation.mutate(!isClicked);
+  };
 
   const randomIndex = parseInt(bizId.slice(1, 14), 10) % 9;
   const RandomImage = ImagesArr[randomIndex];
   const editDate = extractDates(rqutPrdCn);
   const canApply = canApplyNow(rqutPrdCn);
+
   return (
     <>
       <S.Container canApply={canApply}>
@@ -95,13 +108,9 @@ const PolicyCard = (props) => {
           <S.BookmarkFillIcon
             canApply={canApply}
             onClick={handleBookmarkClick}
-          ></S.BookmarkFillIcon>
-        ) : (
-          <S.BookmarkIcon
-            canApply={canApply}
-            onClick={handleBookmarkClick}
-            isclicked={data?.data}
           />
+        ) : (
+          <S.BookmarkIcon canApply={canApply} onClick={handleBookmarkClick} />
         )}
       </S.Container>
       {isModalOpen && (

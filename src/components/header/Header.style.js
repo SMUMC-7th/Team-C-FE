@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { CiBellOn } from 'react-icons/ci';
 
 const Header = styled.header`
   max-width: var(--size-max-width);
@@ -67,4 +68,17 @@ const Title = styled.p`
   transform: translateX(-50%);
 `;
 
-export { Header, Nav, Logo, Title, Profile, UserImg };
+const Bell = styled.div`
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: 10px;
+`;
+
+const BellIcon = styled(CiBellOn)`
+  width: 100%;
+  height: 100%;
+  stroke-width: 1px;
+`;
+
+export { Header, Nav, Logo, Title, Profile, UserImg, Bell, BellIcon };
