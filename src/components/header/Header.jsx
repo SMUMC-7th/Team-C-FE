@@ -14,7 +14,6 @@ function Header() {
     useContext(LoginContext);
 
   const { data, isLoading, isSuccess, isError } = useGetProfile();
-  console.log(data);
   useEffect(() => {
     if (isSuccess) {
       setIsLogin(true);
