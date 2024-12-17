@@ -3,6 +3,7 @@ import { FaCommentDots } from 'react-icons/fa';
 
 const CommentList = styled.div`
   margin-top: 10px;
+  width: 100%;
   overflow-y: scroll;
 `;
 
@@ -22,7 +23,7 @@ const CommentBox = styled.div`
 const Comment = styled.div`
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: 100%;
 
   h6 {
     margin-top: 10px;
