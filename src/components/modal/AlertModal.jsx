@@ -1,11 +1,13 @@
 import * as S from './AlertModal.style';
 
-const AlertModal = ({ setIsModalOpen, imgSrc, content }) => {
+const AlertModal = ({ setIsModalOpen, imgSrc, content, onClose }) => {
   return (
     <S.ModalContainer>
       <S.ModalContent>
         <S.CloseContainer>
-          <S.CloseBtn onClick={() => setIsModalOpen(false)} />
+          <S.CloseBtn
+            onClick={setIsModalOpen ? () => setIsModalOpen(false) : onClose}
+          />
         </S.CloseContainer>
         <S.ContentContainer>
           <S.AlertImg src={imgSrc} />
