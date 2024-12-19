@@ -13,6 +13,7 @@ import {
   getProfileBookmarks,
   getAlarm,
   getEditProfile,
+  deleteProfiles,
 } from '../apis/profile';
 import { useNavigate } from 'react-router-dom';
 import { LoginContext } from '../context/LoginContext';
@@ -114,6 +115,15 @@ function useEditProfile() {
   });
 }
 
+function useDeleteProfiles() {
+  return useMutation({
+    mutationFn: (nickName) => deleteProfiles(nickName),
+    mutationKey: ['deleteProfiles'],
+    onSuccess: (data) => console.log('회원 탈퇴', data),
+    onError: (error) => console.log('회원 탈퇴 오류', error),
+  });
+}
+
 export {
   useGetKakaoOAuth,
   usePostInitProfile,
@@ -125,4 +135,5 @@ export {
   useGetGoogleOAuth,
   useGetAlarm,
   useEditProfile,
+  useDeleteProfiles,
 };

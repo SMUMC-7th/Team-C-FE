@@ -66,6 +66,13 @@ const getEditProfile = async ({
   return data;
 };
 
+const deleteProfiles = async (nickName) => {
+  const { data } = await axiosInstance.delete('/profiles', {
+    nickName: nickName,
+  });
+  return data;
+};
+
 export {
   postInitProfile,
   getProfile,
@@ -73,4 +80,5 @@ export {
   getProfileBookmarks,
   getAlarm,
   getEditProfile,
+  deleteProfiles,
 };

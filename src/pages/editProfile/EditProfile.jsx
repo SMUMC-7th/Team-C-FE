@@ -14,6 +14,7 @@ import Portal from './../../components/Portal';
 import { AlertModal } from '../../components/modal/AlertModal';
 import updateImg2 from '../../images/updateImg2.svg';
 import { useNavigate } from 'react-router-dom';
+import DeleteProfiles from '../../components/deleteProfiles/DeleteProfiles';
 
 function EditProfile() {
   updateVh();
@@ -84,6 +85,7 @@ function EditProfile() {
         isOriginMember={true}
         initialData={initialData}
         onSubmit={handleSubmitEditData}
+        children={<DeleteProfiles />}
       />
       {isModalOpen && (
         <Portal>
