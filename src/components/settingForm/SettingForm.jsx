@@ -16,6 +16,7 @@ function SettingForm({
   isOriginMember,
   initialData,
   onSubmit,
+  children,
 }) {
   const navigate = useNavigate();
   const [profileImg, setProfileImg] = useState(initialData.profileImgUrl);
@@ -104,6 +105,8 @@ function SettingForm({
       <S.SubmitBtn type="submit" disabled={!isFormValid}>
         {btnText}
       </S.SubmitBtn>
+
+      {children}
     </S.Form>
   );
 }
