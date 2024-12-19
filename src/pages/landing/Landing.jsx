@@ -6,7 +6,14 @@ import { useNavigate } from 'react-router-dom';
 import logo_wg from '../../images/logo_wg.svg';
 import Portal from './../../components/Portal';
 import { updateVh } from '../../utils/calculateVH';
-function requestPermission() {
+async function requestPermission() {
+  // Firebase Messaging 지원 여부 확인
+  const supported = await isSupported();
+  if (!supported) {
+    console.warn('이 브라우저는 알림을 지원하지 않습니다.');
+    return; // 알림 기능 없이 종료
+  }
+
   // Notification 지원 여부 확인
   if (typeof Notification === 'undefined') {
     console.warn('이 브라우저는 알림을 지원하지 않습니다.');

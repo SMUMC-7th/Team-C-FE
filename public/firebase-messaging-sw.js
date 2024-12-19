@@ -1,5 +1,11 @@
-importScripts('https://www.gstatic.com/firebasejs/4.6.1/firebase-app.js');
-importScripts('https://www.gstatic.com/firebasejs/4.6.1/firebase-messaging.js');
+// importScripts('https://www.gstatic.com/firebasejs/4.6.1/firebase-app.js');
+// importScripts('https://www.gstatic.com/firebasejs/4.6.1/firebase-messaging.js');
+importScripts(
+  'https://www.gstatic.com/firebasejs/9.25.0/firebase-app-compat.js'
+);
+importScripts(
+  'https://www.gstatic.com/firebasejs/9.25.0/firebase-messaging-compat.js'
+);
 
 firebase.initializeApp({
   apiKey: 'AIzaSyB2mOc_GA_SLj4jkmyIo1qor7-ew21yckA',
@@ -14,17 +20,20 @@ firebase.initializeApp({
 const messaging = firebase.messaging();
 
 self.addEventListener('push', function (event) {
-  const payload = event.data.json();
+  try {
+    const payload = event.data.json();
+    const title = payload.notification.title;
 
-  const title = payload.notification.title;
+    const options = {
+      body: payload.notification.body,
+      icon: payload.notification.icon,
+      data: payload.notification.click_action,
+    };
 
-  const options = {
-    body: payload.notification.body,
-    icon: payload.notification.icon,
-    data: payload.notification.click_action,
-  };
-
-  event.waitUntil(self.registration.showNotification(title, options));
+    event.waitUntil(self.registration.showNotification(title, options));
+  } catch (error) {
+    console.error('Push event error:', error);
+  }
 });
 
 self.addEventListener('notificationclick', function (event) {
