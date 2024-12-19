@@ -8,10 +8,6 @@ export const ModalContext = createContext({
 export function ModalContextProvider({ children }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    console.log('isModalOpen: ', isModalOpen);
-  }, [isModalOpen]);
-
   return (
     <ModalContext.Provider
       value={{
