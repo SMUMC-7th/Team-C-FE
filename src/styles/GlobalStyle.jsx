@@ -56,7 +56,7 @@ const GlobalStyle = createGlobalStyle`
       height: 100vh;
       position: absolute;
       overflow: hidden;
-      z-index: 10;
+      z-index: 1;
     }
 
     #root {
