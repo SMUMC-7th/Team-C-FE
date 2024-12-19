@@ -134,7 +134,7 @@ function PostDetails() {
       </S.PostContent>
       <S.CommentCount>
         <S.CommentIcon />
-        {commentCount}
+        {postData.count}
       </S.CommentCount>
       <S.Divider />
 
