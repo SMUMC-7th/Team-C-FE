@@ -10,6 +10,7 @@ import Alert from '../alert/alert';
 const Day = (props) => {
   const { day, checked, ...policies } = props;
   const dateObj = new Date(day);
+  console.log(day);
   const selectedYear = dateObj.getFullYear();
   const selectedMonth = dateObj.getMonth() + 1;
   const selectedDay = dateObj.getDate();
@@ -30,7 +31,7 @@ const Day = (props) => {
   return (
     <>
       <S.Container>
-        <S.Date>{format(day, 'd')}일</S.Date>
+        <S.Date>{format(day, 'dd')}일</S.Date>
         <S.Contents>
           <S.Contents>
             {DayBookmark?.data?.bookmarks &&
