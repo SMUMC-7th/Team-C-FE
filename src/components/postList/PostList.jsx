@@ -19,7 +19,7 @@ const PostList = ({ posts }) => {
           <p>{post.content}</p>
           <span>
             <S.CommentIcon />
-            {post.commentCount}
+            {post.count}
           </span>
         </S.PostItem>
       ))}

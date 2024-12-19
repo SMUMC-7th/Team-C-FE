@@ -48,8 +48,9 @@ const PostItem = styled.div`
   span {
     display: flex;
     align-items: center;
-    font-size: 13px;
+    font-size: 12px;
     color: var(--color-blue-600);
+    gap: 1px;
   }
 `;
 
