@@ -12,7 +12,6 @@ function NaverOAuthHandler() {
 
   const url = new URLSearchParams(location.search);
   const code = url.get('code');
-  console.log(code);
 
   const { setNickName, setProfileImgUrl, setKakaoProfileImg } =
     useContext(LoginContext);
@@ -22,7 +21,6 @@ function NaverOAuthHandler() {
     isError,
     isSuccess,
   } = useGetNaverOAuth(code);
-  console.log(response);
 
   useEffect(() => {
     if (isSuccess) {

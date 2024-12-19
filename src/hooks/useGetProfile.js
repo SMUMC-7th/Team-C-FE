@@ -72,12 +72,14 @@ function useGetProfileDetails() {
 }
 
 function useGetProfileBookmarks() {
+  const { isLogin } = useContext(LoginContext);
   return useInfiniteQuery({
     queryFn: ({ pageParam = 0 }) =>
       getProfileBookmarks({
         cursor: pageParam,
         offset: 10,
       }),
+    enabled: !!isLogin,
     queryKey: ['profileBookmarks'],
     getNextPageParam: (lastPage) => {
       return lastPage.data.hasNext ? lastPage.data.cursor : undefined;
@@ -95,11 +97,13 @@ function useDeleteBookmark() {
 }
 
 function useGetAlarm() {
+  const { isLogin } = useContext(LoginContext);
   return useInfiniteQuery({
     queryFn: ({ pageParam = 7 }) => {
       return getAlarm();
     },
     queryKey: ['profileAlarm'],
+    enabled: !!isLogin,
     getNextPageParam: (lastPage) => {
       console.log(lastPage.data?.nextCursor);
       return lastPage.data?.hasNext ? lastPage.data?.nextCursor : undefined;

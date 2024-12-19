@@ -29,7 +29,6 @@ const useDeviceToken = (enabled) => {
       ) {
         const token = await generateToken();
         if (token) {
-          console.log(token);
           return postDeviceToken(token);
         }
         throw new Error('푸시 알림 토큰 생성 실패');

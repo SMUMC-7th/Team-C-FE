@@ -30,7 +30,7 @@ function ProfileImgUploader({ profileImg, setProfileImg }) {
         <Portal>
           <ContentModal
             title="프로필 사진 변경"
-            btnText1="카카오 프로필 사용"
+            btnText1="소셜 프로필 사용"
             btnText2="기본 프로필 사용"
             onBtn1Click={handleUseKakaoProfile}
             onBtn2Click={handleUseDefaultProfile}

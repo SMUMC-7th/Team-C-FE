@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import logo_wg from '../../images/logo_wg.svg';
 import Portal from './../../components/Portal';
 import { updateVh } from '../../utils/calculateVH';
+import { isSupported } from 'firebase/messaging';
 async function requestPermission() {
   // Firebase Messaging 지원 여부 확인
   const supported = await isSupported();

@@ -17,9 +17,9 @@ export function LoginContextProvider({ children }) {
   const [profileImgUrl, setProfileImgUrl] = useState('');
   const [kakaoProfileImg, setKakaoProfileImg] = useState('');
 
-  useEffect(() => {
-    console.log('isLogin: ', isLogin);
-  }, [isLogin]);
+  // useEffect(() => {
+  //   console.log('isLogin: ', isLogin);
+  // }, [isLogin]);
 
   return (
     <LoginContext.Provider

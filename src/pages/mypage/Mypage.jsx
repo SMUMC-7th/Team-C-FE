@@ -19,9 +19,7 @@ function MyPage() {
   }, [isLogin]);
 
   return (
-    <S.Container>
-      <MyProfile />
-      <MyBookmark />
+    <>
       {isModalOpen && (
         <Portal>
           <ContentModal
@@ -30,11 +28,18 @@ function MyPage() {
             btnText1="로그인"
             btnText2="닫기"
             onBtn1Click={() => navigate('/')}
-            onBtn2Click={() => setIsModalOpen(false)}
+            onBtn2Click={() => {
+              navigate('/home');
+              setIsModalOpen(false);
+            }}
           />
         </Portal>
       )}
-    </S.Container>
+      <S.Container>
+        <MyProfile />
+        <MyBookmark />
+      </S.Container>
+    </>
   );
 }
 
