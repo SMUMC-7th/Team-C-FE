@@ -1,13 +1,25 @@
 import * as S from './ToggleBtnGroup.style';
 import { ToggleBtn } from './ToggleBtn';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FormSectionTitle } from '../formSectionTitle/FormSectionTitle';
 
 function ToggleBtnGroup({ formMenu, onToggleChange, initialToggles }) {
-  const [toggles, setToggles] = useState(
-    initialToggles ||
-      formMenu.map((item) => Array(item.options.length).fill(false))
-  );
+  const initializeToggles = () => {
+    return formMenu.map((menu, menuIdx) => {
+      return menu.options.map((option) => {
+        if (Array.isArray(initialToggles[menuIdx])) {
+          return initialToggles[menuIdx].includes(option);
+        }
+        return false;
+      });
+    });
+  };
+
+  const [toggles, setToggles] = useState(initializeToggles);
+
+  useEffect(() => {
+    setToggles(initializeToggles());
+  }, [initialToggles]);
 
   const handleToggle = (menuIdx, optionIdx) => {
     const selectedCount = toggles[menuIdx].filter((toggle) => toggle).length;
@@ -20,8 +32,15 @@ function ToggleBtnGroup({ formMenu, onToggleChange, initialToggles }) {
     }
 
     setToggles((prevToggles) => {
-      const newToggles = [...prevToggles];
-      newToggles[menuIdx][optionIdx] = !newToggles[menuIdx][optionIdx];
+      const newToggles = prevToggles.map((menuToggles, idx) => {
+        if (idx === menuIdx) {
+          const newMenuToggles = [...menuToggles];
+          newMenuToggles[optionIdx] = !menuToggles[optionIdx];
+          return newMenuToggles;
+        }
+        return menuToggles;
+      });
+
       onToggleChange(newToggles);
       return newToggles;
     });
@@ -37,7 +56,7 @@ function ToggleBtnGroup({ formMenu, onToggleChange, initialToggles }) {
               <S.Li key={optionIdx}>
                 <ToggleBtn
                   onClick={() => handleToggle(menuIdx, optionIdx)}
-                  isSelected={toggles[menuIdx][optionIdx]}
+                  isSelected={toggles[menuIdx] && toggles[menuIdx][optionIdx]}
                   value={option}
                 />
               </S.Li>

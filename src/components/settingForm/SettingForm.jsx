@@ -8,6 +8,7 @@ import { validateUser } from '../../utils/validate';
 import { ProfileImgUploader } from '../profileImgUploader/ProfileImgUploader';
 import { InputField } from '../inputField/InputField';
 import { LoginContext } from '../../context/LoginContext';
+import { DEFAULT_PROFILE } from '../../constants/menu';
 
 function SettingForm({
   title,
@@ -21,6 +22,13 @@ function SettingForm({
   const [age, setAge] = useState(initialData.age);
   const { setNickName, nickName, setProfileImgUrl, setKakaoProfileImg } =
     useContext(LoginContext);
+
+  const initialToggles = [
+    [initialData.education] || '',
+    initialData.toggles.major || [],
+    initialData.toggles.region || [],
+    initialData.toggles.keywords || [],
+  ];
 
   const {
     values,
@@ -36,12 +44,6 @@ function SettingForm({
     formMenu: FORM_MENU,
   });
 
-  useEffect(() => {
-    setProfileImg(initialData.profileImgUrl);
-    setNickName(initialData.nickName);
-    setAge(initialData.age);
-  }, [initialData]);
-
   const handleToggleChange = (toggles) => {
     setToggleSelections(toggles);
   };
@@ -50,8 +52,11 @@ function SettingForm({
     e.preventDefault();
     if (onSubmit) {
       const [educations, majors, regions, keyword] = getSelectedOptions();
+
+      const validProfileImg = profileImg || DEFAULT_PROFILE;
+
       onSubmit({
-        profileImg,
+        profileImg: validProfileImg,
         nickname: values.nickName,
         age: values.age,
         educations,
@@ -92,6 +97,7 @@ function SettingForm({
         <ToggleBtnGroup
           formMenu={FORM_MENU}
           onToggleChange={handleToggleChange}
+          initialToggles={initialToggles}
         />
       </S.Section>
 
