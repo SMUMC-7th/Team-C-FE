@@ -14,7 +14,7 @@ const CalendarHeader = ({
         <IoIosArrowDown size={24} color="var(--color-gray-700)" />
       </S.Button>
       <S.Title onClick={handleMoveToToday}>
-        {format(currentDate, 'yyyy')}년 {format(currentDate, 'M')}월
+        {format(currentDate, 'yyyy')}년 {format(currentDate, 'MM')}월
       </S.Title>
       <S.Button onClick={nextMonth}>
         <IoIosArrowUp size={24} color="var(--color-gray-700)" />

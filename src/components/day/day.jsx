@@ -30,7 +30,7 @@ const Day = (props) => {
   return (
     <>
       <S.Container>
-        <S.Date>{format(day, 'd')}일</S.Date>
+        <S.Date>{format(day, 'dd')}일</S.Date>
         <S.Contents>
           <S.Contents>
             {DayBookmark?.data?.bookmarks &&

@@ -10,7 +10,7 @@ import { useGetProfile } from '../../hooks/useGetProfile';
 function Header() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { isLogin, setIsLogin, profileImgUrl, setNickName } =
+  const { isLogin, setIsLogin, profileImgUrl, setNickName, setProfileImgUrl } =
     useContext(LoginContext);
 
   const { data, isLoading, isSuccess, isError } = useGetProfile();
@@ -18,6 +18,7 @@ function Header() {
     if (isSuccess) {
       setIsLogin(true);
       setNickName(data?.data?.nickName);
+      setProfileImgUrl(data?.data.profileImg);
     } else if (isError) {
       setIsLogin(false);
     }

@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
 const Container = styled.div`
-  max-height: calc(100vh - var(--size-navbar));
-  height: 100%;
+  height: calc(var(--vh, 1vh) * 100 - 190px);
 `;
 
 export { Container };

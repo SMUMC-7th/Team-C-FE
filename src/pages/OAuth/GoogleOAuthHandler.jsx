@@ -24,7 +24,6 @@ function GoogleOAuthHandler() {
     isError,
     isSuccess,
   } = useGetGoogleOAuth(code);
-  console.log(isLoading);
 
   useEffect(() => {
     if (isSuccess) {

@@ -7,7 +7,8 @@ const Container = styled.div`
   flex-direction: column;
   height: calc(var(--vh, 1vh) * 100 - 190px);
   overflow-y: scroll;
-  max-width: 345px;
+  max-width: var(--size-inner-max-width);
+  min-width: var(--size-min-width);
 `;
 
 const PolicyInfoCard = styled.div`
