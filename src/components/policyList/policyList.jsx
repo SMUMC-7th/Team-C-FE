@@ -78,8 +78,8 @@ const PolicyListLogin = () => {
             ))
           )}
         </S.PolicyList>
+        <S.Ref ref={ref}></S.Ref>
       </S.Container>
-      {hasNextPage && !isFetching && <S.Ref ref={ref}></S.Ref>}
       {isFetching && <PolicyListSkeleton />}
       {isUpload && <Alert content={uploadResponse}></Alert>}
     </>
