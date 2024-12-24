@@ -64,23 +64,25 @@ const PolicyListLogin = () => {
   const policiesData = data?.pages;
 
   return (
-    <S.Container>
-      <S.PolicyList>
-        {policiesData?.map((page) =>
-          page?.data?.emp.map((policyData) => (
-            <PolicyCard
-              key={policyData.bizId}
-              setIsUpload={setIsUpload}
-              setUploadResponse={setUploadResponse}
-              {...policyData}
-            />
-          ))
-        )}
-      </S.PolicyList>
+    <>
+      <S.Container>
+        <S.PolicyList>
+          {policiesData?.map((page) =>
+            page?.data?.emp.map((policyData) => (
+              <PolicyCard
+                key={policyData.bizId}
+                setIsUpload={setIsUpload}
+                setUploadResponse={setUploadResponse}
+                {...policyData}
+              />
+            ))
+          )}
+        </S.PolicyList>
+      </S.Container>
       {hasNextPage && !isFetching && <S.Ref ref={ref}></S.Ref>}
       {isFetching && <PolicyListSkeleton />}
       {isUpload && <Alert content={uploadResponse}></Alert>}
-    </S.Container>
+    </>
   );
 };
 

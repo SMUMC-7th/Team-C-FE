@@ -22,6 +22,7 @@ const Card = styled(Link)`
   display: flex;
   min-height: 156px;
   min-width: var(--size-min-width);
+  width: 90%;
   justify-content: center;
   align-items: center;
   padding: 0 20px;
@@ -54,7 +55,7 @@ const Texts = styled.div`
   width: 60%;
   max-width: 400px;
   height: 100%;
-  justify-content: center;
+  //justify-content: center;
   flex-direction: column;
   gap: 8px;
   margin-top: 15px;
