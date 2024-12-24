@@ -8,8 +8,9 @@ import { getPostDetail, deletePost } from '../../apis/post';
 import { getComments, createComment } from '../../apis/comment';
 import useStore from '../../store/store';
 import Loading from '../loading/Loading';
-
+import { LoginContext } from '../../context/LoginContext';
 function PostDetails() {
+  const { profileImgUrl } = useContext(LoginContext);
   const { postId } = useParams();
   const articleId = Number(postId);
   const [post, setPost] = useState(null);
@@ -74,6 +75,7 @@ function PostDetails() {
 
     try {
       const newReply = await createComment(commentData);
+      newReply.imgUrl = profileImgUrl;
       setComments((prev) => [...prev, newReply]);
       setCommentCount(commentCount + 1);
       setNewComment('');
