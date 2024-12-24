@@ -1,5 +1,6 @@
 # 🌱 **청년돋움** 🌱 
 ## 맞춤 정책 관리 서비스 | UMC 7기 미니 프로젝트
+![README(최종) (1)](https://github.com/user-attachments/assets/0a711b97-2c02-44f0-8ceb-26f2d12e9224)
 ### 🎨 FE Commit convention
 ```
 feat : 새로운 기능 추가
