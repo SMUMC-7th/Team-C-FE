@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  height: calc(var(--vh, 1vh) * 100 - 190px);
+  height: calc(var(--vh, 1vh) * 100 - 180px);
   align-items: center;
   gap: 20px;
   width: var(--size-inner-max-width);
@@ -16,7 +16,6 @@ const PolicyContainer = styled.div`
   flex: 1;
   overflow-y: scroll;
   width: 100%;
-  max-height: 75%;
 `;
 
 const Title = styled.div`

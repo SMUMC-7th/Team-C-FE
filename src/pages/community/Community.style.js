@@ -3,7 +3,7 @@ import { IoSearch } from 'react-icons/io5';
 
 const Container = styled.div`
   width: var(--size-inner-max-width);
-  height: calc(100vh - 190px);
+  height: calc(100vh - 180px);
   margin: 0 auto;
   padding: 10px;
   overflow-y: auto;

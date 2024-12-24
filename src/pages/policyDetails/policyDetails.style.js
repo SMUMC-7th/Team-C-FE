@@ -5,7 +5,7 @@ const Container = styled.div`
   display: flex;
   position: relative;
   flex-direction: column;
-  height: calc(var(--vh, 1vh) * 100 - 190px);
+  height: calc(var(--vh, 1vh) * 100 - 180px);
   overflow-y: scroll;
   max-width: var(--size-inner-max-width);
   min-width: var(--size-min-width);
@@ -22,6 +22,7 @@ const PolicyInfoCard = styled.div`
     rgba(88, 139, 226, 0.1) 100%
   );
   width: 100%;
+  margin-bottom: 10px;
 `;
 
 const Table = styled.table`

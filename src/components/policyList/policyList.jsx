@@ -77,11 +77,11 @@ const PolicyListLogin = () => {
               />
             ))
           )}
+          {isUpload && <Alert content={uploadResponse}></Alert>}
         </S.PolicyList>
         <S.Ref ref={ref}></S.Ref>
       </S.Container>
       {isFetching && <PolicyListSkeleton />}
-      {isUpload && <Alert content={uploadResponse}></Alert>}
     </>
   );
 };

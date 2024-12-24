@@ -33,7 +33,7 @@ const SubmitBtn = styled.button`
   padding: 10px 15px;
   border: none;
   border-radius: 15px;
-
+  margin-bottom: 10px;
   &:disabled {
     background-color: var(--color-gray-400);
   }

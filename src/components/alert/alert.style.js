@@ -6,6 +6,8 @@ const Container = styled.div`
   bottom: 100px;
   align-self: center;
   justify-content: center;
+  /* width: 100%; */
+
   z-index: 1;
 `;
 

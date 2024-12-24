@@ -45,7 +45,7 @@ const PolicyCard = (props) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsUpload(false);
-    }, 100000);
+    }, 1000);
     return () => clearTimeout(timer);
   }, [isClicked]);
 
