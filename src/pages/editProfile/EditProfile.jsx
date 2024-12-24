@@ -15,8 +15,9 @@ import { AlertModal } from '../../components/modal/AlertModal';
 import updateImg2 from '../../images/updateImg2.svg';
 import { useNavigate } from 'react-router-dom';
 import DeleteProfiles from '../../components/deleteProfiles/DeleteProfiles';
-
+import { useQueryClient } from '@tanstack/react-query';
 function EditProfile() {
+  const queryClient = useQueryClient();
   updateVh();
   window.addEventListener('resize', updateVh);
 
@@ -57,7 +58,15 @@ function EditProfile() {
   } = useEditProfile();
 
   const handleSubmitEditData = (data) => {
-    mutate(data);
+    mutate(data, {
+      onSuccess: (updatedData) => {
+        queryClient.setQueryData('getProfileDetails', (oldData) => ({
+          ...oldData,
+          data: updatedData,
+        }));
+        setIsModalOpen(true);
+      },
+    });
   };
 
   const handleCloseModal = () => {
