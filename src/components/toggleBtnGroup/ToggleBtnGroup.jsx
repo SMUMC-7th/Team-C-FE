@@ -19,7 +19,7 @@ function ToggleBtnGroup({ formMenu, onToggleChange, initialToggles }) {
 
   useEffect(() => {
     setToggles(initializeToggles());
-  }, [initialToggles]);
+  }, []);
 
   const handleToggle = (menuIdx, optionIdx) => {
     const selectedCount = toggles[menuIdx].filter((toggle) => toggle).length;

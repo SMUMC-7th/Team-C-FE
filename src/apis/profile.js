@@ -56,12 +56,12 @@ const getEditProfile = async ({
 }) => {
   const { data } = await axiosInstance.put('/profiles', {
     profileImg: profileImg,
-    nickname: nickname,
+    nickName: nickname,
     age: Number(age),
-    regions: regions,
-    keyword: keyword,
-    majors: majors,
-    educations: educations,
+    region: regions,
+    keywords: keyword,
+    major: majors,
+    education: educations,
   });
   return data;
 };
