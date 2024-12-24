@@ -39,7 +39,7 @@ const Alert = styled.div`
 `;
 
 const Ref = styled.div`
-  height: 50px;
+  height: 1px;
   display: flex;
   justify-content: center;
   align-items: center;
