@@ -60,7 +60,7 @@ function EditProfile() {
   const handleSubmitEditData = (data) => {
     mutate(data, {
       onSuccess: (updatedData) => {
-        queryClient.setQueryData('getProfileDetails', (oldData) => ({
+        queryClient.invalidateQueries('getProfileDetails', (oldData) => ({
           ...oldData,
           data: updatedData,
         }));
